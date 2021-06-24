@@ -40,7 +40,7 @@ export default {
   background-image: url("../assets/images/tumblr_ovlwvoWy2i1qmh1uqo1_500.png");
   background-size: cover;
   width: 500px;
-  height: 550px;
+  height: 700px;
   margin-left: auto;
   margin-right: auto;
 }

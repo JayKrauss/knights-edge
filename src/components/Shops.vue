@@ -15,7 +15,7 @@ export default {
 <style scoped>
  #view-port{
      width: 500px;
-     height: 550px;
+     height: 700px;
      background: gray;
      margin-left: auto;
      margin-right: auto;

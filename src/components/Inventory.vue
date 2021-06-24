@@ -15,12 +15,13 @@ export default {
 <style scoped>
  #inventory{
      width: 500px;
-     height: 550px;
+     height: 700px;
      background: blue;
      margin-left: auto;
      margin-right: auto;
      background-image: url("../assets/images/backpack.png");
      background-size: cover;
+     background-position: center;
  }
 
 </style>

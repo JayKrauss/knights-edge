@@ -38,14 +38,15 @@ export default {
 #status-bar{
   top:0;
   width: 500px;
-  height: 40px;
+  height: 50px;
   background: black;
   margin-left: auto;
   margin-right: auto;
   color: white;
+  font-size: large;
   font-weight: bold;
-  background-image: url("../assets/images/buttonStock1d.png");
-  background-size: cover;
+  background-image: url("../assets/images/concrete_wall.png");
+  border-bottom: gray 3px solid;
 }
 table{
   margin-left: auto;

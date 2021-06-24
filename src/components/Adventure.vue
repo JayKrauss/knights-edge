@@ -15,7 +15,7 @@ export default {
 <style scoped>
  #adventure{
      width: 500px;
-     height: 550px;
+     height: 700px;
      background: red;
      margin-left: auto;
      margin-right: auto;

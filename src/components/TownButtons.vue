@@ -33,13 +33,15 @@ export default {
  #town-buttons{
      bottom:0;
      width: 500px;
-     height: 60px;
+     height: 70px;
      background: black;
      margin-left: auto;
      margin-right: auto;
+     border-top: gray 3px solid;
+     background: url("../assets/images/concrete_wall.png");
  }
  button{
-     height: 40px;
+     height: 50px;
      width: 105px;
      margin: 10px;
      color: white;
