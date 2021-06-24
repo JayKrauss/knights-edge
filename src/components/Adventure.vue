@@ -1,5 +1,5 @@
 <template>
-  <div id="adventure">
+  <div id="adventure" class="main-screen">
 
   </div>
 </template>
@@ -14,11 +14,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
  #adventure{
-     width: 500px;
-     height: 700px;
-     background: red;
-     margin-left: auto;
-     margin-right: auto;
      background-image: url("../assets/images/knightsfighting.png");
      background-size: cover;
  }

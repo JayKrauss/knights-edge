@@ -1,5 +1,6 @@
 <template>
-    <div id="equipment">
+    <div id="equipment" class="main-screen">
+        <br><br><br><br>
     <table id="equipment-pane">
         <tr>
         <td></td>
@@ -17,9 +18,9 @@
         <td class="slot"></td>
         </tr>
         <tr>
-        <td class="slot"></td>
         <td></td>
         <td class="slot"></td>
+        <td></td>
         </tr>
     </table>
     </div>
@@ -39,10 +40,6 @@ export default {
 #equipment{
   background-image: url("../assets/images/tumblr_ovlwvoWy2i1qmh1uqo1_500.png");
   background-size: cover;
-  width: 500px;
-  height: 700px;
-  margin-left: auto;
-  margin-right: auto;
 }
 table{
   margin-left: auto;
