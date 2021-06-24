@@ -1,16 +1,70 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <StatusBar :level="this.level" :xp="this.xp" :toLevel="this.toLevel" :gold="this.gold" :currentHP="this.currentHP" :maxHP="this.maxHP"/>
+  <div v-if="shops"><Shops /></div>
+  <div v-if="equipment"><Equipment /></div>
+  <div v-if="inventory"><Inventory /></div>
+  <div v-if="adventure"><Adventure /></div>
+  <TownButtons @openEquipment="openEquipment" @openInventory="openInventory" @openShops="openShops" @openAdventure="openAdventure"/>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import StatusBar from "./components/StatusBar.vue";
+import Shops from "./components/Shops.vue";
+import TownButtons from "./components/TownButtons.vue";
+import Equipment from "./components/Equipment.vue";
+import Inventory from "./components/Inventory.vue";
+import Adventure from "./components/Adventure.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    StatusBar,
+    Shops,
+    TownButtons,
+    Equipment,
+    Inventory,
+    Adventure
   },
+  data() {
+    return {
+      equipment : false,
+      inventory : false,
+      shops : true,
+      adventure : false,
+      level : 1,
+      xp : 1,
+      toLevel : 100,
+      gold : 25,
+      currentHP : 15,
+      maxHP : 15
+    }
+  },
+  methods: {
+    openEquipment() {
+      this.equipment = true;
+      this.inventory = false;
+      this.shops = false;
+      this.adventure = false;
+    },
+    openInventory() {
+      this.equipment = false;
+      this.inventory = true;
+      this.shops = false;
+      this.adventure = false;
+    },
+    openShops() {
+      this.equipment = false;
+      this.inventory = false;
+      this.shops = true;
+      this.adventure = false;
+    },
+    openAdventure() {
+      this.equipment = false;
+      this.inventory = false;
+      this.shops = false;
+      this.adventure = true;
+    }
+  }
 };
 </script>
 
@@ -21,6 +75,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
