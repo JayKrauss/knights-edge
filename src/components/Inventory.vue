@@ -35,7 +35,6 @@ export default {
  }
  #inventory-item{
      background: gray;
-     color: white;
  }
 
 </style>
