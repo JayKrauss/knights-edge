@@ -16,7 +16,12 @@
 <script>
 export default {
   name: "RandomCombat",
-  props: [],
+  props: [
+      "playerCurrentHP",
+      "playerMaxHP",
+      "playerDamage",
+      "playerArmor",
+  ],
   data() {
     return{
       randomCombatText : "You come upon a rodent of unusual size.",
