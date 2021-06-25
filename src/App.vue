@@ -154,11 +154,19 @@ export default {
       currentHP : 15,
       maxHP : 15,
       characterName : "Adventurer",
-      characterStrength : 1,
-      characterConstitution : 1,
-      characterDexterity : 1,
-      characterCharisma : 1,
-      characterIntellect : 1,
+      characterStrength : 3,
+      characterConstitution : 2,
+      characterDexterity : 2,
+      characterCharisma : 2,
+      characterIntellect : 2,
+      equippedWeapons : [
+        {name : "Iron Dagger", damage : 2},
+      ],
+      equippedArmor : [
+        {name : "Leather Chestpiece", armor : 4},
+      ],
+      totalPlayerDamage : 0,
+      totalPlayerArmor : 0,
       currentInventory : [
         {name : "Torch", amount : 4},
         {name : "Rope", amount : 2},
@@ -169,6 +177,20 @@ export default {
     }
   },
   methods: {
+    collatePlayerStats(){
+      var playerDamage = 0;
+      var playerArmor = 0;
+      for (var i=0; i<this.equippedWeapons.length(); i++){
+        playerDamage += this.equippedWeapons[i].damage;
+      }
+      for (var j=0; j<this.equippedArmor.length(); j++){
+        playerArmor += this.equippedArmor[j].armor;
+      }
+      this.totalPlayerDamage = playerDamage * (1 + (this.characterStrength / 10));
+      this.totalPlayerArmor = playerArmor * (1 + (this.characterDexterity / 10));
+      console.log(this.totalPlayerDamage);
+      console.log(this.totalPlayerArmor);
+    },
     //Working on passing in argument to run single function to determine panes to be active, probably based on the commented out flag above.
     //For now its the big ugly you see below. Works though.
 
