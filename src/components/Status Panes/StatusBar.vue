@@ -3,16 +3,19 @@
       <table>
           <tr>
               <td>
-                  Level: {{ level }}
+                <button @click="openCharacter">📜</button>
               </td>
               <td>
-                  XP: {{ xp }}/ {{ toLevel }}
+                  Level: <span id="player-level">{{ level }}</span>
               </td>
               <td>
-                  Gold: {{ gold }}gp
+                  XP: <span id="current-xp">{{ xp }}</span>/ <span id="to-level">{{ toLevel }}</span>
               </td>
               <td>
-                  HP: {{ currentHP }}/{{ maxHP }}
+                  Gold: <span id="gold-amount">{{ gold }}</span>
+              </td>
+              <td>
+                  HP: <span id="current-HP">{{ currentHP }}</span>/<span id="max-HP">{{ maxHP }}</span>
               </td>
           </tr>
       </table>
@@ -30,6 +33,11 @@ export default {
     "currentHP",
     "maxHP"
   ],
+  methods: {
+    openCharacter() {
+      this.$emit("openCharacter")
+    },
+  }
 };
 </script>
 
@@ -45,8 +53,20 @@ export default {
   color: white;
   font-size: large;
   font-weight: bold;
-  background-image: url("../assets/images/concrete_wall.png");
+  background-image: url("../../assets/images/concrete_wall.png");
   border-bottom: gray 3px solid;
+}
+#player-level{
+  color: lightblue;
+}
+#current-xp, #to-level{
+  color: green;
+}
+#gold-amount{
+  color: gold;
+}
+#current-HP, #max-HP{
+  color: red;
 }
 table{
   margin-left: auto;
@@ -55,7 +75,7 @@ table{
 tr {
   width: 400px;
   margin: 20x auto;
-  padding: 10px 20px;
+  padding: 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

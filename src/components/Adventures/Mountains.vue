@@ -1,0 +1,29 @@
+<template>
+  <div id="mountains" class="main-screen">
+    <br><br><br>
+    <div class="shop-text"><strong>{{ mountainText }}</strong></div>
+      <br><br>
+  <button class="shop-button">Gather</button><br>
+  <button class="shop-button">Fight</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Mountains",
+  props: [],
+  data() {
+    return{
+      mountainText : "You go for a climb."
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+#mountains{
+     background-image: url("../../assets/images/mountains.jpg");
+     background-size: cover;
+ }
+</style>
