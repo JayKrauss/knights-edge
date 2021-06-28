@@ -1,0 +1,16 @@
+{
+    "character" : [
+        {"name" : "Adventurer"},
+        {"level" : 0},
+        {"xp" : 0},
+        {"gold" : 0},
+        {"strength" : 0},
+        {"constitution" : 0},
+        {"dexterity" : 0},
+        {"charisma" : 0},
+        {"intellect" : 0},
+        {"equippedWeapons" : []},
+        {"equippedArmor" : []},
+        {"inventory" : []}
+    ]
+}

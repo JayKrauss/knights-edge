@@ -22,7 +22,7 @@ export default {
   ],
   data(){
     return{
-      introText : "You find yourself in a bustling town center, surrounded by merchants calling their wares out above the mid-morning crowds."
+      introText : "You find yourself in a bustling town center, surrounded by merchants calling out their wares above the mid-morning crowds."
     }
   },
   methods: {

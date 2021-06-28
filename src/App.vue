@@ -30,6 +30,22 @@
       :characterXP="this.xp"
       :toLevel="this.toLevel"
       :characterLevel="this.level"
+      :attributePoints="this.attributePoints"
+      @openPane="openPane"
+    />
+  </div>
+  <div v-if="levelUpPane">
+    <LevelUp 
+      :characterName="this.characterName"
+      :characterStrength="this.characterStrength"
+      :characterConstitution="this.characterConstitution"
+      :characterDexterity="this.characterDexterity"
+      :characterCharisma="this.characterCharisma"
+      :characterIntellect="this.characterIntellect"
+      :attributePoints="this.attributePoints"
+      @openPane="openPane"
+      @modifyPlayerStats="modifyPlayerStats"
+      @updateStats="updateStats"
     />
   </div>
   <div v-if="shopsPane">
@@ -92,6 +108,7 @@
       :opponentGoldGain="this.opponentGoldGain"
       :characterXP="this.xp"
       :toLevel="this.toLevel"
+      @checkLevel="checkLevel"
     />
   </div>
   <div v-if="townButtonsPane">
@@ -109,12 +126,13 @@
 <script>
 import StatusBar from "./components/Status Panes/StatusBar.vue";
 import LogIn from "./components/Main Panes/LogIn.vue";
-import Character from "./components/Main Panes/Character.vue";
-import CreateCharacter from "./components/Main Panes/CreateCharacter.vue";
+import Character from "./components/Character/Character.vue";
+import CreateCharacter from "./components/Character/CreateCharacter.vue";
+import LevelUp from "./components/Character/LevelUp.vue";
 import Shops from "./components/Main Panes/Shops.vue";
 import TownButtons from "./components/Status Panes/TownButtons.vue";
-import Equipment from "./components/Main Panes/Equipment.vue";
-import Inventory from "./components/Main Panes/Inventory.vue";
+import Equipment from "./components/Character/Equipment.vue";
+import Inventory from "./components/Character/Inventory.vue";
 import Adventure from "./components/Main Panes/Adventure.vue";
 import Blacksmith from "./components/Shops/Blacksmith.vue";
 import Clothier from "./components/Shops/Clothier.vue";
@@ -138,6 +156,7 @@ export default {
     StatusBar,
     Character,
     CreateCharacter,
+    LevelUp,
     Shops,
     TownButtons,
     AdventureButtons,
@@ -154,14 +173,22 @@ export default {
     RandomCombat,
     Victory,
   },
+  mounted(){
+    fetch("http://localhost:3000/character")
+      .then(res => res.json())
+        .then(data => this.serverCharacter = data)
+          .catch(err => console.log(err.message));
+  },
   data() {
     //Data store persistent
     return {
+      serverCharacter : {},
       //flags for which pane(s) should be active
       statusPane : false,
       loginPane : false,
       characterPane : false,
       createCharacterPane : true,
+      levelUpPane : false,
       equipmentPane : false,
       inventoryPane : false,
       shopsPane : false,
@@ -180,13 +207,14 @@ export default {
       // currentPane : "shops",
 
       //Player statistics, to be moved to the server once authentication is live
+      characterName : "Adventurer",
       level : 0,
       xp : 0,
       toLevel : 100,
       gold : 0,
       currentHP : 0,
       maxHP : 0,
-      characterName : "Adventurer",
+      attributePoints : 0,
       characterStrength : 0,
       characterConstitution : 0,
       characterDexterity : 0,
@@ -221,6 +249,14 @@ export default {
     }
   },
   methods: {
+    checkLevel() {
+      if (this.xp >= this.toLevel){
+        this.level += 1;
+        this.toLevel = this.toLevel * 2;
+        this.attributePoints += 1;
+      }
+    },
+    //collects and distills the combat stats for the player based on their equipment and stats
     collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
@@ -235,7 +271,9 @@ export default {
       console.log("Player Damage: " + this.totalPlayerDamage);
       console.log("Player Armor: " + this.totalPlayerArmor);
     },
+    //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
+      console.log("changing stats")
       switch (stat){
         case "health":
           if (direction == "-"){
@@ -273,6 +311,15 @@ export default {
             this.level += amount;
             break;
           }
+        case "attributePoints":
+          if (direction == "-"){
+            this.attributePoints -= amount;
+            break;
+          }
+          else{
+            this.attributePoints += amount;
+            break;
+          }
         case "strength":
           if (direction == "-"){
             this.characterStrength -= amount;
@@ -289,6 +336,7 @@ export default {
           }
           else{
             this.characterConstitution += amount;
+            this.maxHP += 5;
             break;
           }
         case "dexterity":
@@ -323,16 +371,25 @@ export default {
             break;
       }
     },
+    //update HP and combat stats after leveling up
+    updateStats(){
+      this.maxHP += 5;
+      this.currentHP = this.maxHP;
+
+      this.collatePlayerStats();
+    },
+    //WIP
     getEnemyRandom() {
       return standardEnemies.standardEnemies.forestEnemies.forestRodent;
     },
 
-//This does the lifting for switching between panes based on button press and other factors. May refactor to use Vue Router if it makes sense to do so
+//This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
     openPane(pane){
       this.statusPane = false;
       this.loginPane = false;
       this.characterPane = false;
       this.createCharacterPane = false;
+      this.levelUpPane = false;
       this.equipmentPane = false;
       this.inventoryPane = false;
       this.shopsPane = false;
@@ -360,6 +417,9 @@ export default {
           break;
         case "createCharacter":
           this.createCharacterPane = true;
+          break;
+        case "levelUp":
+          this.levelUpPane = true;
           break;
         case "equipment":
           this.statusPane = true;
@@ -425,7 +485,8 @@ export default {
           break;
       }
     },
-    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect) {
+    //takes in data from createCharacter pane to build the local character to be uploaded to the server
+    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
       this.characterName = name;
       this.level = level;
       this.xp = xp;
@@ -437,6 +498,7 @@ export default {
       this.characterDexterity = dexterity;
       this.characterCharisma = charisma;
       this.characterIntellect = intellect;
+      this.attributePoints = attributePoints;
       this.loginPane = false;
       this.characterPane = true;
       this.createCharacterPane= false;
@@ -457,6 +519,7 @@ export default {
       this.adventureButtonsPane = false;
       console.log("Welcome to the game.")
     },
+    //In the off chance the player kills something
     playerVictory(name, level, xp, gold) {
       this.opponentName = name;
       this.opponentLevel = level;

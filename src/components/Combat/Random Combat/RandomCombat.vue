@@ -1,24 +1,28 @@
 <template>
   <div id="random-combat" class="main-screen">
     <br><br>
+    <div v-if="mounted">
     <div class="random-combat-text"><strong>{{ randomCombatText }}</strong></div>
     <br>
     <img id="combat-image" src="../../../assets/images/rodentofsize.png"><br>
     <span id="enemy-chat"><strong>"What the fu- I mean.. Squeak?"</strong></span>
     <h5 id="enemy-hp-bar">HP: {{ opponentCurrentHP }} / {{ opponentMaxHP }}</h5>
-    <button class="shop-button" @click="playerAttack">Attack</button>
+    <button @click="playerAttack" class="shop-button">Attack</button>
     <button class="shop-button">Defend</button>
-    <button class="shop-button">Heal</button>
+    <button @click="playerHeal" class="shop-button">Heal</button>
+    </div>
+    <div v-else>
+      <h4>Kicking grass..</h4>
+    </div>
 
   </div>
 </template>
 
 <script>
-// import standardEnemies from "../../../datafiles/enemies/standardEnemies.js"
+import standardEnemies from "../../../datafiles/enemies/standardEnemies.js"
 
 export default {
   name: "RandomCombat",
-//   enemy : standardEnemies.forestEnemies.forestRodent,
   props: [
       "playerCurrentHP",
       "playerMaxHP",
@@ -27,41 +31,59 @@ export default {
   ],
   data() {
     return{
-      randomCombatText : "You come upon a rodent of unusual size.",
-      opponentName : "Rodent of Unusual Size",
-      opponentLevel : 1,
-      opponentMaxHP : 10,
-      opponentCurrentHP : 10,
-      opponentDamage : 2,
-      opponentXPValue : 10,
-      opponentGoldValue : 5,
-      localCurrentHP : this.playerCurrentHP,
+      mounted : false,
+      randomCombatText : "",
+      opponentName : "",
+      opponentLevel : 0,
+      opponentMaxHP : 0,
+      opponentCurrentHP : 0,
+      opponentDamage : 0,
+      opponentXPValue : 0,
+      opponentGoldValue : 0,
     }
   },
+  mounted(){
+    this.generateOpponent();
+  },
   methods: {
+      generateOpponent(){
+        this.opponentName = standardEnemies.standardEnemies.forestEnemies.forestRodent.name;
+        this.opponentLevel = standardEnemies.standardEnemies.forestEnemies.forestRodent.level;
+        this.opponentMaxHP = standardEnemies.standardEnemies.forestEnemies.forestRodent.maxHP;
+        this.opponentCurrentHP = standardEnemies.standardEnemies.forestEnemies.forestRodent.maxHP;
+        this.opponentDamage = standardEnemies.standardEnemies.forestEnemies.forestRodent.attack;
+        this.opponentXPValue = standardEnemies.standardEnemies.forestEnemies.forestRodent.xpValue;
+        this.opponentGoldValue = standardEnemies.standardEnemies.forestEnemies.forestRodent.goldValue;
+        this.randomCombatText = standardEnemies.standardEnemies.forestEnemies.forestRodent.introduction;
+        this.mounted = true;
+      },
       playerAttack() {
-          Math.round(this.opponentCurrentHP -= this.playerDamage);
-          if (this.playerDamage > this.opponentCurrentHP){
-              this.opponentCurrentHP = 0;
-              this.combatWon();
-          }
-          else{
-              this.opponentAttack();
-          }
+        if (this.playerDamage > this.opponentCurrentHP){
+          this.opponentCurrentHP = 0;
+          this.combatWon();
+        }
+        else{
+          this.opponentCurrentHP -= this.playerDamage
+          this.opponentAttack();
+        }
       },
       playerDefend() {
           
       },
       opponentAttack() {
-          this.$emit('modifyPlayerStats', "health", this.opponentDamage, "-");
+        this.$emit('modifyPlayerStats', "health", this.opponentDamage, "-");
+      },
+      playerHeal() {
+        this.$emit('modifyPlayerStats', "health", 5, "+");
       },
       playerVictory() {
-          this.$emit("playerVictory", this.opponentName, this.opponentLevel, this.opponentXPValue, this.opponentGoldValue);
+        this.$emit("playerVictory", this.opponentName, this.opponentLevel, this.opponentXPValue, this.opponentGoldValue);
+        this.opponentAttack();
       },
       combatWon() {
-          this.$emit('modifyPlayerStats', "xp", this.opponentXPValue, "+");
-          this.$emit('modifyPlayerStats', "gold", this.opponentGoldValue, "+");
-          this.playerVictory();
+        this.$emit('modifyPlayerStats', "xp", this.opponentXPValue, "+");
+        this.$emit('modifyPlayerStats', "gold", this.opponentGoldValue, "+");
+        this.playerVictory();
       },
   }
 };

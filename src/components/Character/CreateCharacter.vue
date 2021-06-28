@@ -38,6 +38,7 @@ export default {
           characterDexterity : 3,
           characterCharisma : 4,
           characterIntellect : 3,
+          attributePoints : 0,
           primaryStat : "",
       }
   },
@@ -53,6 +54,7 @@ export default {
               this.characterDexterity,
               this.characterCharisma,
               this.characterIntellect,
+              this.attributePoints,
             )
       },
 

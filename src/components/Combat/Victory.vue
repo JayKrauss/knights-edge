@@ -10,7 +10,6 @@
         <h4>{{ opponentGoldGain }} GP</h4>
         <h4>Remaining to next level:</h4>
         <h4>XP: {{ characterXP }} / {{ toLevel }}</h4>
-        <button id="level-up" class="shop-button" disabled>Level Up</button>
         <br><br>
       </div>
   </div>
@@ -26,7 +25,10 @@ export default {
     "opponentGoldGain",
     "characterXP",
     "toLevel",
-  ] 
+  ],
+  unmounted(){
+    this.$emit('checkLevel')
+  }
 };
 
 </script>
