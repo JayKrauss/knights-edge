@@ -27,16 +27,16 @@ export default {
   },
   methods: {
     enterBlacksmith() {
-      this.$emit("enterBlacksmith")
+      this.$emit("openPane", "blacksmith")
     },
     enterGeneralStore() {
-      this.$emit("enterGeneralStore")
+      this.$emit("openPane", "generalstore")
     },
     enterClothier() {
-      this.$emit("enterClothier")
+      this.$emit("openPane", "clothier")
     },
     enterInn() {
-      this.$emit("enterInn")
+      this.$emit("openPane", "inn")
     },
   },
 };

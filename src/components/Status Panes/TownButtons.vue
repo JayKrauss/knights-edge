@@ -13,16 +13,16 @@ export default {
   props: [],
   methods: {
     openEquipment() {
-      this.$emit("openEquipment")
+      this.$emit("openPane", "equipment")
     },
     openInventory() {
-      this.$emit("openInventory")
+      this.$emit("openPane", "inventory")
     },
     openShops() {
-      this.$emit("openShops")
+      this.$emit("openPane", "shops")
     },
     openAdventure() {
-      this.$emit("openAdventure")
+      this.$emit("openPane", "adventure")
     }
   }
 };

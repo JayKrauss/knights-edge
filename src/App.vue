@@ -1,13 +1,24 @@
 <template>
-  <StatusBar 
-    :level="this.level" 
-    :xp="this.xp" 
-    :toLevel="this.toLevel" 
-    :gold="this.gold" 
-    :currentHP="this.currentHP" 
-    :maxHP="this.maxHP"
-    @openCharacter="openCharacter"
-  />
+  <div v-if="statusPane">
+    <StatusBar 
+      :level="this.level" 
+      :xp="this.xp" 
+      :toLevel="this.toLevel" 
+      :gold="this.gold" 
+      :currentHP="this.currentHP" 
+      :maxHP="this.maxHP"
+      @openPane="openPane"
+    />
+  </div>
+  <div v-if="loginPane">
+    <LogIn @openShops="openPane"/>
+  </div>
+  <div v-if="createCharacterPane">
+    <CreateCharacter 
+      @createCharacter="createCharacter"
+      @openPane="openPane"
+    />
+  </div>
   <div v-if="characterPane">
     <Character 
       :characterName="this.characterName"
@@ -23,10 +34,7 @@
   </div>
   <div v-if="shopsPane">
     <Shops 
-      @enterBlacksmith="enterBlacksmith"
-      @enterClothier="enterClothier"
-      @enterGeneralStore="enterGeneralStore"
-      @enterInn="enterInn"
+      @openPane="openPane" 
     />
   </div>
   <div v-if="equipmentPane">
@@ -39,9 +47,7 @@
   </div>
   <div v-if="adventurePane">
     <Adventure 
-      @travelForest="travelForest"
-      @travelMountains="travelMountains"
-      @travelQuests="travelQuests"
+      @openPane="openPane" 
     />
   </div>
   <div v-if="blacksmithPane">
@@ -58,7 +64,8 @@
   </div>
   <div v-if="forestPane">
     <Forest 
-      @randomCombat="randomCombat"
+      @openPane="openPane"
+      @collatePlayerStats="collatePlayerStats"
     />
   </div>
   <div v-if="mountainsPane">
@@ -68,26 +75,42 @@
     <TravelQuests />
   </div>
   <div v-if="randomCombatPane">
-    <RandomCombat />
+    <RandomCombat 
+      :playerCurrentHP="this.currentHP"
+      :playerMaxHP="this.maxHP"
+      :playerDamage="this.totalPlayerDamage"
+      :playerArmor="this.totalPlayerArmor"
+      @modifyPlayerStats="modifyPlayerStats"
+      @playerVictory="playerVictory"
+    />
+  </div>
+  <div v-if="victoryPane">
+    <Victory 
+      :opponentName="this.opponentName"
+      :opponentLevel="this.opponentLevel"
+      :opponentXPGain="this.opponentXPGain"
+      :opponentGoldGain="this.opponentGoldGain"
+      :characterXP="this.xp"
+      :toLevel="this.toLevel"
+    />
   </div>
   <div v-if="townButtonsPane">
   <TownButtons 
-    @openEquipment="openEquipment" 
-    @openInventory="openInventory" 
-    @openShops="openShops" 
-    @openAdventure="openAdventure" 
+    @openPane="openPane" 
   />
   </div>
   <div v-if="adventureButtonsPane">
     <AdventureButtons 
-    @openShops="openShops" 
+    @openPane="openPane"  
   />
   </div>
 </template>
 
 <script>
 import StatusBar from "./components/Status Panes/StatusBar.vue";
+import LogIn from "./components/Main Panes/LogIn.vue";
 import Character from "./components/Main Panes/Character.vue";
+import CreateCharacter from "./components/Main Panes/CreateCharacter.vue";
 import Shops from "./components/Main Panes/Shops.vue";
 import TownButtons from "./components/Status Panes/TownButtons.vue";
 import Equipment from "./components/Main Panes/Equipment.vue";
@@ -102,15 +125,19 @@ import Mountains from "./components/Adventures/Mountains.vue";
 import TravelQuests from "./components/Adventures/Quests.vue";
 import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
 import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
+import Victory from "./components/Combat/Victory.vue";
 
-// import equipmentList from "./assets/items/equipment.js";
-// import gearList from "./assets/items/gear";
+import { default as standardEnemies } from "./datafiles/enemies/standardEnemies.js";
+import { default as equipmentList } from "./datafiles/items/equipment.js";
+import { default as gearList } from "./datafiles/items/gear.js";
 
 export default {
   name: "App",
   components: {
+    LogIn,
     StatusBar,
     Character,
+    CreateCharacter,
     Shops,
     TownButtons,
     AdventureButtons,
@@ -125,15 +152,19 @@ export default {
     Mountains,
     TravelQuests,
     RandomCombat,
+    Victory,
   },
   data() {
     //Data store persistent
     return {
       //flags for which pane(s) should be active
+      statusPane : false,
+      loginPane : false,
       characterPane : false,
+      createCharacterPane : true,
       equipmentPane : false,
       inventoryPane : false,
-      shopsPane : true,
+      shopsPane : false,
       adventurePane : false,
       blacksmithPane : false,
       clothierPane : false,
@@ -142,99 +173,273 @@ export default {
       forestPane : false,
       mountainsPane : false,
       travelQuestsPane : false,
-      townButtonsPane : true,
+      townButtonsPane : false,
       adventureButtonsPane : false,
       randomCombatPane : false,
+      victoryPane : false,
       // currentPane : "shops",
+
       //Player statistics, to be moved to the server once authentication is live
-      level : 1,
+      level : 0,
       xp : 0,
       toLevel : 100,
-      gold : 25,
-      currentHP : 15,
-      maxHP : 15,
+      gold : 0,
+      currentHP : 0,
+      maxHP : 0,
       characterName : "Adventurer",
-      characterStrength : 3,
-      characterConstitution : 2,
-      characterDexterity : 2,
-      characterCharisma : 2,
-      characterIntellect : 2,
+      characterStrength : 0,
+      characterConstitution : 0,
+      characterDexterity : 0,
+      characterCharisma : 0,
+      characterIntellect : 0,
+
+      //objects to hold equipped weapons and armor so that attack and defend values may be calculated. Passed to collatePlayerStats()
       equippedWeapons : [
-        {name : "Iron Dagger", damage : 2},
+        equipmentList.equipmentList.mainhands.ironDagger,
       ],
       equippedArmor : [
-        {name : "Leather Chestpiece", armor : 4},
+        equipmentList.equipmentList.chests.leatherChestpiece,
       ],
+
+      //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
       totalPlayerDamage : 0,
       totalPlayerArmor : 0,
+
+      //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
       currentInventory : [
-        {name : "Torch", amount : 4},
-        {name : "Rope", amount : 2},
-        {name : "Health Potion", amount : 10},
-        {name : "Rations", amount : 2},
-        {name : "Water", amount : 3},
-      ]
+        {name : gearList.gearList.adventuringGear.torch.name, amount : 4},
+        {name : gearList.gearList.adventuringGear.rope.name, amount : 2},
+        {name : gearList.gearList.potions.basicHealthPotion.name, amount : 10},
+        {name : gearList.gearList.adventuringGear.rations.name, amount : 2},
+        {name : gearList.gearList.adventuringGear.water.name, amount : 3},
+      ],
+      currentOpponent : this.getEnemyRandom(),
+      opponentName : "",
+      opponentLevel : 0,
+      opponentXPGain : 0,
+      opponentGoldGain : 0,
     }
   },
   methods: {
-    collatePlayerStats(){
+    collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
-      for (var i=0; i<this.equippedWeapons.length(); i++){
+      for (var i=0; i<this.equippedWeapons.length; i++){
         playerDamage += this.equippedWeapons[i].damage;
       }
-      for (var j=0; j<this.equippedArmor.length(); j++){
+      for (var j=0; j<this.equippedArmor.length; j++){
         playerArmor += this.equippedArmor[j].armor;
       }
       this.totalPlayerDamage = playerDamage * (1 + (this.characterStrength / 10));
       this.totalPlayerArmor = playerArmor * (1 + (this.characterDexterity / 10));
-      console.log(this.totalPlayerDamage);
-      console.log(this.totalPlayerArmor);
+      console.log("Player Damage: " + this.totalPlayerDamage);
+      console.log("Player Armor: " + this.totalPlayerArmor);
     },
-    //Working on passing in argument to run single function to determine panes to be active, probably based on the commented out flag above.
-    //For now its the big ugly you see below. Works though.
+    modifyPlayerStats(stat, amount, direction) {
+      switch (stat){
+        case "health":
+          if (direction == "-"){
+            this.currentHP -= amount;
+            break;
+          }
+          else{
+            this.currentHP += amount;
+            break;
+          }
+        case "xp":
+          if (direction == "-"){
+            this.xp -= amount;
+            break;
+          }
+          else{
+            this.xp += amount;
+            break;
+          }
+        case "gold":
+          if (direction == "-"){
+            this.gold -= amount;
+            break;
+          }
+          else{
+            this.gold += amount;
+            break;
+          }
+        case "level":
+          if (direction == "-"){
+            this.level -= amount;
+            break;
+          }
+          else{
+            this.level += amount;
+            break;
+          }
+        case "strength":
+          if (direction == "-"){
+            this.characterStrength -= amount;
+            break;
+          }
+          else{
+            this.characterStrength += amount;
+            break;
+          }
+        case "constitution":
+          if (direction == "-"){
+            this.characterConstitution -= amount;
+            break;
+          }
+          else{
+            this.characterConstitution += amount;
+            break;
+          }
+        case "dexterity":
+          if (direction == "-"){
+            this.characterDexterity -= amount;
+            break;
+          }
+          else{
+            this.characterDexterity += amount;
+            break;
+          }
+        case "charisma":
+          if (direction == "-"){
+            this.characterCharisma -= amount;
+            break;
+          }
+          else{
+            this.characterCharisma += amount;
+            break;
+          }
+        case "intellect":
+          if (direction == "-"){
+            this.characterIntellect -= amount;
+            break;
+          }
+          else{
+            this.characterIntellect += amount;
+            break;
+          }
+          default:
+            console.log("You broke it. Well done.");
+            break;
+      }
+    },
+    getEnemyRandom() {
+      return standardEnemies.standardEnemies.forestEnemies.forestRodent;
+    },
 
-    // openPane(pane){
-    //   this.equipmentPane = false;
-    //   this.inventoryPane = false;
-    //   this.shopsPane = false;
-    //   this.adventurePane = false;
-    //   this.blacksmithPane = false;
-    //   this.clothierPane = false;
-    //   this.generalStorePane = false;
-    //   this.innPane = false;
+//This does the lifting for switching between panes based on button press and other factors. May refactor to use Vue Router if it makes sense to do so
+    openPane(pane){
+      this.statusPane = false;
+      this.loginPane = false;
+      this.characterPane = false;
+      this.createCharacterPane = false;
+      this.equipmentPane = false;
+      this.inventoryPane = false;
+      this.shopsPane = false;
+      this.adventurePane = false;
+      this.blacksmithPane = false;
+      this.clothierPane = false;
+      this.generalStorePane = false;
+      this.innPane = false;
+      this.forestPane = false;
+      this.mountainsPane = false;
+      this.travelQuestsPane = false;
+      this.townButtonsPane = false;
+      this.adventureButtonsPane = false;
+      this.randomCombatPane = false;
+      this.victoryPane = false;
 
-    //   switch (pane){
-    //     case "equipment":
-    //       this.equipmentPane = true;
-    //       break;
-    //     case "inventory":
-    //       this.inventoryPane = true;
-    //       break;
-    //     case "shops":
-    //       this.shopsPane = true;
-    //       break;
-    //     case "adventure":
-    //       this.adventurePane = true;
-    //       break;
-    //     case "blacksmith":
-    //       this.blacksmithPane = true;
-    //       break;
-    //     case "generalstore":
-    //       this.generalStorePane = true;
-    //       break;
-    //     case "clothier":
-    //       this.clothierPane = true;
-    //       break;
-    //     case "inn":
-    //       this.innPane = true;
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // },
-    openCharacter() {
+      switch (pane){
+        case "login":
+          this.loginPane = true;
+          break;
+        case "character":
+          this.statusPane = true;
+          this.characterPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "createCharacter":
+          this.createCharacterPane = true;
+          break;
+        case "equipment":
+          this.statusPane = true;
+          this.equipmentPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "inventory":
+          this.statusPane = true;
+          this.inventoryPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "shops":
+          this.statusPane = true;
+          this.shopsPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "adventure":
+          this.statusPane = true;
+          this.adventurePane = true;
+          this.adventureButtonsPane = true;
+          break;
+        case "blacksmith":
+          this.statusPane = true;
+          this.blacksmithPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "generalstore":
+          this.statusPane = true;
+          this.generalStorePane = true;
+          this.townButtonsPane = true;
+          break;
+        case "clothier":
+          this.statusPane = true;
+          this.clothierPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "inn":
+          this.statusPane = true;
+          this.innPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "forest":
+          this.statusPane = true;
+          this.forestPane = true;
+          this.adventureButtonsPane = true;
+          break;
+        case "mountains":
+          this.statusPane = true;
+          this.mountainsPane = true;
+          this.adventureButtonsPane = true;
+          break;
+        case "travelQuests":
+          this.statusPane = true;
+          this.travelQuestsPane = true;
+          this.adventureButtonsPane = true;
+          break;
+        case "randomCombat":
+          this.statusPane = true;
+          this.randomCombatPane = true;
+          this.adventureButtonsPane = true;
+          break;
+        default:
+          break;
+      }
+    },
+    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect) {
+      this.characterName = name;
+      this.level = level;
+      this.xp = xp;
+      this.gold = charisma * 5;
+      this.maxHP = constitution * 5;
+      this.currentHP = this.maxHP;
+      this.characterStrength = strength;
+      this.characterConstitution = constitution;
+      this.characterDexterity = dexterity;
+      this.characterCharisma = charisma;
+      this.characterIntellect = intellect;
+      this.loginPane = false;
       this.characterPane = true;
+      this.createCharacterPane= false;
       this.equipmentPane = false;
       this.inventoryPane = false;
       this.shopsPane = false;
@@ -247,209 +452,17 @@ export default {
       this.mountainsPane = false;
       this.travelQuestsPane = false;
       this.randomCombatPane = false;
+      this.victoryPane = false;
       this.townButtonsPane = true;
       this.adventureButtonsPane = false;
-      console.log("Opening Character Screen.")
+      console.log("Welcome to the game.")
     },
-    openEquipment() {
-      this.characterPane = false;
-      this.equipmentPane = true;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Opening Equipment.")
-    },
-    openInventory() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = true;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Opening Inventory.")
-    },
-    openShops() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = true;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Opening Shops.")
-    },
-    openAdventure() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = true;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Opening Adventure.")
-    },
-    enterBlacksmith() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = true;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Entering Blacksmith Forge.")
-    },
-    enterGeneralStore() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = true;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Entering General Store.")
-    },
-    enterClothier() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = true;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Entering Clothier.")
-    },
-    enterInn() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = true;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Entering Inn.")
-    },
-    travelForest() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = true;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = false;
-      this.adventureButtonsPane = true;
-      console.log("Traveling Forest.")
-    },
-    travelMountains() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = true;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.townButtonsPane = false;
-      this.adventureButtonsPane = true;
-      console.log("Traveling Mountains.")
-    },
-    travelQuests() {
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = true;
-      this.randomCombatPane = false;
-      this.townButtonsPane = false;
-      this.adventureButtonsPane = true;
-      console.log("Opening Quests.")
-    },
-    randomCombat() {
+    playerVictory(name, level, xp, gold) {
+      this.opponentName = name;
+      this.opponentLevel = level;
+      this.opponentXPGain = xp;
+      this.opponentGoldGain = gold;
+      this.loginPane = false;
       this.characterPane = false;
       this.equipmentPane = false;
       this.inventoryPane = false;
@@ -462,11 +475,12 @@ export default {
       this.forestPane = false;
       this.mountainsPane = false;
       this.travelQuestsPane = false;
-      this.randomCombatPane = true;
+      this.randomCombatPane = false;
+      this.victoryPane = true;
       this.townButtonsPane = false;
       this.adventureButtonsPane = true;
       console.log("Spinning up Combat.")
-    }
+    },
   }
 };
 </script>

@@ -35,7 +35,7 @@ export default {
   ],
   methods: {
     openCharacter() {
-      this.$emit("openCharacter")
+      this.$emit("openPane", "character")
     },
   }
 };

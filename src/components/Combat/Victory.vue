@@ -1,0 +1,58 @@
+<template>
+  <div id="victory" class="main-screen">
+      <br><br><br><br>
+      <div id="victory-stats">
+        <br>
+        <h3>You Won!</h3>
+        <h4>You defeated a {{ opponentName }} <br/> Level: {{ opponentLevel }}</h4>
+        <h4>You gain: </h4>
+        <h4>{{ opponentXPGain }} XP</h4>
+        <h4>{{ opponentGoldGain }} GP</h4>
+        <h4>Remaining to next level:</h4>
+        <h4>XP: {{ characterXP }} / {{ toLevel }}</h4>
+        <button id="level-up" class="shop-button" disabled>Level Up</button>
+        <br><br>
+      </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Victory",
+  props: [
+    "opponentName",
+    "opponentLevel",
+    "opponentXPGain",
+    "opponentGoldGain",
+    "characterXP",
+    "toLevel",
+  ] 
+};
+
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+ #victory{
+     background-image: url("../../assets/images/characterparchment.jpg");
+     background-size: cover;
+     background-position: center;
+ }
+ #victory-stats{
+     width: 300px;
+     min-height: 200px;
+     margin-left: auto;
+     margin-right: auto;
+     background: rgba(0,0,0,.7);
+     color: white;
+     list-style: none;
+     justify-content: space-evenly;
+ }
+ #inventory-item{
+     background: gray;
+ }
+ #level-up:disabled{
+     opacity: .5;
+ }
+
+</style>

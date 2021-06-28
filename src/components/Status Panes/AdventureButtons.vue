@@ -10,7 +10,7 @@ export default {
   props: [],
   methods: {
     openShops() {
-      this.$emit("openShops")
+      this.$emit("openPane", "shops")
     },
   }
 };

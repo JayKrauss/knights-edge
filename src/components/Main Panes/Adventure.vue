@@ -20,13 +20,13 @@ export default {
   },
   methods: {
     travelForest() {
-      this.$emit("travelForest")
+      this.$emit("openPane", "forest")
     },
     travelMountains() {
-      this.$emit("travelMountains")
+      this.$emit("openPane", "mountains")
     },
     travelQuests() {
-      this.$emit("travelQuests")
+      this.$emit("openPane", "travelQuests")
     },
   },
 };
