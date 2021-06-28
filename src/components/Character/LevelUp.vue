@@ -30,7 +30,7 @@ export default {
   ],
   data() {
     return {
-     
+     pointsSpent : 0,
     }
   },
   methods: {
@@ -39,7 +39,7 @@ export default {
             alert("You must assign all of your attribute points to continue.")
           }
           else{
-            this.$emit('updateStats');
+            this.$emit('updateStats', this.pointsSpent);
             this.$emit('openPane', 'character');
           }
       },
@@ -48,6 +48,7 @@ export default {
           if (this.attributePoints > 0){
               this.$emit('modifyPlayerStats', 'attributePoints', 1, '-');
               this.$emit('modifyPlayerStats', stat, 1, '+');
+              this.pointsSpent++;
           }
           else{
               alert("You are out of attribute points. Please commit your changes.")

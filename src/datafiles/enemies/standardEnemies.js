@@ -11,6 +11,16 @@ export default {
                 xpValue : 100,
                 goldValue : 5,
             },
+            forestRockling : {
+                name : "Young Rockling",
+                introduction : "You come upon a young rockling.",
+                id : "seyr001",
+                maxHP : 20, 
+                attack : 4,
+                speech : "'Hissssssss' it says, inexplicably.",
+                xpValue : 100,
+                goldValue : 8,
+            },
         }
     }
 };

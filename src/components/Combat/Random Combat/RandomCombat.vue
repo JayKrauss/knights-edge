@@ -5,8 +5,12 @@
     <div class="random-combat-text"><strong>{{ randomCombatText }}</strong></div>
     <br>
     <img id="combat-image" src="../../../assets/images/rodentofsize.png"><br>
-    <span id="enemy-chat"><strong>"What the fu- I mean.. Squeak?"</strong></span>
-    <h5 id="enemy-hp-bar">HP: {{ opponentCurrentHP }} / {{ opponentMaxHP }}</h5>
+    <span id="enemy-chat"><strong>{{ randomCombatText }}</strong></span><br>
+    <span id="enemy-hp-bar">HP: {{ opponentCurrentHP.toFixed(2) }} / {{ opponentMaxHP.toFixed(2) }}</span><br/><br/>
+    <div id="status-pane">
+    <span id="status-text">{{ statusText }}</span><br/>
+    <span id="status-text2">{{ statusText2 }}</span><br/>
+    </div>
     <button @click="playerAttack" class="shop-button">Attack</button>
     <button class="shop-button">Defend</button>
     <button @click="playerHeal" class="shop-button">Heal</button>
@@ -40,6 +44,8 @@ export default {
       opponentDamage : 0,
       opponentXPValue : 0,
       opponentGoldValue : 0,
+      statusText : "",
+      statusText2 : "",
     }
   },
   mounted(){
@@ -64,6 +70,8 @@ export default {
         }
         else{
           this.opponentCurrentHP -= this.playerDamage
+          this.statusText = "";
+          this.statusText += `You swing your weapon and do ${this.playerDamage} damage to ${this.opponentName}. `
           this.opponentAttack();
         }
       },
@@ -71,10 +79,23 @@ export default {
           
       },
       opponentAttack() {
+        this.statusText2 = "";
+        this.statusText2 += `${this.opponentName} hits you for ${this.opponentDamage} damage.\n`
         this.$emit('modifyPlayerStats', "health", this.opponentDamage, "-");
       },
       playerHeal() {
-        this.$emit('modifyPlayerStats', "health", 5, "+");
+        if (this.playerCurrentHP < this.playerMaxHP){
+          if ((this.playerCurrentHP + 5) <= this.playerMaxHP){
+            this.$emit('modifyPlayerStats', "health", 5, "+");
+          }
+          else {
+            this.$emit('healToFull');
+          }
+        }
+        else {
+          alert("You cannot heal above maximum.")
+        }
+        
       },
       playerVictory() {
         this.$emit("playerVictory", this.opponentName, this.opponentLevel, this.opponentXPValue, this.opponentGoldValue);
@@ -102,9 +123,17 @@ export default {
      margin-right: auto;
  }
  #enemy-chat{
-     color: darkblue;
+    font-size: 18px;
+    color: darkblue;
  }
  #enemy-hp-bar{
      color: red;
+     font-size: 18px;
+     font-weight: bold;
+ }
+ #status-pane{
+   background: rgba(0,0,0,.5);
+   color: white;
+   font-weight: bold;
  }
 </style>

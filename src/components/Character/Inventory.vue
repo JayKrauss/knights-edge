@@ -1,13 +1,8 @@
 <template>
   <div id="inventory" class="main-screen">
       <br><br>
-      <ul id="inventory-list">
-        <br>
-          <li class="inventory-item" v-for="(item, index) in currentInventory" :key="index">
-              <p>{{ item.name }} - {{item.amount}}</p>
-          </li>
-          <br>
-      </ul>
+      <ul id="gear-inventory-list"></ul>
+      <ul id="potion-inventory-list"></ul>
   </div>
 </template>
 
@@ -16,8 +11,22 @@ export default {
   name: "Inventory",
   props: [
     "currentInventory",
-  ] 
+  ],
+  methods: {
+    buildInventories() {
+      for (var i=0; i<this.currentInventory.length; i++){
+        if (this.currentInventory[i]["adventuringGear"]){
+          document.getElementById("gear-inventory-list").append(this.currentInventory[i].gearList.gearList.adventuringGear["name"])
+        }
+        else if(this.currentInventory[i]["potions"]){
+          document.getElementById("potions-inventory-list").append(this.currentInventory[i].gearList.gearList.potions["name"])
+        }
+      }
+    }
+  }
 };
+
+
 
 </script>
 

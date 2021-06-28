@@ -1,4 +1,5 @@
 <template>
+<div>
   <div v-if="statusPane">
     <StatusBar 
       :level="this.level" 
@@ -98,6 +99,7 @@
       :playerArmor="this.totalPlayerArmor"
       @modifyPlayerStats="modifyPlayerStats"
       @playerVictory="playerVictory"
+      @healToFull="healToFull"
     />
   </div>
   <div v-if="victoryPane">
@@ -121,6 +123,7 @@
     @openPane="openPane"  
   />
   </div>
+</div>
 </template>
 
 <script>
@@ -204,7 +207,6 @@ export default {
       adventureButtonsPane : false,
       randomCombatPane : false,
       victoryPane : false,
-      // currentPane : "shops",
 
       //Player statistics, to be moved to the server once authentication is live
       characterName : "Adventurer",
@@ -371,9 +373,12 @@ export default {
             break;
       }
     },
+    healToFull(){
+      this.currentHP = this.maxHP;
+    },
     //update HP and combat stats after leveling up
-    updateStats(){
-      this.maxHP += 5;
+    updateStats(points){
+      this.maxHP += (5 * points);
       this.currentHP = this.maxHP;
 
       this.collatePlayerStats();
