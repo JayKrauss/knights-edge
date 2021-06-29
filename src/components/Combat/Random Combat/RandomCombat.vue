@@ -49,18 +49,19 @@ export default {
     }
   },
   mounted(){
+    console.table(standardEnemies)
     this.generateOpponent();
   },
   methods: {
       generateOpponent(){
-        this.opponentName = standardEnemies.standardEnemies.forestEnemies.forestRodent.name;
-        this.opponentLevel = standardEnemies.standardEnemies.forestEnemies.forestRodent.level;
-        this.opponentMaxHP = standardEnemies.standardEnemies.forestEnemies.forestRodent.maxHP;
-        this.opponentCurrentHP = standardEnemies.standardEnemies.forestEnemies.forestRodent.maxHP;
-        this.opponentDamage = standardEnemies.standardEnemies.forestEnemies.forestRodent.attack;
-        this.opponentXPValue = standardEnemies.standardEnemies.forestEnemies.forestRodent.xpValue;
-        this.opponentGoldValue = standardEnemies.standardEnemies.forestEnemies.forestRodent.goldValue;
-        this.randomCombatText = standardEnemies.standardEnemies.forestEnemies.forestRodent.introduction;
+        this.opponentName = standardEnemies.standardEnemies[0].name;
+        this.opponentLevel = standardEnemies.standardEnemies[0].level;
+        this.opponentMaxHP = standardEnemies.standardEnemies[0].maxHP;
+        this.opponentCurrentHP = standardEnemies.standardEnemies[0].maxHP;
+        this.opponentDamage = standardEnemies.standardEnemies[0].attack;
+        this.opponentXPValue = standardEnemies.standardEnemies[0].xpValue;
+        this.opponentGoldValue = standardEnemies.standardEnemies[0].goldValue;
+        this.randomCombatText = standardEnemies.standardEnemies[0].introduction;
         this.mounted = true;
       },
       playerAttack() {

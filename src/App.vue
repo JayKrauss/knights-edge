@@ -2,7 +2,7 @@
 <template>
 <!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
 <!-- Onions have layers? Games have layers. Just roll with it. -->
-<div>
+<div id="playfield">
   <div v-if="statusPane">
     <StatusBar 
       :level="this.level" 
@@ -35,7 +35,7 @@
       :toLevel="this.toLevel"
       :characterLevel="this.level"
       :attributePoints="this.attributePoints"
-      @levelUp="levelUp"
+      @openPane="openPane"
     />
   </div>
   <div v-if="characterLandingPane">
@@ -86,7 +86,7 @@
   </div>
   <div v-if="inventoryPane">
     <Inventory 
-      :currentInventory="this.currentInventory"
+      :currentInventoryObjects="this.currentInventoryObjects"
     />
   </div>
   <div v-if="adventurePane">
@@ -179,6 +179,10 @@ import Victory from "./components/Combat/Victory.vue";
 
 import { default as equipmentList } from "./datafiles/items/equipment.js";
 import { default as gearList } from "./datafiles/items/gear.js";
+import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
+
+import getPlayers from  "./database/firebaseGetPlayer.js";
+import standardEnemies from './datafiles/enemies/standardEnemies';
 
 export default {
   name: "App",
@@ -207,14 +211,13 @@ export default {
     Victory,
   },
   mounted(){
-    fetch("http://localhost:3000/character")
-      .then(res => res.json())
-        .then(data => this.serverCharacter = data)
-          .catch(err => console.log(err.message));
+    this.collatePlayerStats();
+    this.buildInventory();
   },
   data() {
     //Data store persistent
     return {
+      playerList : [],
       serverCharacter : {},
       //flags for which pane(s) should be active
       statusPane : false,
@@ -260,23 +263,29 @@ export default {
 
       //objects to hold equipped weapons and armor so that attack and defend values may be calculated. Passed to collatePlayerStats()
       equippedWeapons : [
-        equipmentList.equipmentList.mainhands.ironDagger,
+        "mhid001",
       ],
       equippedArmor : [
-        equipmentList.equipmentList.chests.leatherChestpiece,
+        "lcu001",
       ],
+
+      //bounces current item being pulled from the datasheet, to be used in other functions.
+      currentItem : {},
 
       //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
       totalPlayerDamage : 0,
       totalPlayerArmor : 0,
 
       //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
-      currentInventory : [
-        {name : gearList.gearList.adventuringGear.torch.name, amount : 4},
-        {name : gearList.gearList.adventuringGear.rope.name, amount : 2},
-        {name : gearList.gearList.potions.basicHealthPotion.name, amount : 10},
-        {name : gearList.gearList.adventuringGear.rations.name, amount : 2},
-        {name : gearList.gearList.adventuringGear.water.name, amount : 3},
+      currentInventoryIDs : [
+        [ "agt001" , 5 ],
+        [ "agr001" , 3 ],
+        [ "agr002" , 2 ],
+        [ "agw001" , 5 ],
+        [ "bhp001" , 3 ],
+      ],
+      currentInventoryObjects : [
+
       ],
 
       //quest variables
@@ -292,6 +301,9 @@ export default {
     }
   },
   methods: {
+    getPlayerList(){
+      this.playerList = getPlayers();
+    },
     checkLevel() {
       if (this.xp >= this.toLevel){
         this.level += 1;
@@ -299,15 +311,18 @@ export default {
         this.attributePoints += 1;
       }
     },
-    //collects and distills the combat stats for the player based on their equipment and stats
+    //collects and modifies the combat stats for the player based on their equipment and stats
     collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
+
       for (var i=0; i<this.equippedWeapons.length; i++){
-        playerDamage += this.equippedWeapons[i].damage;
+        this.retrieveByID("equipment", this.equippedWeapons[i]);
+        playerDamage += this.currentItem.damage;
       }
       for (var j=0; j<this.equippedArmor.length; j++){
-        playerArmor += this.equippedArmor[j].armor;
+        this.retrieveByID("equipment", this.equippedArmor[j]);
+        playerArmor += this.currentItem.armor;
       }
       this.totalPlayerDamage = playerDamage * (1 + (this.characterStrength / 10));
       this.totalPlayerArmor = playerArmor * (1 + (this.characterDexterity / 10));
@@ -577,6 +592,46 @@ export default {
         default:
           break;
       }
+    }, 
+    //allows for retrieval of objects from data storage by ID- pass in the name of the datasheet and the ID.
+    retrieveByID(datasheet, id) {
+      switch (datasheet) {
+        case "standardEnemies":
+          this.retrieveFromDatasheet(standardEnemies["standardEnemies"], id);
+          break;
+        case "equipment":
+          this.retrieveFromDatasheet(equipmentList["equipment"], id);
+          break;
+        case "adventuringGear":
+          this.retrieveFromDatasheet(gearList["adventuringGear"], id);
+          break;
+        case "standardQuests":
+          this.retrieveFromDatasheet(standardQuests["standardQuests"], id);
+          break;
+      }
+    },
+    retrieveFromDatasheet(sheet, id){
+      for (var i=0 ; i < sheet.length ; i++)
+          {
+              if (sheet[i]["id"] == id) {
+                console.table(sheet[i])
+                  this.currentItem = sheet[i];
+              }
+          }
+    },
+    buildInventory(){
+      for (var k=0; k<this.currentInventoryIDs.length; k++){
+        this.retrieveByID("adventuringGear", this.currentInventoryIDs[k][0]);
+        console.log(this.currentItem)
+        var item = {};
+        item.name = this.currentItem.name;
+        item.id = this.currentItem.id;
+        item.amount = this.currentInventoryIDs[k][1];
+        item.value = this.currentItem.value;
+        item.description = this.currentItem.description;
+        this.currentInventoryObjects.push(item);
+      }
+      console.table(this.currentInventoryObjects);
     },
   }
 };

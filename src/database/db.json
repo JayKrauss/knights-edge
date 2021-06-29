@@ -9,6 +9,8 @@
         {"dexterity" : 0},
         {"charisma" : 0},
         {"intellect" : 0},
+        {"openQuests" : []},
+        {"completedQuests" : []},
         {"equippedWeapons" : []},
         {"equippedArmor" : []},
         {"inventory" : []}

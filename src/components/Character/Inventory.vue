@@ -1,8 +1,8 @@
 <template>
   <div id="inventory" class="main-screen">
       <br><br>
-      <ul id="gear-inventory-list"></ul>
-      <ul id="potion-inventory-list"></ul>
+      <h3 id='inventory-title'>INVENTORY</h3>
+      <ul id="inventory-list"></ul>
   </div>
 </template>
 
@@ -10,19 +10,18 @@
 export default {
   name: "Inventory",
   props: [
-    "currentInventory",
+    "currentInventoryObjects",
   ],
   methods: {
     buildInventories() {
-      for (var i=0; i<this.currentInventory.length; i++){
-        if (this.currentInventory[i]["adventuringGear"]){
-          document.getElementById("gear-inventory-list").append(this.currentInventory[i].gearList.gearList.adventuringGear["name"])
-        }
-        else if(this.currentInventory[i]["potions"]){
-          document.getElementById("potions-inventory-list").append(this.currentInventory[i].gearList.gearList.potions["name"])
-        }
+      for (var i=0; i<this.currentInventoryObjects.length; i++){
+        let item = `<li class="inventory-item">${this.currentInventoryObjects[i].name} - ${this.currentInventoryObjects[i].amount} </li>`
+          document.getElementById("inventory-list").innerHTML += item 
       }
-    }
+    },
+  },
+  mounted(){
+    this.buildInventories();
   }
 };
 
@@ -42,13 +41,15 @@ export default {
      min-height: 200px;
      margin-left: auto;
      margin-right: auto;
+     padding-top: 40px;
      background: rgba(0,0,0,.7);
      color: white;
      list-style: none;
      justify-content: space-evenly;
  }
- #inventory-item{
-     background: gray;
- }
-
+#inventory-title{
+  color: white;
+  background: rgba(0,0,0,.7);
+  padding: 15px;
+}
 </style>
