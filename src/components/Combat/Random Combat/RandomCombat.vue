@@ -58,7 +58,7 @@ export default {
         this.opponentLevel = standardEnemies.standardEnemies[0].level;
         this.opponentMaxHP = standardEnemies.standardEnemies[0].maxHP;
         this.opponentCurrentHP = standardEnemies.standardEnemies[0].maxHP;
-        this.opponentDamage = standardEnemies.standardEnemies[0].attack;
+        this.opponentDamage = (standardEnemies.standardEnemies[0].attack - (this.playerArmor / 100));
         this.opponentXPValue = standardEnemies.standardEnemies[0].xpValue;
         this.opponentGoldValue = standardEnemies.standardEnemies[0].goldValue;
         this.randomCombatText = standardEnemies.standardEnemies[0].introduction;

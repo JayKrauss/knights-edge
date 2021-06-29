@@ -15,7 +15,7 @@
                   Gold: <span id="gold-amount">{{ gold }}</span>
               </td>
               <td>
-                  HP: <span id="current-HP">{{ currentHP }}</span>/<span id="max-HP">{{ maxHP }}</span>
+                  HP: <span id="current-HP">{{ currentHP.toFixed(2) }}</span>/<span id="max-HP">{{ maxHP.toFixed(2) }}</span>
               </td>
           </tr>
       </table>
@@ -51,7 +51,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   color: white;
-  font-size: large;
+  font-size: 15px;
   font-weight: bold;
   background-image: url("../../assets/images/concrete_wall.png");
   border-bottom: gray 3px solid;

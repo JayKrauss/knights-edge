@@ -1,9 +1,9 @@
 <template>
-  <div id="level-up" class="main-screen">
-      <br><br><br><br>
+  <div id="level-up" class="modified-screen">
+      <br><br><br><br><br>
       <div id="player-stats">
         <br>
-        <h3>Name: {{ characterName }} </h3> 
+        <span id="player-name">Name: {{ characterName }} </span><br>
         <span class='stat-span'>Strength: {{ characterStrength }} <button @click="addStr" id="str-plus" class="level-up-button">+</button></span><br/>
         <span class='stat-span'>Constitution: {{ characterConstitution }} <button @click="addCon" id="con-plus" class="level-up-button">+</button></span><br/>
         <span class='stat-span'>Dexterity: {{ characterDexterity }} <button @click="addDex" id="dex-plus" class="level-up-button">+</button></span><br/>
@@ -77,8 +77,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
  #level-up{
-     background-image: url("../../assets/images/characterparchment.jpg");
-     background-size: cover;
+     background-image: url("../../assets/images/Poster4.png");
+     background-size: 110%;
+     background-repeat: no-repeat;
      background-position: center;
  }
  #player-stats{
@@ -92,6 +93,11 @@ export default {
      list-style: none;
      justify-content: space-evenly;
  }
+ #player-name{
+   font-size: 18px;
+   font-weight: bold;
+   margin-bottom: 10px;
+ }
  #inventory-item{
      background: gray;
  }
@@ -101,9 +107,9 @@ export default {
 .stat-span{
   display: flex;
   width: 290px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   justify-content: space-between;
 }
 </style>
