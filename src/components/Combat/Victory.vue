@@ -1,6 +1,6 @@
 <template>
-  <div id="victory" class="main-screen">
-      <br><br><br><br>
+  <div id="victory" class="modified-screen">
+      <br><br><br><br><br><br>
       <div id="victory-stats">
         <br>
         <h3>You Won!</h3>
@@ -36,9 +36,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
  #victory{
-     background-image: url("../../assets/images/characterparchment.jpg");
-     background-size: cover;
+     background-image: url("../../assets/images/Poster4.png");
+     background-size: 110%;
      background-position: center;
+     background-repeat: no-repeat;
  }
  #victory-stats{
      width: 300px;

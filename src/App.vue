@@ -32,7 +32,22 @@
       :toLevel="this.toLevel"
       :characterLevel="this.level"
       :attributePoints="this.attributePoints"
-      @openPane="openPane"
+      @levelUp="levelUp"
+    />
+  </div>
+  <div v-if="characterLandingPane">
+    <CharacterLanding 
+      :characterName="this.characterName"
+      :characterStrength="this.characterStrength"
+      :characterConstitution="this.characterConstitution"
+      :characterDexterity="this.characterDexterity"
+      :characterCharisma="this.characterCharisma"
+      :characterIntellect="this.characterIntellect"
+      :characterXP="this.xp"
+      :toLevel="this.toLevel"
+      :characterLevel="this.level"
+      :attributePoints="this.attributePoints"
+      @generateQuest="generateQuest"
     />
   </div>
   <div v-if="levelUpPane">
@@ -47,6 +62,15 @@
       @openPane="openPane"
       @modifyPlayerStats="modifyPlayerStats"
       @updateStats="updateStats"
+    />
+  </div>
+  <div v-if="questInfoPane">
+    <QuestInfo 
+      :questName="this.questName"
+      :questText="this.questInfo"
+      :questRewards="this.questRewards"
+      @openPane="openPane"
+      @addQuestToList="addQuestToList"
     />
   </div>
   <div v-if="shopsPane">
@@ -131,7 +155,9 @@ import StatusBar from "./components/Status Panes/StatusBar.vue";
 import LogIn from "./components/Main Panes/LogIn.vue";
 import Character from "./components/Character/Character.vue";
 import CreateCharacter from "./components/Character/CreateCharacter.vue";
+import CharacterLanding from "./components/Character/CharacterLanding.vue";
 import LevelUp from "./components/Character/LevelUp.vue";
+import QuestInfo from "./components/Main Panes/QuestInfo.vue";
 import Shops from "./components/Main Panes/Shops.vue";
 import TownButtons from "./components/Status Panes/TownButtons.vue";
 import Equipment from "./components/Character/Equipment.vue";
@@ -148,7 +174,6 @@ import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
 import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
 import Victory from "./components/Combat/Victory.vue";
 
-import { default as standardEnemies } from "./datafiles/enemies/standardEnemies.js";
 import { default as equipmentList } from "./datafiles/items/equipment.js";
 import { default as gearList } from "./datafiles/items/gear.js";
 
@@ -159,7 +184,9 @@ export default {
     StatusBar,
     Character,
     CreateCharacter,
+    CharacterLanding,
     LevelUp,
+    QuestInfo,
     Shops,
     TownButtons,
     AdventureButtons,
@@ -191,7 +218,9 @@ export default {
       loginPane : false,
       characterPane : false,
       createCharacterPane : true,
+      characterLandingPane : false,
       levelUpPane : false,
+      questInfoPane : false,
       equipmentPane : false,
       inventoryPane : false,
       shopsPane : false,
@@ -223,6 +252,9 @@ export default {
       characterCharisma : 0,
       characterIntellect : 0,
 
+      openQuests : [],
+      completedQuests : [],
+
       //objects to hold equipped weapons and armor so that attack and defend values may be calculated. Passed to collatePlayerStats()
       equippedWeapons : [
         equipmentList.equipmentList.mainhands.ironDagger,
@@ -243,7 +275,13 @@ export default {
         {name : gearList.gearList.adventuringGear.rations.name, amount : 2},
         {name : gearList.gearList.adventuringGear.water.name, amount : 3},
       ],
-      currentOpponent : this.getEnemyRandom(),
+
+      //quest variables
+      questName : "",
+      questInfo : "",
+      questRewards : [],
+
+      //victory variables
       opponentName : "",
       opponentLevel : 0,
       opponentXPGain : 0,
@@ -383,18 +421,54 @@ export default {
 
       this.collatePlayerStats();
     },
-    //WIP
-    getEnemyRandom() {
-      return standardEnemies.standardEnemies.forestEnemies.forestRodent;
-    },
+    //pass info to create the quest dialog. Rewards are passed as an array of objects.
+    generateQuest(name, info, rewards){
+      this.questName = name;
+      this.questInfo = info;
+      this.questRewards = rewards;
 
-//This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
+      this.openPane('questInfo');
+    },
+    addQuestToList(name, text, rewards, trigger) {
+      console.log(name, text, rewards, trigger)
+    },
+    //takes in data from createCharacter pane to build the local character to be uploaded to the server
+    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
+      this.characterName = name;
+      this.level = level;
+      this.xp = xp;
+      this.gold = charisma * 5;
+      this.maxHP = constitution * 5;
+      this.currentHP = this.maxHP;
+      this.characterStrength = strength;
+      this.characterConstitution = constitution;
+      this.characterDexterity = dexterity;
+      this.characterCharisma = charisma;
+      this.characterIntellect = intellect;
+      this.attributePoints = attributePoints;
+      this.openPane('characterLanding');
+      console.log("Welcome to the game.");
+    },
+    //In the off chance the player kills something
+    playerVictory(name, level, xp, gold) {
+      this.opponentName = name;
+      this.opponentLevel = level;
+      this.opponentXPGain = xp;
+      this.opponentGoldGain = gold;
+      
+      this.openPane('victory');
+
+      console.log("Oh look, you survived.")
+    },
+    //This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
     openPane(pane){
       this.statusPane = false;
       this.loginPane = false;
       this.characterPane = false;
       this.createCharacterPane = false;
+      this.characterLandingPane = false;
       this.levelUpPane = false;
+      this.questInfoPane = false
       this.equipmentPane = false;
       this.inventoryPane = false;
       this.shopsPane = false;
@@ -423,8 +497,14 @@ export default {
         case "createCharacter":
           this.createCharacterPane = true;
           break;
+        case "characterLanding":
+          this.characterLandingPane = true;
+          break;
         case "levelUp":
           this.levelUpPane = true;
+          break;
+        case "questInfo":
+          this.questInfoPane = true;
           break;
         case "equipment":
           this.statusPane = true;
@@ -486,68 +566,14 @@ export default {
           this.randomCombatPane = true;
           this.adventureButtonsPane = true;
           break;
+        case "victory":
+          this.statusPane = true;
+          this.victoryPane = true;
+          this.adventureButtonsPane = true;
+          break;
         default:
           break;
       }
-    },
-    //takes in data from createCharacter pane to build the local character to be uploaded to the server
-    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
-      this.characterName = name;
-      this.level = level;
-      this.xp = xp;
-      this.gold = charisma * 5;
-      this.maxHP = constitution * 5;
-      this.currentHP = this.maxHP;
-      this.characterStrength = strength;
-      this.characterConstitution = constitution;
-      this.characterDexterity = dexterity;
-      this.characterCharisma = charisma;
-      this.characterIntellect = intellect;
-      this.attributePoints = attributePoints;
-      this.loginPane = false;
-      this.characterPane = true;
-      this.createCharacterPane= false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.victoryPane = false;
-      this.townButtonsPane = true;
-      this.adventureButtonsPane = false;
-      console.log("Welcome to the game.")
-    },
-    //In the off chance the player kills something
-    playerVictory(name, level, xp, gold) {
-      this.opponentName = name;
-      this.opponentLevel = level;
-      this.opponentXPGain = xp;
-      this.opponentGoldGain = gold;
-      this.loginPane = false;
-      this.characterPane = false;
-      this.equipmentPane = false;
-      this.inventoryPane = false;
-      this.shopsPane = false;
-      this.adventurePane = false;
-      this.blacksmithPane = false;
-      this.clothierPane = false;
-      this.generalStorePane = false;
-      this.innPane = false;
-      this.forestPane = false;
-      this.mountainsPane = false;
-      this.travelQuestsPane = false;
-      this.randomCombatPane = false;
-      this.victoryPane = true;
-      this.townButtonsPane = false;
-      this.adventureButtonsPane = true;
-      console.log("Spinning up Combat.")
     },
   }
 };

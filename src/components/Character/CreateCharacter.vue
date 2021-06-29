@@ -1,5 +1,6 @@
 <template>
-  <div id="character" class="main-screen">
+<br><br>
+  <div id="character" class="modified-screen">
       <br><br><br><br>
       <div id="character-create">
         <br>
@@ -21,6 +22,7 @@
         <button @click="openLogIn" class="character-button">Already in Town? Sign in.</button>
         <br><br>
       </div>
+      <br><br>
   </div>
 </template>
 
@@ -105,9 +107,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
  #character{
-     background-image: url("../../assets/images/characterparchment.jpg");
-     background-size: cover;
+     background-image: url("../../assets/images/Poster1.png");
+     background-size: 88%;
+     background-repeat: no-repeat;
      background-position: center;
+     margin-bottom: 100px;
  }
  #character-create{
      width: 300px;

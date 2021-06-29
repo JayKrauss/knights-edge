@@ -53,7 +53,7 @@ export default {
   padding: 20px;
   color: white;
   text-align: center;
-  text-size: 16px;
+  font-size: 16px;
 }
 #shop-buttons{
   margin-top: 90px;

@@ -1,4 +1,5 @@
 <template>
+<br><br><br>
   <div id="character" class="modified-screen">
       <br><br><br><br>
       <div id="player-stats">
@@ -12,7 +13,8 @@
         <span class='stat-span'>Intellect: {{ characterIntellect }}</span><br/><br/>
         <span class='stat-span'>XP: {{ characterXP }} / {{ toLevel }}</span><br/><br/>
         <span class='stat-span'>Unassigned Attribute Points: {{ attributePoints }}</span><br/><br/>
-        <button v-if="attributePoints>0" @click="levelUp" id="level-up" class="shop-button">Level Up</button>
+
+        <button @click="acceptCharacter" id="accept-character" class="shop-button">Get Going!</button>
       </div>
   </div>
 </template>
@@ -38,8 +40,14 @@ export default {
     }
   },
   methods: {
-    levelUp() {
-      this.$emit('openPane', 'levelUp');
+    acceptCharacter() {
+        console.log("clicked")
+        this.$emit(
+            'generateQuest', 
+            'Welcome Wagon', 
+            'Welcome to town! You should head to the Shops and take a look around before heading out on an adventure!',
+            [{ name: "Gold", amount : 10 }, { name : "XP", amount : 10 }]
+            )
     }
   }
 };
@@ -49,7 +57,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
  #character{
-     background-image: url("../../assets/images/Poster6.png");
+     background-image: url("../../assets/images/Poster5.png");
      background-size: cover;
      background-position: center;
  }
@@ -65,9 +73,6 @@ export default {
  }
  #inventory-item{
      background: gray;
- }
- #level-up:disabled{
-     opacity: .5;
  }
 .stat-span{
   font-size: 14px;
