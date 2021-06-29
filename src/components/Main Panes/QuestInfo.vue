@@ -24,6 +24,7 @@ export default {
   name: "QuestInfo",
   props: [
       "questName",
+      "questID",
       "questText",
       "questRewards",
       "questTrigger",
@@ -35,17 +36,15 @@ export default {
   },
   methods: {
       openTown() {
-          this.addQuestToList(this.questName, this.questText, this.questRewards, this.questTrigger)
+          this.addQuestToIdList(this.questID)
           this.$emit('openPane', 'shops');
       },
-      addQuestToList(name, text, rewards, trigger){
+      addQuestToIdList(id){
           this.$emit(
-              'addQuestToList',
-              name,
-              text,
-              rewards,
-              trigger
-          )
+              'addQuestToIDList',
+              id
+          );
+          this.$emit('addQuestToObjectList');
       }
   }
 };

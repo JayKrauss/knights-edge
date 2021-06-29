@@ -72,8 +72,10 @@
       :questName="this.questName"
       :questText="this.questInfo"
       :questRewards="this.questRewards"
+      :questID="this.questID"
       @openPane="openPane"
-      @addQuestToList="addQuestToList"
+      @addQuestToIDList="addQuestToIDList"
+      @addQuestToObjectList="addQuestToObjectList"
     />
   </div>
   <div v-if="shopsPane">
@@ -213,6 +215,7 @@ export default {
   mounted(){
     this.collatePlayerStats();
     this.buildInventory();
+    this.addQuestToObjectList();
   },
   data() {
     //Data store persistent
@@ -258,10 +261,13 @@ export default {
       characterCharisma : 0,
       characterIntellect : 0,
 
-      openQuests : [],
-      completedQuests : [],
+      //to hold quest IDs that can then be pulled and displayed, or completed
+      openQuestsIDs : [],
+      openQuestObjects : [],
+      completedQuestIDs : [],
+      completedQuestObjects : [],
 
-      //objects to hold equipped weapons and armor so that attack and defend values may be calculated. Passed to collatePlayerStats()
+      //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
       equippedWeapons : [
         "mhid001",
       ],
@@ -290,6 +296,7 @@ export default {
 
       //quest variables
       questName : "",
+      questID : "",
       questInfo : "",
       questRewards : [],
 
@@ -301,9 +308,11 @@ export default {
     }
   },
   methods: {
+    //to be continued for databasing
     getPlayerList(){
       this.playerList = getPlayers();
     },
+    //check if the player is ready to level up, and then give attribute points on true
     checkLevel() {
       if (this.xp >= this.toLevel){
         this.level += 1;
@@ -324,6 +333,7 @@ export default {
         this.retrieveByID("equipment", this.equippedArmor[j]);
         playerArmor += this.currentItem.armor;
       }
+      //modify the player's damage by strength stat and armor by dexterity stat
       this.totalPlayerDamage = playerDamage * (1 + (this.characterStrength / 10));
       this.totalPlayerArmor = playerArmor * (1 + (this.characterDexterity / 10));
       console.log("Player Damage: " + this.totalPlayerDamage);
@@ -429,6 +439,7 @@ export default {
             break;
       }
     },
+    //heals to full to avoid over-healing
     healToFull(){
       this.currentHP = this.maxHP;
     },
@@ -440,15 +451,32 @@ export default {
       this.collatePlayerStats();
     },
     //pass info to create the quest dialog. Rewards are passed as an array of objects.
-    generateQuest(name, info, rewards){
+    generateQuest(name, id, info, rewards){
       this.questName = name;
+      this.questID = id;
       this.questInfo = info;
       this.questRewards = rewards;
 
       this.openPane('questInfo');
     },
-    addQuestToList(name, text, rewards, trigger) {
-      console.log(name, text, rewards, trigger)
+    //adds quest to player's quest list - WIP
+    addQuestToIDList(id){
+      this.openQuestsIDs.push(id);
+    },
+    //removes quest ID from "open" list and adds it to the "completed" list
+    completeQuest(id){
+      const index = this.openQuestsIDs.indexOf(id);
+      this.openQuestsIDs.splice(index);
+      this.completedQuestIDs.push(id);
+    },
+    //converts the ID array into an array of objects corresponding to those IDs
+    addQuestToObjectList() {
+      for (var i=0; i<this.openQuestsIDs.length; i++){
+        this.retrieveByID('standardQuests', this.openQuestsIDs[i])
+        console.log(this.currentItem);
+        this.openQuestObjects.push(this.currentItem)
+      }
+      console.table(this.openQuestObjects)
     },
     //takes in data from createCharacter pane to build the local character to be uploaded to the server
     createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
@@ -610,11 +638,13 @@ export default {
           break;
       }
     },
+    //this is what actually finds the item and returns it
     retrieveFromDatasheet(sheet, id){
       for (var i=0 ; i < sheet.length ; i++)
           {
               if (sheet[i]["id"] == id) {
                 console.table(sheet[i])
+                  //bounce the item to "global" so that the calling functions can actually see it
                   this.currentItem = sheet[i];
               }
           }

@@ -45,6 +45,7 @@ export default {
         this.$emit(
             'generateQuest', 
             'Welcome Wagon', 
+            'sqsqww001',
             'Welcome to town! You should head to the Shops and take a look around before heading out on an adventure!',
             [{ name: "Gold", amount : 10 }, { name : "XP", amount : 10 }]
             )
