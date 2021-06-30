@@ -1,4 +1,3 @@
-
 <template>
 <!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
 <!-- Onions have layers? Games have layers. Just roll with it. -->
@@ -609,11 +608,13 @@ export default {
           this.townButtonsPane = true;
           break;
         case "equipment":
+          this.buildEquippedItemArray();
           this.statusPane = true;
           this.equipmentPane = true;
           this.townButtonsPane = true;
           break;
         case "inventory":
+          this.buildInventory();
           this.statusPane = true;
           this.inventoryPane = true;
           this.townButtonsPane = true;
