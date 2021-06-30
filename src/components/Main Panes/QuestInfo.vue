@@ -1,6 +1,6 @@
 <template>
-<br>
 <div class="modified-screen">
+    <br><br><br><br><br>
   <div id="quest-info">
     <br>
     <div id="quest-screen">

@@ -14,6 +14,9 @@
       @openPane="openPane"
     />
   </div>
+  <div v-if="topSpacerPane">
+    <TopSpacer />
+  </div>
   <div v-if="loginPane">
     <LogIn @openShops="openPane"/>
   </div>
@@ -158,11 +161,15 @@
     @openPane="openPane"  
   />
   </div>
+  <div v-if="bottomSpacerPane">
+    <BottomSpacer />
+  </div>
 </div>
 </template>
 
 <script>
 import StatusBar from "./components/Status Panes/StatusBar.vue";
+import TopSpacer from "./components/Status Panes/TopSpacer.vue";
 import LogIn from "./components/Main Panes/LogIn.vue";
 import Character from "./components/Character/Character.vue";
 import CreateCharacter from "./components/Character/CreateCharacter.vue";
@@ -184,6 +191,7 @@ import TravelQuests from "./components/Adventures/Quests.vue";
 import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
 import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
 import Victory from "./components/Combat/Victory.vue";
+import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
 
 import { default as equipmentList } from "./datafiles/items/equipment.js";
 import { default as gearList } from "./datafiles/items/gear.js";
@@ -197,6 +205,7 @@ export default {
   components: {
     LogIn,
     StatusBar,
+    TopSpacer,
     Character,
     CreateCharacter,
     CharacterLanding,
@@ -217,6 +226,7 @@ export default {
     TravelQuests,
     RandomCombat,
     Victory,
+    BottomSpacer,
   },
   mounted(){
     this.collatePlayerStats();
@@ -231,6 +241,7 @@ export default {
       serverCharacter : {},
       //flags for which pane(s) should be active
       statusPane : false,
+      topSpacerPane : false,
       loginPane : false,
       characterPane : false,
       createCharacterPane : true,
@@ -252,6 +263,7 @@ export default {
       adventureButtonsPane : false,
       randomCombatPane : false,
       victoryPane : false,
+      bottomSpacerPane : false,
 
       //Player statistics, to be moved to the server once authentication is live
       player :{
@@ -542,6 +554,7 @@ export default {
     openPane(pane){
       this.statusPane = false;
       this.loginPane = false;
+      this.topSpacerPane = false;
       this.characterPane = false;
       this.createCharacterPane = false;
       this.characterLandingPane = false;
@@ -562,10 +575,13 @@ export default {
       this.adventureButtonsPane = false;
       this.randomCombatPane = false;
       this.victoryPane = false;
+      this.bottomSpacerPane = false;
 
       switch (pane){
         case "login":
+          this.topSpacerPane = true;
           this.loginPane = true;
+          this.bottomSpacerPane = true;
           break;
         case "character":
           this.statusPane = true;
@@ -573,13 +589,19 @@ export default {
           this.townButtonsPane = true;
           break;
         case "createCharacter":
+          this.topSpacerPane = true;
           this.createCharacterPane = true;
+          this.bottomSpacerPane = true;
           break;
         case "characterLanding":
+          this.topSpacerPane = true;
           this.characterLandingPane = true;
+          this.bottomSpacerPane = true;
           break;
         case "levelUp":
+          this.topSpacerPane = true;
           this.levelUpPane = true;
+          this.bottomSpacerPane = true;
           break;
         case "questInfo":
           this.statusPane = true;

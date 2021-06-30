@@ -1,8 +1,10 @@
 <template>
-  <div id="victory" class="modified-screen">
-      <br><br><br><br><br>
+<div class="modified-screen">
+  <br><br><br>
+  <div id="victory">
+      <br><br><br><br>
       <div id="victory-stats">
-        <br>
+        <br><br>
         <span id="win-text">You Won!</span><br>
         <img id="death-image" v-bind:src="opponentDeathImage"><br>
         <span class="victory-text">You defeated a {{ opponentName }}</span><br><br>
@@ -14,6 +16,7 @@
         <br><br>
       </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -52,7 +55,7 @@ export default {
  }
  #victory-stats{
      width: 380px;
-     min-height: 200px;
+     min-height: 350px;
      margin-left: auto;
      margin-right: auto;
      background: rgba(0,0,0,.7);

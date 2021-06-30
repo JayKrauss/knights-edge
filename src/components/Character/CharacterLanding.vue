@@ -1,6 +1,7 @@
 <template>
-<br><br><br>
-  <div id="character" class="modified-screen">
+<div class="modified-screen">
+<br><br>
+  <div id="character">
       <br><br><br><br>
       <div id="player-stats">
         <br>
@@ -17,6 +18,7 @@
         <button @click="acceptCharacter" id="accept-character" class="shop-button">Get Going!</button>
       </div>
   </div>
+</div>
 </template>
 
 <script>
