@@ -374,6 +374,7 @@ export default {
     },
     //builds array of objects for equipped items
     buildEquippedItemArray() {
+      this.player.equippedItemsObject = [];
       for (var i=0; i<this.player.equippedItemsID.length; i++){
               this.retrieveByID('equipment', this.player.equippedItemsID[i]);
               console.log(this.currentItem);
@@ -709,6 +710,7 @@ export default {
     },
     //translates the ID set of items into objects with all item data
     buildInventory(){
+      this.player.currentInventoryObjects = [];
       for (var k=0; k<this.player.currentInventoryIDs.length; k++){
         this.retrieveByID("adventuringGear", this.player.currentInventoryIDs[k][0]);
         console.log(this.currentItem)
