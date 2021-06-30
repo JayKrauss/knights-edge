@@ -1,7 +1,7 @@
 <template>
   <div id="inventory" class="main-screen">
       <br><br>
-      <h3 id='inventory-title'>INVENTORY</h3>
+      <span id='inventory-title'>INVENTORY</span>
       <ul id="inventory-list"></ul>
   </div>
 </template>
@@ -48,6 +48,8 @@ export default {
      justify-content: space-evenly;
  }
 #inventory-title{
+  width: 100%;
+  font-size: 40px;
   color: white;
   background: rgba(0,0,0,.7);
   padding: 15px;

@@ -5,12 +5,12 @@
 <div id="playfield">
   <div v-if="statusPane">
     <StatusBar 
-      :level="this.level" 
-      :xp="this.xp" 
-      :toLevel="this.toLevel" 
-      :gold="this.gold" 
-      :currentHP="this.currentHP" 
-      :maxHP="this.maxHP"
+      :level="this.player.level" 
+      :xp="this.player.xp" 
+      :toLevel="this.player.toLevel" 
+      :gold="this.player.gold" 
+      :currentHP="this.player.currentHP" 
+      :maxHP="this.player.maxHP"
       @openPane="openPane"
     />
   </div>
@@ -25,43 +25,43 @@
   </div>
   <div v-if="characterPane">
     <Character 
-      :characterName="this.characterName"
-      :characterStrength="this.characterStrength"
-      :characterConstitution="this.characterConstitution"
-      :characterDexterity="this.characterDexterity"
-      :characterCharisma="this.characterCharisma"
-      :characterIntellect="this.characterIntellect"
-      :characterXP="this.xp"
-      :toLevel="this.toLevel"
-      :characterLevel="this.level"
-      :attributePoints="this.attributePoints"
+      :characterName="this.player.characterName"
+      :characterStrength="this.player.characterStrength"
+      :characterConstitution="this.player.characterConstitution"
+      :characterDexterity="this.player.characterDexterity"
+      :characterCharisma="this.player.characterCharisma"
+      :characterIntellect="this.player.characterIntellect"
+      :characterXP="this.player.xp"
+      :toLevel="this.player.toLevel"
+      :characterLevel="this.player.level"
+      :attributePoints="this.player.attributePoints"
       @openPane="openPane"
     />
   </div>
   <div v-if="characterLandingPane">
     <CharacterLanding 
-      :characterName="this.characterName"
-      :characterStrength="this.characterStrength"
-      :characterConstitution="this.characterConstitution"
-      :characterDexterity="this.characterDexterity"
-      :characterCharisma="this.characterCharisma"
-      :characterIntellect="this.characterIntellect"
-      :characterXP="this.xp"
-      :toLevel="this.toLevel"
-      :characterLevel="this.level"
-      :attributePoints="this.attributePoints"
+      :characterName="this.player.characterName"
+      :characterStrength="this.player.characterStrength"
+      :characterConstitution="this.player.characterConstitution"
+      :characterDexterity="this.player.characterDexterity"
+      :characterCharisma="this.player.characterCharisma"
+      :characterIntellect="this.player.characterIntellect"
+      :characterXP="this.player.xp"
+      :toLevel="this.player.toLevel"
+      :characterLevel="this.player.level"
+      :attributePoints="this.player.attributePoints"
       @generateQuest="generateQuest"
     />
   </div>
   <div v-if="levelUpPane">
     <LevelUp 
-      :characterName="this.characterName"
-      :characterStrength="this.characterStrength"
-      :characterConstitution="this.characterConstitution"
-      :characterDexterity="this.characterDexterity"
-      :characterCharisma="this.characterCharisma"
-      :characterIntellect="this.characterIntellect"
-      :attributePoints="this.attributePoints"
+      :characterName="this.player.characterName"
+      :characterStrength="this.player.characterStrength"
+      :characterConstitution="this.player.characterConstitution"
+      :characterDexterity="this.player.characterDexterity"
+      :characterCharisma="this.player.characterCharisma"
+      :characterIntellect="this.player.characterIntellect"
+      :attributePoints="this.player.attributePoints"
       @openPane="openPane"
       @modifyPlayerStats="modifyPlayerStats"
       @updateStats="updateStats"
@@ -84,11 +84,13 @@
     />
   </div>
   <div v-if="equipmentPane">
-    <Equipment />
+    <Equipment 
+      :equippedItemsArray="this.player.equippedItemsObject"
+    />
   </div>
   <div v-if="inventoryPane">
     <Inventory 
-      :currentInventoryObjects="this.currentInventoryObjects"
+      :currentInventoryObjects="this.player.currentInventoryObjects"
     />
   </div>
   <div v-if="adventurePane">
@@ -122,10 +124,13 @@
   </div>
   <div v-if="randomCombatPane">
     <RandomCombat 
-      :playerCurrentHP="this.currentHP"
-      :playerMaxHP="this.maxHP"
-      :playerDamage="this.totalPlayerDamage"
-      :playerArmor="this.totalPlayerArmor"
+      :playerCurrentHP="this.player.currentHP"
+      :playerMaxHP="this.player.maxHP"
+      :playerDamage="this.player.totalPlayerDamage"
+      :playerArmor="this.player.totalPlayerArmor"
+      :opponent="this.currentItem"
+      :opponentImage="this.currentItem.image"
+      :opponentDeathImage="this.currentItem.deathImage"
       @modifyPlayerStats="modifyPlayerStats"
       @playerVictory="playerVictory"
       @healToFull="healToFull"
@@ -137,8 +142,9 @@
       :opponentLevel="this.opponentLevel"
       :opponentXPGain="this.opponentXPGain"
       :opponentGoldGain="this.opponentGoldGain"
-      :characterXP="this.xp"
-      :toLevel="this.toLevel"
+      :opponentDeathImage="this.opponentDeathImage"
+      :characterXP="this.player.xp"
+      :toLevel="this.player.toLevel"
       @checkLevel="checkLevel"
     />
   </div>
@@ -216,6 +222,7 @@ export default {
     this.collatePlayerStats();
     this.buildInventory();
     this.addQuestToObjectList();
+    this.buildEquippedItemArray()
   },
   data() {
     //Data store persistent
@@ -247,52 +254,67 @@ export default {
       victoryPane : false,
 
       //Player statistics, to be moved to the server once authentication is live
-      characterName : "Adventurer",
-      level : 0,
-      xp : 0,
-      toLevel : 100,
-      gold : 0,
-      currentHP : 0,
-      maxHP : 0,
-      attributePoints : 0,
-      characterStrength : 0,
-      characterConstitution : 0,
-      characterDexterity : 0,
-      characterCharisma : 0,
-      characterIntellect : 0,
+      player :{
+        characterName : "Adventurer",
+        level : 0,
+        xp : 0,
+        toLevel : 100,
+        gold : 0,
+        currentHP : 0,
+        maxHP : 0,
+        attributePoints : 0,
+        characterStrength : 0,
+        characterConstitution : 0,
+        characterDexterity : 0,
+        characterCharisma : 0,
+        characterIntellect : 0,
 
-      //to hold quest IDs that can then be pulled and displayed, or completed
-      openQuestsIDs : [],
-      openQuestObjects : [],
-      completedQuestIDs : [],
-      completedQuestObjects : [],
+        //to hold quest IDs that can then be pulled and displayed, or completed
+        openQuestsIDs : [],
+        openQuestObjects : [],
+        completedQuestIDs : [],
+        completedQuestObjects : [],
 
-      //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
-      equippedWeapons : [
-        "mhid001",
-      ],
-      equippedArmor : [
-        "lcu001",
-      ],
+        //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
+        equippedItemsID : [
+          "mhiss001",
+          "lhu001",
+          "lcu001",
+          "lsu001",
+        ],
+        equippedItemsObject : [
 
+        ],
+        equippedWeapons : [
+          "mhiss001",
+        ],
+        equippedArmor : [
+          "lhu001",
+          "lcu001",
+          "lsu001",
+        ],
+
+        //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
+        totalPlayerDamage : 0,
+        totalPlayerArmor : 0,
+
+        //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
+        currentInventoryIDs : [
+          [ "agt001" , 5 ],
+          [ "agr001" , 3 ],
+          [ "agr002" , 2 ],
+          [ "agw001" , 5 ],
+          [ "bhp001" , 3 ],
+        ],
+        currentInventoryObjects : [
+          
+        ],
+      },
+      
       //bounces current item being pulled from the datasheet, to be used in other functions.
       currentItem : {},
-
-      //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
-      totalPlayerDamage : 0,
-      totalPlayerArmor : 0,
-
-      //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
-      currentInventoryIDs : [
-        [ "agt001" , 5 ],
-        [ "agr001" , 3 ],
-        [ "agr002" , 2 ],
-        [ "agw001" , 5 ],
-        [ "bhp001" , 3 ],
-      ],
-      currentInventoryObjects : [
-
-      ],
+      currentOpponent : "serous001",
+      opponentDeathImage : "",
 
       //quest variables
       questName : "",
@@ -314,10 +336,10 @@ export default {
     },
     //check if the player is ready to level up, and then give attribute points on true
     checkLevel() {
-      if (this.xp >= this.toLevel){
-        this.level += 1;
-        this.toLevel = this.toLevel * 2;
-        this.attributePoints += 1;
+      if (this.player.xp >= this.player.toLevel){
+        this.player.level += 1;
+        this.player.toLevel = this.player.toLevel * 2;
+        this.player.attributePoints += 1;
       }
     },
     //collects and modifies the combat stats for the player based on their equipment and stats
@@ -325,19 +347,28 @@ export default {
       var playerDamage = 0;
       var playerArmor = 0;
 
-      for (var i=0; i<this.equippedWeapons.length; i++){
-        this.retrieveByID("equipment", this.equippedWeapons[i]);
+      for (var i=0; i<this.player.equippedWeapons.length; i++){
+        this.retrieveByID("equipment", this.player.equippedWeapons[i]);
         playerDamage += this.currentItem.damage;
       }
-      for (var j=0; j<this.equippedArmor.length; j++){
-        this.retrieveByID("equipment", this.equippedArmor[j]);
+      for (var j=0; j<this.player.equippedArmor.length; j++){
+        this.retrieveByID("equipment", this.player.equippedArmor[j]);
         playerArmor += this.currentItem.armor;
       }
       //modify the player's damage by strength stat and armor by dexterity stat
-      this.totalPlayerDamage = playerDamage * (1 + (this.characterStrength / 10));
-      this.totalPlayerArmor = playerArmor * (1 + (this.characterDexterity / 10));
-      console.log("Player Damage: " + this.totalPlayerDamage);
-      console.log("Player Armor: " + this.totalPlayerArmor);
+      this.player.totalPlayerDamage = playerDamage * (1 + (this.player.characterStrength / 10));
+      this.player.totalPlayerArmor = playerArmor * (1 + (this.player.characterDexterity / 10));
+      console.log("Player Damage: " + this.player.totalPlayerDamage);
+      console.log("Player Armor: " + this.player.totalPlayerArmor);
+    },
+    //builds array of objects for equipped items
+    buildEquippedItemArray() {
+      for (var i=0; i<this.player.equippedItemsID.length; i++){
+              this.retrieveByID('equipment', this.player.equippedItemsID[i]);
+              console.log(this.currentItem);
+              this.player.equippedItemsObject.push(this.currentItem);
+            }
+      console.table(this.player.equippedItemsObject);
     },
     //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
@@ -345,93 +376,93 @@ export default {
       switch (stat){
         case "health":
           if (direction == "-"){
-            this.currentHP -= amount;
+            this.player.currentHP -= amount;
             break;
           }
           else{
-            this.currentHP += amount;
+            this.player.currentHP += amount;
             break;
           }
         case "xp":
           if (direction == "-"){
-            this.xp -= amount;
+            this.player.xp -= amount;
             break;
           }
           else{
-            this.xp += amount;
+            this.player.xp += amount;
             break;
           }
         case "gold":
           if (direction == "-"){
-            this.gold -= amount;
+            this.player.gold -= amount;
             break;
           }
           else{
-            this.gold += amount;
+            this.player.gold += amount;
             break;
           }
         case "level":
           if (direction == "-"){
-            this.level -= amount;
+            this.player.level -= amount;
             break;
           }
           else{
-            this.level += amount;
+            this.player.level += amount;
             break;
           }
         case "attributePoints":
           if (direction == "-"){
-            this.attributePoints -= amount;
+            this.player.attributePoints -= amount;
             break;
           }
           else{
-            this.attributePoints += amount;
+            this.player.attributePoints += amount;
             break;
           }
         case "strength":
           if (direction == "-"){
-            this.characterStrength -= amount;
+            this.player.characterStrength -= amount;
             break;
           }
           else{
-            this.characterStrength += amount;
+            this.player.characterStrength += amount;
             break;
           }
         case "constitution":
           if (direction == "-"){
-            this.characterConstitution -= amount;
+            this.player.characterConstitution -= amount;
             break;
           }
           else{
-            this.characterConstitution += amount;
-            this.maxHP += 5;
+            this.player.characterConstitution += amount;
+            this.player.maxHP += 5;
             break;
           }
         case "dexterity":
           if (direction == "-"){
-            this.characterDexterity -= amount;
+            this.player.characterDexterity -= amount;
             break;
           }
           else{
-            this.characterDexterity += amount;
+            this.player.characterDexterity += amount;
             break;
           }
         case "charisma":
           if (direction == "-"){
-            this.characterCharisma -= amount;
+            this.player.characterCharisma -= amount;
             break;
           }
           else{
-            this.characterCharisma += amount;
+            this.player.characterCharisma += amount;
             break;
           }
         case "intellect":
           if (direction == "-"){
-            this.characterIntellect -= amount;
+            this.player.characterIntellect -= amount;
             break;
           }
           else{
-            this.characterIntellect += amount;
+            this.player.characterIntellect += amount;
             break;
           }
           default:
@@ -441,12 +472,12 @@ export default {
     },
     //heals to full to avoid over-healing
     healToFull(){
-      this.currentHP = this.maxHP;
+      this.player.currentHP = this.player.maxHP;
     },
     //update HP and combat stats after leveling up
     updateStats(points){
-      this.maxHP += (5 * points);
-      this.currentHP = this.maxHP;
+      this.player.maxHP += (5 * points);
+      this.player.currentHP = this.player.maxHP;
 
       this.collatePlayerStats();
     },
@@ -461,46 +492,47 @@ export default {
     },
     //adds quest to player's quest list - WIP
     addQuestToIDList(id){
-      this.openQuestsIDs.push(id);
+      this.player.openQuestsIDs.push(id);
     },
     //removes quest ID from "open" list and adds it to the "completed" list
     completeQuest(id){
-      const index = this.openQuestsIDs.indexOf(id);
-      this.openQuestsIDs.splice(index);
-      this.completedQuestIDs.push(id);
+      const index = this.player.openQuestsIDs.indexOf(id);
+      this.player.openQuestsIDs.splice(index);
+      this.player.completedQuestIDs.push(id);
     },
     //converts the ID array into an array of objects corresponding to those IDs
     addQuestToObjectList() {
-      for (var i=0; i<this.openQuestsIDs.length; i++){
-        this.retrieveByID('standardQuests', this.openQuestsIDs[i])
+      for (var i=0; i<this.player.openQuestsIDs.length; i++){
+        this.retrieveByID('standardQuests', this.player.openQuestsIDs[i])
         console.log(this.currentItem);
-        this.openQuestObjects.push(this.currentItem)
+        this.player.openQuestObjects.push(this.currentItem)
       }
-      console.table(this.openQuestObjects)
+      console.table(this.player.openQuestObjects)
     },
     //takes in data from createCharacter pane to build the local character to be uploaded to the server
     createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
-      this.characterName = name;
-      this.level = level;
-      this.xp = xp;
-      this.gold = charisma * 5;
-      this.maxHP = constitution * 5;
-      this.currentHP = this.maxHP;
-      this.characterStrength = strength;
-      this.characterConstitution = constitution;
-      this.characterDexterity = dexterity;
-      this.characterCharisma = charisma;
-      this.characterIntellect = intellect;
-      this.attributePoints = attributePoints;
+      this.player.characterName = name;
+      this.player.level = level;
+      this.player.xp = xp;
+      this.player.gold = charisma * 5;
+      this.player.maxHP = constitution * 5;
+      this.player.currentHP = this.player.maxHP;
+      this.player.characterStrength = strength;
+      this.player.characterConstitution = constitution;
+      this.player.characterDexterity = dexterity;
+      this.player.characterCharisma = charisma;
+      this.player.characterIntellect = intellect;
+      this.player.attributePoints = attributePoints;
       this.openPane('characterLanding');
       console.log("Welcome to the game.");
     },
     //In the off chance the player kills something
-    playerVictory(name, level, xp, gold) {
+    playerVictory(name, level, xp, gold, deathImage) {
       this.opponentName = name;
       this.opponentLevel = level;
       this.opponentXPGain = xp;
       this.opponentGoldGain = gold;
+      this.opponentDeathImage = deathImage;
       
       this.openPane('victory');
 
@@ -550,7 +582,9 @@ export default {
           this.levelUpPane = true;
           break;
         case "questInfo":
+          this.statusPane = true;
           this.questInfoPane = true;
+          this.townButtonsPane = true;
           break;
         case "equipment":
           this.statusPane = true;
@@ -608,6 +642,7 @@ export default {
           this.adventureButtonsPane = true;
           break;
         case "randomCombat":
+          this.retrieveByID("standardEnemies", this.currentOpponent);
           this.statusPane = true;
           this.randomCombatPane = true;
           this.adventureButtonsPane = true;
@@ -649,19 +684,20 @@ export default {
               }
           }
     },
+    //translates the ID set of items into objects with all item data
     buildInventory(){
-      for (var k=0; k<this.currentInventoryIDs.length; k++){
-        this.retrieveByID("adventuringGear", this.currentInventoryIDs[k][0]);
+      for (var k=0; k<this.player.currentInventoryIDs.length; k++){
+        this.retrieveByID("adventuringGear", this.player.currentInventoryIDs[k][0]);
         console.log(this.currentItem)
         var item = {};
         item.name = this.currentItem.name;
         item.id = this.currentItem.id;
-        item.amount = this.currentInventoryIDs[k][1];
+        item.amount = this.player.currentInventoryIDs[k][1];
         item.value = this.currentItem.value;
         item.description = this.currentItem.description;
-        this.currentInventoryObjects.push(item);
+        this.player.currentInventoryObjects.push(item);
       }
-      console.table(this.currentInventoryObjects);
+      console.table(this.player.currentInventoryObjects);
     },
   }
 };

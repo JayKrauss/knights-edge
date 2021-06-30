@@ -1,14 +1,14 @@
 <template>
-<br><br>
+<br><br><br><br>
   <div id="character" class="modified-screen">
-      <br><br><br><br>
+      <br><br>
       <div id="character-create">
-        <br>
-        <h3>Welcome!</h3>
-        <h4>This is the start of a great journey, but like any great journey, it starts simple.</h4>
-        <h4>Tell us your name.</h4>
-        <input type="text" id="name-input"><br>
-        <h4>What did you do before coming to town?</h4>
+
+        <span id="welcome">Welcome!</span><br>
+        <span class="welcome-text">This is the start of a great journey, but like any great journey, it starts simple.</span><br><br>
+        <span class="welcome-text">Tell us your name.</span><br><br>
+        <input type="text" id="name-input"><br><br>
+        <span class="welcome-text">What did you do before coming to town?</span><br><br>
         <form id="way-selection">
             <select id="jobs">
                 <option value="strength">I was a Blacksmith</option>
@@ -18,8 +18,9 @@
                 <option value="intellect">I was a Teacher</option>
             </select>
         </form>
-        <button @click="giveCharacterStats" class="character-button">Begin</button>
-        <button @click="openLogIn" class="character-button">Already in Town? Sign in.</button>
+        <button @click="giveCharacterStats" class="shop-button">Begin</button><br>
+        <span class="welcome-text">Already in town?</span><br>
+        <button @click="openLogIn" class="shop-button">Sign in.</button>
         <br><br>
       </div>
       <br><br>
@@ -114,28 +115,23 @@ export default {
      margin-bottom: 100px;
  }
  #character-create{
+     background-image: url("../../assets/images/staticbackground.png");
      width: 300px;
      min-height: 200px;
      margin-left: auto;
      margin-right: auto;
+     padding: 20px;
      background: rgba(0,0,0,.7);
      color: white;
      list-style: none;
      justify-content: space-evenly;
  }
- .character-button{
-    height: 35px;
-    width: 145px;
-    margin: 20px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
-    background: url("../../assets/images/ravenna.png");
-    background-size: inherit;
-    background-position: center;
-    background-repeat: no-repeat;
+ #welcome{
+     font-size: 40px;
+     font-weight: bold;
+ }
+ .welcome-text{
+     font-size: 18px;
  }
  #jobs {
      width: 250px;

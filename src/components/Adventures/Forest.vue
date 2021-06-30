@@ -31,7 +31,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #forest{
-     background-image: url("../../assets/images/forest.jpg");
+     background-image: url("../../assets/images/forestbackground.png");
      background-size: cover;
  }
 </style>

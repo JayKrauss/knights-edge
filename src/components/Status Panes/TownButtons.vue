@@ -1,9 +1,9 @@
 <template>
   <div id="town-buttons">
-      <button @click="openEquipment">Equipment</button>
-      <button @click="openInventory">Inventory</button>
-      <button @click="openShops">Shops</button>
-      <button @click="openAdventure">Adventure</button>
+      <button @click="openEquipment" class="town-button" >Equipment</button>
+      <button @click="openInventory" class="town-button" >Inventory</button>
+      <button @click="openShops" class="town-button" >Shops</button>
+      <button @click="openAdventure" class="town-button" >Adventure</button>
   </div>
 </template>
 
@@ -39,16 +39,5 @@ export default {
      margin-right: auto;
      border-top: gray 3px solid;
      background: url("../../assets/images/concrete_wall.png");
- }
- button{
-     height: 50px;
-     width: 105px;
-     margin: 10px;
-     color: white;
-     border-radius: 5px;
-     background: url("../../assets/images/buttonStock1.png");
-     background-size: inherit;
-     background-position: center;
-     background-repeat: no-repeat;
  }
 </style>

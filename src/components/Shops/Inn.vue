@@ -1,11 +1,13 @@
 <template>
   <div id="inn" class="main-screen">
-    <br><br><br>
-    <div class="shop-text"><strong>{{ innText }}</strong></div>
     <br><br>
-    <button class="shop-button">Rest</button>
-    <button class="shop-button">Drink</button>
-    <button class="shop-button">Quests</button>
+    <div class="shop-text"><strong>{{ innText }}</strong></div>
+    <div id="innkeeper-image"></div><span id='innkeeper-greeting'>Food? Drink? Or a place to rest?</span>
+    <div id='inn-buttons'>
+      <button class="shop-button">Rest</button>
+      <button class="shop-button">Drink</button>
+      <button class="shop-button">Quests</button>
+    </div>
   </div>
 </template>
 
@@ -27,4 +29,52 @@ export default {
      background-image: url("../../assets/images/inn.jpg");
      background-size: cover;
  }
+ @keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+#innkeeper-image{
+  width: 250px;
+  height: 320px;
+  margin-left: 10px;
+  background-image: url('../../assets/images/npcimages/innkeeperidle.png');
+  background-size: cover;
+  background-position: center;
+  animation: fadeIn 1.5s;
+  -webkit-animation: fadeIn 1.5s;
+  -moz-animation: fadeIn 1.5s;
+  -o-animation: fadeIn 1.5s;
+  -ms-animation: fadeIn 1.5s;
+}
+#innkeeper-greeting{
+  color:black;
+  font-weight: bold;
+  position: absolute;
+  top: 40%;
+  right: 29%;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeIn 1.5s;
+  -webkit-animation: fadeIn 1.5s;
+  -moz-animation: fadeIn 1.5s;
+  -o-animation: fadeIn 1.5s;
+  -ms-animation: fadeIn 1.5s;
+}
+#inn-buttons{
+  margin-top: 50px;
+}
+button{
+  margin: 5px;
+}
 </style>

@@ -1,15 +1,15 @@
 <template>
   <div id="shops" class="main-screen">
     <br><br><br>
-    <div id="intro-text">
-      <strong>{{ introText }}</strong>
+    <div class="shop-text">
+      <strong> {{ introText }} </strong>
     </div>
     <div id="shop-buttons">
-      <button @click="enterBlacksmith">Blacksmith</button>
-      <button @click="enterGeneralStore">General Store</button>
+      <button @click="enterBlacksmith" class="shop-button">Blacksmith</button>
+      <button @click="enterGeneralStore" class="shop-button">General Store</button>
       <br/>
-      <button @click="enterClothier">Clothier</button>
-      <button @click="enterInn">Inn</button>
+      <button @click="enterClothier" class="shop-button">Clothier</button>
+      <button @click="enterInn" class="shop-button">Inn</button>
     </div>
   </div>
 </template>
@@ -48,26 +48,7 @@ export default {
      background-image: url("../../assets/images/DxRz37sXcAEQ6Cm.jpg");
      background-size: cover;
  }
-#intro-text{
-  background: rgba(0,0,0,.6);
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-size: 16px;
-}
 #shop-buttons{
   margin-top: 90px;
-}
-button{
-     height: 50px;
-     width: 145px;
-     margin: 30px;
-     color: black;
-     font-weight: bold;
-     border-radius: 5px;
-     background: url("../../assets/images/ravenna.png");
-     background-size: inherit;
-     background-position: center;
-     background-repeat: no-repeat;
 }
 </style>

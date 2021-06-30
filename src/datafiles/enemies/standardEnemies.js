@@ -7,9 +7,11 @@ export default
             id : "serous001",
             maxHP : 10, 
             attack : 2,
-            speech : "What the fu- I mean.. squeak?",
+            speech : "'What the fu- I mean.. squeak?'",
             xpValue : 100,
             goldValue : 5,
+            image : require("../../assets/images/enemyimages/rodentofunusualsize.png"),
+            deathImage : require("../../assets/images/enemyimages/rodentofunusualsizedead.png"),
         },
         {
             name : "Young Rockling",
@@ -20,6 +22,7 @@ export default
             speech : "'Hissssssss' it says, inexplicably.",
             xpValue : 100,
             goldValue : 8,
+            image : require("../../assets/images/enemyimages/rodentofunusualsize.png"),
         },
     ]
 };

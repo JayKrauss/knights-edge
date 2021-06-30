@@ -1,24 +1,20 @@
 <template>
   <div id="random-combat" class="main-screen">
     <br><br>
-    <div v-if="mounted">
-    <div class="random-combat-text"><strong>{{ randomCombatText }}</strong></div>
+    <div v-show="mounted">
+    <div class="intro-text"><strong>{{ randomCombatText }}</strong></div>
     <br>
-    <img id="combat-image" src="../../../assets/images/rodentofsize.png"><br>
-    <span id="enemy-chat"><strong>{{ randomCombatText }}</strong></span><br>
+    <img id="combat-image" v-bind:src="opponentImage"><div id="attack-animation"></div><br>
+    <span id="enemy-chat"><strong>{{ opponentSpeech }}</strong></span><br>
     <span id="enemy-hp-bar">HP: {{ opponentCurrentHP.toFixed(2) }} / {{ opponentMaxHP.toFixed(2) }}</span><br/><br/>
     <div id="status-pane">
     <span id="status-text">{{ statusText }}</span><br/>
     <span id="status-text2">{{ statusText2 }}</span><br/>
     </div>
-    <button @click="playerAttack" class="shop-button">Attack</button>
+    <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
     <button class="shop-button">Defend</button>
     <button @click="playerHeal" class="shop-button">Heal</button>
     </div>
-    <div v-else>
-      <h4>Kicking grass..</h4>
-    </div>
-
   </div>
 </template>
 
@@ -32,6 +28,9 @@ export default {
       "playerMaxHP",
       "playerDamage",
       "playerArmor",
+      "opponent",
+      "opponentImage",
+      "opponentDeathImage",
   ],
   data() {
     return{
@@ -44,6 +43,8 @@ export default {
       opponentDamage : 0,
       opponentXPValue : 0,
       opponentGoldValue : 0,
+      opponentSpeech : "",
+      deathImage : "",
       statusText : "",
       statusText2 : "",
     }
@@ -54,22 +55,28 @@ export default {
   },
   methods: {
       generateOpponent(){
-        this.opponentName = standardEnemies.standardEnemies[0].name;
-        this.opponentLevel = standardEnemies.standardEnemies[0].level;
-        this.opponentMaxHP = standardEnemies.standardEnemies[0].maxHP;
-        this.opponentCurrentHP = standardEnemies.standardEnemies[0].maxHP;
-        this.opponentDamage = (standardEnemies.standardEnemies[0].attack - (this.playerArmor / 100));
-        this.opponentXPValue = standardEnemies.standardEnemies[0].xpValue;
-        this.opponentGoldValue = standardEnemies.standardEnemies[0].goldValue;
-        this.randomCombatText = standardEnemies.standardEnemies[0].introduction;
+        this.opponentName = this.opponent.name;
+        this.opponentLevel = this.opponent.level;
+        this.opponentMaxHP = this.opponent.maxHP;
+        this.opponentCurrentHP = this.opponent.maxHP;
+        this.opponentDamage = (this.opponent.attack - (this.playerArmor / 100));
+        this.opponentXPValue = this.opponent.xpValue;
+        this.opponentGoldValue = this.opponent.goldValue;
+        this.opponentSpeech = this.opponent.speech;
+        this.randomCombatText = this.opponent.introduction;
+        this.deathImage = this.opponentDeathImage;
         this.mounted = true;
       },
+      // getImage(opponent){
+      //   return require(opponent.image);
+      // },
       playerAttack() {
         if (this.playerDamage > this.opponentCurrentHP){
           this.opponentCurrentHP = 0;
           this.combatWon();
         }
         else{
+          this.attackAnimation()
           this.opponentCurrentHP -= this.playerDamage
           this.statusText = "";
           this.statusText += `You swing your weapon and do ${this.playerDamage} damage to ${this.opponentName}. `
@@ -78,6 +85,15 @@ export default {
       },
       playerDefend() {
           
+      },
+      attackAnimation(){
+        document.getElementById("attackbutton").disabled = true;
+        document.getElementById("attack-animation").style.display = "block";
+        setTimeout(function(){
+          document.getElementById("attackbutton").disabled = false;
+          document.getElementById("attack-animation").style.display = "none";
+          this.attacking = false;
+        }, 1000);
       },
       opponentAttack() {
         this.statusText2 = "";
@@ -99,7 +115,7 @@ export default {
         
       },
       playerVictory() {
-        this.$emit("playerVictory", this.opponentName, this.opponentLevel, this.opponentXPValue, this.opponentGoldValue);
+        this.$emit("playerVictory", this.opponentName, this.opponentLevel, this.opponentXPValue, this.opponentGoldValue, this.deathImage);
         this.opponentAttack();
       },
       combatWon() {
@@ -114,11 +130,26 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #random-combat{
-     background-image: url("../../../assets/images/randomcombat.jpg");
+     background-image: url("../../../assets/images/game_background_3.png");
      background-size: cover;
  }
+ .random-combat-text{
+   color: white;
+ }
+ #attack-animation{
+   background-image: url("../../../assets/images/ezgif.com-gif-maker (2).gif");
+   background-size: cover;
+   width: 200px;
+   height: 200px;
+   z-index: 100;
+   position: absolute;
+   top: 15%;
+   left: 45%;
+   display: none;
+ }
  #combat-image{
-     width: 150px;
+    background-size: cover;
+     width: 350px;
      height: 200px;
      margin-left: auto;
      margin-right: auto;
@@ -135,6 +166,7 @@ export default {
  #status-pane{
    background: rgba(0,0,0,.5);
    color: white;
+   font-size: 14px;
    font-weight: bold;
  }
 </style>

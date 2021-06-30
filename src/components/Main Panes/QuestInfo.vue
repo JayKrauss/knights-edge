@@ -1,13 +1,14 @@
 <template>
-<br><br><br><br>
-  <div id="quest-info" class="modified-screen">
-    <br><br><br>
+<br>
+<div class="modified-screen">
+  <div id="quest-info">
+    <br>
     <div id="quest-screen">
     <br><br>
     <span id='quest-banner-text'>QUEST</span><br><br>
-    <div id="quest-name" class="info-text"><strong>{{ questName }}</strong></div><br>
-    <div id="quest-text" class="info-text"><strong>{{ questText }}</strong></div><br>
-    <div id="quest-rewards" class="info-text"><strong>Rewards:</strong></div>
+    <div id="quest-name" class="info-text"><strong><span>{{ questName }}</span></strong></div><br>
+    <div id="quest-text" class="info-text"><span>{{ questText }}</span></div><br>
+    <div id="quest-rewards" class="info-text"><strong><span>Rewards:</span></strong></div>
     <ul id="rewards-list">
         <li class="quest-reward" v-for="item in questRewards" :key="item.name">
             {{ item.name }} - {{ item.amount }}
@@ -15,8 +16,8 @@
     </ul>
     <button @click="openTown" class="shop-button">Accept</button>
     </div>
-
   </div>
+</div>
 </template>
 
 <script>
@@ -58,7 +59,8 @@ ul{
 }
 #quest-info{
      background-image: url("../../assets/images/Poster4.png");
-     background-size: contain;
+     background-position: center;
+     background-size: 93%;
      background-repeat: no-repeat;
  }
 #rewards-list{
@@ -71,10 +73,11 @@ ul{
     justify-content: center;
 }
 #quest-name{
-    font-size: 20px;
+    font-size: 28px;
     color: darkblue;
 }
 #quest-text{
+    font-size: 20px;
     color: white;
 }
 #quest-banner-text{

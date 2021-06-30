@@ -1,6 +1,6 @@
 <template>
   <div id="adventure-buttons">
-      <button @click="openShops">Retreat</button>
+      <button @click="openShops" class="town-button">Retreat</button>
   </div>
 </template>
 
@@ -28,15 +28,5 @@ export default {
      border-top: gray 3px solid;
      background: url("../../assets/images/concrete_wall.png");
  }
- button{
-     height: 50px;
-     width: 105px;
-     margin: 10px;
-     color: white;
-     border-radius: 5px;
-     background: url("../../assets/images/buttonStock1.png");
-     background-size: inherit;
-     background-position: center;
-     background-repeat: no-repeat;
- }
+
 </style>

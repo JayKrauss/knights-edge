@@ -7,49 +7,63 @@ export default
             id : "lhu001",
             armor : 2,
             value : 5,
-            description : "A leather helmet."
+            description : "A leather helmet.",
+            slot : "helm",
+            image : require("../../assets/images/armorimages/4.png"),
         },
         {
             name : "Iron Helm",
             id : "ihu001",
             armor : 4,
             value : 10,
-            description : "An iron helmet."
+            description : "An iron helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Helm",
             id : "shu001",
             armor : 8,
             value : 25,
-            description : "A steel helmet."
+            description : "A steel helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Black Helm",
             id : "bhu001",
             armor : 12,
             value : 55,
-            description : "A black helmet."
+            description : "A black helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Helm",
             id : "mhu001",
             armor : 16,
             value : 100,
-            description : "A mithril helmet."
+            description : "A mithril helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Adamantine Helm",
             id : "ahu001",
             armor : 22,
             value : 260,
-            description : "An adamantine helmet."
+            description : "An adamantine helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Crystal Helm",
             id : "chu001",
             armor : 30,
             value : 500,
-            description : "A crystal helmet."
+            description : "A crystal helmet.",
+            slot : "helm",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //CHESTS
         {
@@ -57,49 +71,63 @@ export default
             id : "lcu001",
             armor : 4,
             value : 15,
-            description : "A leather chestpiece."
+            description : "A leather chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/armorimages/5.png"),
         },
         {
             name : "Iron Chestpiece",
             id : "icu001",
             armor : 8,
             value : 25,
-            description : "An iron chestpiece."
+            description : "An iron chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Chestpiece",
             id : "scu001",
             armor : 16,
             value : 50,
-            description : "A steel chestpiece."
+            description : "A steel chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Black Chestpiece",
             id : "bcu001",
             armor : 22,
             value : 110,
-            description : "A black chestpiece."
+            description : "A black chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Chestpiece",
             id : "mcu001",
             armor : 28,
             value : 250,
-            description : "A mithril chestpiece."
+            description : "A mithril chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Adamantine Chestpiece",
             id : "acu001",
             armor : 36,
             value : 515,
-            description : "An adamantine chestpiece."
+            description : "An adamantine chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Crystal Chestpiece",
             id : "ccu001",
             armor : 45,
             value : 1500,
-            description : "A crystal chestpiece."
+            description : "A crystal chestpiece.",
+            slot : "chest",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //NECK SLOTS
         {
@@ -107,42 +135,54 @@ export default
             id : "snu001",
             health : 5,
             value : 15,
-            description : "A silver necklace."
+            description : "A silver necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Gold Necklace",
             id : "gnu001",
             health : 10,
             value : 35,
-            description : "A gold necklace."
+            description : "A gold necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Ruby Necklace",
             id : "rnu001",
             health : 15,
             value : 60,
-            description : "A ruby necklace."
+            description : "A ruby necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Emerald Necklace",
             id : "enu001",
             health : 25,
             value : 120,
-            description : "An emerald necklace."
+            description : "An emerald necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Onyx Necklace",
             id : "onu001",
             health : 45,
             value : 250,
-            description : "An onyx necklace."
+            description : "An onyx necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Diamond Necklace",
             id : "dnu001",
             health : 80,
             value : 900,
-            description : "A diamond necklace."
+            description : "A diamond necklace.",
+            slot : "neck",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //BAGS
         {
@@ -150,21 +190,27 @@ export default
             id : "ocb001",
             perk : "oreCollection",
             value : 25,
-            description : "Allows collection of ore."
+            description : "Allows collection of ore.",
+            slot : "shoulder",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Herb Collection Bag",
             id : "hcb001",
             perk : "herbCollection",
             value : 50,
-            description : "Allows collection of herbs."
+            description : "Allows collection of herbs.",
+            slot : "shoulder",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Runestone Collection Bag",
             id : "rcb001",
             perk : "runestoneCollection",
             value : 25,
-            description : "Allows collection of runestones."
+            description : "Allows collection of runestones.",
+            slot : "shoulder",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //MAIN HANDS
         {
@@ -172,70 +218,90 @@ export default
             id : "mhid001",
             damage : 2,
             value : 2,
-            description : "Iron dagger."
+            description : "Iron dagger.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Iron Short Sword",
             id : "mhiss001",
             damage : 3,
             value : 5,
-            description : "Iron short sword."
+            description : "Iron short sword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Short Sword",
             id : "mhsss001",
             damage : 6,
             value : 15,
-            description : "Steel short sword."
+            description : "Steel short sword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Short Sword",
             id : "mhmss001",
             damage : 12,
             value : 75,
-            description : "Mithril short sword."
+            description : "Mithril short sword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Iron Longsword",
             id : "mhils001",
             damage : 5,
             value : 10,
-            description : "Iron longsword."
+            description : "Iron longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Longsword",
             id : "mhsls001",
             damage : 8,
             value : 25,
-            description : "Steel longsword."
+            description : "Steel longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Black Longsword",
             id : "mhbls001",
             damage : 12,
             value : 55,
-            description : "Black longsword."
+            description : "Black longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Longsword",
             id : "mhmls001",
             damage : 16,
             value : 100,
-            description : "Mithril longsword."
+            description : "Mithril longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Adamantine Longsword",
             id : "mhals001",
             damage : 22,
             value : 260,
-            description : "Adamantine longsword."
+            description : "Adamantine longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Crystal Longsword",
             id : "mhcls001",
             damage : 30,
             value : 500,
-            description : "Crystal longsword."
+            description : "Crystal longsword.",
+            slot : "mainhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //OFFHANDS
         {
@@ -243,19 +309,25 @@ export default
             id : "wrs001",
             armor : 2,
             value : 5,
-            description : "A round wooden shield."
+            description : "A round wooden shield.",
+            slot : "offhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             id : "wks001",
             armor : 5,
             value : 15,
-            description : "A triangular wooden shield."
+            description : "A triangular wooden shield.",
+            slot : "offhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             id : "wts001",
             armor : 15,
             value : 55,
-            description : "A large, rectangular wooden shield."
+            description : "A large, rectangular wooden shield.",
+            slot : "offhand",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //GREAVES
         {
@@ -263,49 +335,63 @@ export default
             id : "lgu001",
             armor : 2,
             value : 5,
-            description : "Leather greaves."
+            description : "Leather greaves.",
+            slot : "legs",
+            image : require("../../assets/images/armorimages/3.png"),
         },
         {
             name : "Iron Greaves",
             id : "igu001",
             armor : 4,
             value : 10,
-            description : "Iron greaves."
+            description : "Iron greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Greaves",
             id : "sgu001",
             armor : 8,
             value : 25,
-            description : "Steel greaves."
+            description : "Steel greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Black Greaves",
             id : "bgu001",
             armor : 12,
             value : 55,
-            description : "Black greaves."
+            description : "Black greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Greaves",
             id : "mgu001",
             armor : 16,
             value : 100,
-            description : "Mithril greaves."
+            description : "Mithril greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Adamantine Greaves",
             id : "agu001",
             armor : 22,
             value : 260,
-            description : "Adamantine greaves."
+            description : "Adamantine greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Crystal Greaves",
             id : "cgu001",
             armor : 30,
             value : 500,
-            description : "Crystal greaves."
+            description : "Crystal greaves.",
+            slot : "legs",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         //SABATONS
         {
@@ -313,49 +399,63 @@ export default
             id : "lsu001",
             armor : 2,
             value : 5,
-            description : "Leather sabatons."
+            description : "Leather sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/armorimages/3.png"),
         },
         {
             name : "Iron Sabatons",
             id : "isu001",
             armor : 4,
             value : 10,
-            description : "Iron sabatons."
+            description : "Iron sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Steel Sabatons",
             id : "ssu001",
             armor : 8,
             value : 25,
-            description : "Steel sabatons."
+            description : "Steel sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Black Sabatons",
             id : "bsu001",
             armor : 12,
             value : 55,
-            description : "Black sabatons."
+            description : "Black sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Mithril Sabatons",
             id : "msu001",
             armor : 16,
             value : 100,
-            description : "Mithril sabatons."
+            description : "Mithril sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Adamantine Sabatons",
             id : "asu001",
             armor : 22,
             value : 260,
-            description : "Adamantine sabatons."
+            description : "Adamantine sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
         {
             name : "Crystal Sabatons",
             id : "csu001",
             armor : 30,
             value : 500,
-            description : "Crystal sabatons."
+            description : "Crystal sabatons.",
+            slot : "feet",
+            image : require("../../assets/images/weaponimages/1.png"),
         },
     ],
 }

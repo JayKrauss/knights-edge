@@ -1,10 +1,12 @@
 <template>
   <div id="clothier" class="main-screen">
-    <br><br><br>
-    <div class="shop-text"><strong>{{ clothierText }}</strong></div>
     <br><br>
-    <button class="shop-button">Buy</button>
-    <button class="shop-button">Sell</button>
+    <div class="shop-text"><strong>{{ clothierText }}</strong></div>
+    <div id="clothier-image"></div><span id='clothier-greeting'>Greetings. Buy something.</span>
+    <div id='clothier-buttons'>
+      <button class="shop-button">Buy</button>
+      <button class="shop-button">Sell</button>
+    </div>
   </div>
 </template>
 
@@ -31,18 +33,55 @@ export default {
   padding: 20px;
   color: white;
   text-align: center;
-  text-size: 16px;
+  font-size: 16px;
+}
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+#clothier-image{
+  margin-top: 30px;
+  width: 250px;
+  height: 320px;
+  margin-left: 10px;
+  background-image: url('../../assets/images/npcimages/clothieridle.png');
+  background-size: cover;
+  background-position: center;
+  animation: fadeIn 1.5s;
+  -webkit-animation: fadeIn 1.5s;
+  -moz-animation: fadeIn 1.5s;
+  -o-animation: fadeIn 1.5s;
+  -ms-animation: fadeIn 1.5s;
+}
+#clothier-greeting{
+  color:black;
+  font-weight: bold;
+  position: absolute;
+  top: 42%;
+  right: 33%;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeIn 1.5s;
+  -webkit-animation: fadeIn 1.5s;
+  -moz-animation: fadeIn 1.5s;
+  -o-animation: fadeIn 1.5s;
+  -ms-animation: fadeIn 1.5s;
+}
+#clothier-buttons{
+  margin-top: 40px;
 }
 button{
-     height: 50px;
-     width: 145px;
-     margin: 30px;
-     color: black;
-     font-weight: bold;
-     border-radius: 5px;
-     background: url("../../assets/images/ravenna.png");
-     background-size: inherit;
-     background-position: center;
-     background-repeat: no-repeat;
+  margin: 5px;
 }
 </style>

@@ -2,6 +2,16 @@
     background-image: url("./images/tweed.png");
     min-height: 800px;
 }
+span, li{
+    /* font-family: 'Akaya Kanadaka', cursive; */
+    font-family: 'Julee', cursive;
+    /* font-family: 'Merienda One', cursive; */
+    /* font-family: 'Rock Salt', cursive; */
+}
+button{
+    font-family: 'Julee', cursive;
+    font-size: 20px;
+}
 #playfield{
     margin-top: auto;
     margin-bottom: auto;
@@ -9,6 +19,9 @@
     margin-right: auto;
 }
 .main-screen{
+    background-image: url("./images/staticbackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 500px;
     height: 100%;
     min-height: 600px;
@@ -18,6 +31,9 @@
     margin-right: auto;
 }
 .modified-screen{
+    background-image: url("./images/staticbackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 500px;
     height: 100%;
     min-height: 600px;
@@ -35,21 +51,44 @@
     margin-left: -35px;
 }
 .shop-button{
-    height: 50px;
-    width: 145px;
-    margin: 30px;
+    height: 60px;
+    width: 195px;
+    margin: 20px;
     color: black;
     font-weight: bold;
-    border-radius: 5px;
-    background: url("./images/ravenna.png");
-    background-size: inherit;
+    background: url("./images/Button_RL_Background_Yellow.png");
+    background-size: 115%;
     background-position: center;
     background-repeat: no-repeat;
   }
-.shop-text{
+.shop-button:hover{
+    background: url("./images/Button_RL_Hover_Yellow.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.town-button{
+     height: 40px;
+     width: 115px;
+     margin-right: 2.5px;
+     margin-left: 2.5px;
+     margin-top: 15px;
+     color: white;
+     background: url("./images/Button_RM_Foreground_Red.png");
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+.town-button:hover{
+    background: url("./images/Button_RM_Hover_Red.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.intro-text, .shop-text{
+    font-family: 'Julee', cursive;
     background: rgba(0,0,0,.6);
-    padding: 20px;
+    padding: 18px;
     color: white;
     text-align: center;
-    font-size: 16px;
+    font-size: 22px;
 }
