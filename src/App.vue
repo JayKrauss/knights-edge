@@ -737,6 +737,16 @@ export default {
           this.adventureButtonsPane = true;
           break;
         case "mountains":
+          if (this.player.totalPlayerDamage < 1){
+            alert("You should probably consider at least bringing something sharp with you out there.\nCheck your inventory.")
+            this.openPane('inventory');
+          }
+          else{
+            this.retrieveByID("standardEnemies", this.currentOpponent);
+            this.statusPane = true;
+            this.randomCombatPane = true;
+            this.adventureButtonsPane = true;
+          }
           this.statusPane = true;
           this.mountainsPane = true;
           this.adventureButtonsPane = true;
