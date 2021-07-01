@@ -2,7 +2,8 @@
   <div id="inventory" class="main-screen">
       <br><br>
       <span id='inventory-title'>INVENTORY</span>
-      <ul id="inventory-list"></ul>
+      <ul id="gear-inventory-list"></ul>
+      <ul @click="equipItem" id="loot-inventory-list"></ul>
   </div>
 </template>
 
@@ -15,10 +16,35 @@ export default {
   methods: {
     buildInventories() {
       for (var i=0; i<this.currentInventoryObjects.length; i++){
-        let item = `<li class="inventory-item">${this.currentInventoryObjects[i].name} - ${this.currentInventoryObjects[i].amount} </li>`
-          document.getElementById("inventory-list").innerHTML += item 
+        if (this.currentInventoryObjects[i].type == "gear"){
+          let gearItem = `
+            <li class="inventory-item">
+              <span class='left-side-item'>${this.currentInventoryObjects[i].name}</span>
+              <span class='right-side-item'>${this.currentInventoryObjects[i].amount}</span>
+            </li>
+          `
+          document.getElementById("gear-inventory-list").innerHTML += gearItem 
+        }
+        else if (this.currentInventoryObjects[i].type == "equipment"){
+          let lootItem = `
+            <li class="inventory-item">
+              <span class='left-side-item'>${this.currentInventoryObjects[i].name}</span>
+              <button class="equip-button" value="${this.currentInventoryObjects[i].id}">EQUIP</button>
+              <span class='right-side-item'>${this.currentInventoryObjects[i].amount}</span>
+            </li>
+          `
+          document.getElementById("loot-inventory-list").innerHTML += lootItem 
+        }
+          
       }
     },
+    equipItem(e){
+      if (e.target.matches('.equip-button')) {
+        var itemID = e.target.value
+        this.$emit('equipItem', itemID)
+        console.log(itemID)
+      }
+    }
   },
   mounted(){
     this.buildInventories();
@@ -36,17 +62,20 @@ export default {
      background-size: cover;
      background-position: center;
  }
- #inventory-list{
-     width: 300px;
-     min-height: 200px;
+ #gear-inventory-list, #loot-inventory-list{
+     width: 350px;
+     height: 250px;
+     overflow-y: scroll; 
      margin-left: auto;
      margin-right: auto;
-     padding-top: 40px;
      background: rgba(0,0,0,.7);
      color: white;
      list-style: none;
-     justify-content: space-evenly;
+     padding: 5px;
+     border: solid gray 5px;
  }
+#gear-inventory-list::-webkit-scrollbar { width: 0 !important }
+#loot-inventory-list::-webkit-scrollbar { width: 0 !important }
 #inventory-title{
   width: 100%;
   font-size: 40px;

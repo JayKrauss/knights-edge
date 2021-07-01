@@ -10,6 +10,7 @@ export default
             description : "A leather helmet.",
             slot : "helm",
             image : require("../../assets/images/armorimages/4.png"),
+            type : "equipment"        
         },
         {
             name : "Iron Helm",
@@ -19,6 +20,7 @@ export default
             description : "An iron helmet.",
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Helm",
@@ -27,7 +29,8 @@ export default
             value : 25,
             description : "A steel helmet.",
             slot : "helm",
-            image : require("../../assets/images/weaponimages/1.png"),
+            image : require("../../assets/images/armorimages/12.png"),
+            type : "equipment"
         },
         {
             name : "Black Helm",
@@ -37,6 +40,7 @@ export default
             description : "A black helmet.",
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Helm",
@@ -46,6 +50,7 @@ export default
             description : "A mithril helmet.",
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Adamantine Helm",
@@ -55,6 +60,7 @@ export default
             description : "An adamantine helmet.",
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Crystal Helm",
@@ -64,6 +70,7 @@ export default
             description : "A crystal helmet.",
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //CHESTS
         {
@@ -74,6 +81,7 @@ export default
             description : "A leather chestpiece.",
             slot : "chest",
             image : require("../../assets/images/armorimages/5.png"),
+            type : "equipment"        
         },
         {
             name : "Iron Chestpiece",
@@ -83,6 +91,7 @@ export default
             description : "An iron chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Chestpiece",
@@ -92,6 +101,7 @@ export default
             description : "A steel chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Black Chestpiece",
@@ -101,6 +111,7 @@ export default
             description : "A black chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Chestpiece",
@@ -110,6 +121,7 @@ export default
             description : "A mithril chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Adamantine Chestpiece",
@@ -119,6 +131,7 @@ export default
             description : "An adamantine chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Crystal Chestpiece",
@@ -128,6 +141,7 @@ export default
             description : "A crystal chestpiece.",
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //NECK SLOTS
         {
@@ -138,6 +152,7 @@ export default
             description : "A silver necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Gold Necklace",
@@ -147,6 +162,7 @@ export default
             description : "A gold necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Ruby Necklace",
@@ -156,6 +172,7 @@ export default
             description : "A ruby necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Emerald Necklace",
@@ -165,6 +182,7 @@ export default
             description : "An emerald necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Onyx Necklace",
@@ -174,6 +192,7 @@ export default
             description : "An onyx necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Diamond Necklace",
@@ -183,6 +202,7 @@ export default
             description : "A diamond necklace.",
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //BAGS
         {
@@ -193,6 +213,7 @@ export default
             description : "Allows collection of ore.",
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Herb Collection Bag",
@@ -202,6 +223,7 @@ export default
             description : "Allows collection of herbs.",
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Runestone Collection Bag",
@@ -211,6 +233,7 @@ export default
             description : "Allows collection of runestones.",
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //MAIN HANDS
         {
@@ -221,6 +244,7 @@ export default
             description : "Iron dagger.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Iron Short Sword",
@@ -230,6 +254,7 @@ export default
             description : "Iron short sword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Short Sword",
@@ -239,6 +264,7 @@ export default
             description : "Steel short sword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Short Sword",
@@ -248,6 +274,7 @@ export default
             description : "Mithril short sword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Iron Longsword",
@@ -257,6 +284,7 @@ export default
             description : "Iron longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Longsword",
@@ -266,6 +294,7 @@ export default
             description : "Steel longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Black Longsword",
@@ -275,6 +304,7 @@ export default
             description : "Black longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Longsword",
@@ -284,6 +314,7 @@ export default
             description : "Mithril longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Adamantine Longsword",
@@ -293,6 +324,7 @@ export default
             description : "Adamantine longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Crystal Longsword",
@@ -302,6 +334,7 @@ export default
             description : "Crystal longsword.",
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //OFFHANDS
         {
@@ -312,6 +345,7 @@ export default
             description : "A round wooden shield.",
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             id : "wks001",
@@ -320,6 +354,7 @@ export default
             description : "A triangular wooden shield.",
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             id : "wts001",
@@ -328,6 +363,7 @@ export default
             description : "A large, rectangular wooden shield.",
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //GREAVES
         {
@@ -338,6 +374,7 @@ export default
             description : "Leather greaves.",
             slot : "legs",
             image : require("../../assets/images/armorimages/3.png"),
+            type : "equipment"       
         },
         {
             name : "Iron Greaves",
@@ -347,6 +384,7 @@ export default
             description : "Iron greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Greaves",
@@ -356,6 +394,7 @@ export default
             description : "Steel greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Black Greaves",
@@ -365,6 +404,7 @@ export default
             description : "Black greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Greaves",
@@ -374,6 +414,7 @@ export default
             description : "Mithril greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Adamantine Greaves",
@@ -383,6 +424,7 @@ export default
             description : "Adamantine greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Crystal Greaves",
@@ -392,6 +434,7 @@ export default
             description : "Crystal greaves.",
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         //SABATONS
         {
@@ -402,6 +445,7 @@ export default
             description : "Leather sabatons.",
             slot : "feet",
             image : require("../../assets/images/armorimages/3.png"),
+            type : "equipment"        
         },
         {
             name : "Iron Sabatons",
@@ -411,6 +455,7 @@ export default
             description : "Iron sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Steel Sabatons",
@@ -420,6 +465,7 @@ export default
             description : "Steel sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Black Sabatons",
@@ -429,6 +475,7 @@ export default
             description : "Black sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Mithril Sabatons",
@@ -438,6 +485,7 @@ export default
             description : "Mithril sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Adamantine Sabatons",
@@ -447,6 +495,7 @@ export default
             description : "Adamantine sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
         {
             name : "Crystal Sabatons",
@@ -456,6 +505,7 @@ export default
             description : "Crystal sabatons.",
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
+            type : "equipment"
         },
     ],
 }

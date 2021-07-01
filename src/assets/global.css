@@ -35,15 +35,6 @@ button{
     margin-left: auto;
     margin-right: auto;
 }
-.inventory-item{
-    color: white;
-    list-style-type: none;
-    align-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-left: -35px;
-}
 .shop-button{
     height: 60px;
     width: 195px;
@@ -86,5 +77,30 @@ button{
     text-align: center;
     font-size: 22px;
 }
+.inventory-item{
+    width: 350px;
+    height: 30px;
+    background: white;
+    color: black;
+    border-radius: 3px;
+    margin-top: 5px;
+    padding-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+.left-side-item{
+    float: left;
+    margin-left: 25px;
+}
+.right-side-item{
+    float: right;
+    margin-right: 25px;
+}
+.equip-button{
+    height: 25px;
+    font-size: 12px;
 
-
+}
+element::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}

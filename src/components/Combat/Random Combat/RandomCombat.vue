@@ -79,7 +79,7 @@ export default {
           this.attackAnimation()
           this.opponentCurrentHP -= this.playerDamage
           this.statusText = "";
-          this.statusText += `You swing your weapon and do ${this.playerDamage} damage to ${this.opponentName}. `
+          this.statusText += `You swing your weapon and do ${this.playerDamage.toFixed(2)} damage to ${this.opponentName}. `
           this.opponentAttack();
         }
       },
@@ -97,7 +97,7 @@ export default {
       },
       opponentAttack() {
         this.statusText2 = "";
-        this.statusText2 += `${this.opponentName} hits you for ${this.opponentDamage} damage.\n`
+        this.statusText2 += `${this.opponentName} hits you for ${this.opponentDamage.toFixed(2)} damage.\n`
         this.$emit('modifyPlayerStats', "health", this.opponentDamage, "-");
       },
       playerHeal() {

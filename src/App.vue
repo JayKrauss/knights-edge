@@ -87,12 +87,13 @@
   </div>
   <div v-if="equipmentPane">
     <Equipment 
-      :equippedItemsArray="this.player.equippedItemsObject"
+      :equippedItemsArray="this.player.equippedItemsObjects"
     />
   </div>
   <div v-if="inventoryPane">
     <Inventory 
       :currentInventoryObjects="this.player.currentInventoryObjects"
+      @equipItem="equipItem"
     />
   </div>
   <div v-if="adventurePane">
@@ -115,7 +116,6 @@
   <div v-if="forestPane">
     <Forest 
       @openPane="openPane"
-      @collatePlayerStats="collatePlayerStats"
     />
   </div>
   <div v-if="mountainsPane">
@@ -287,22 +287,17 @@ export default {
         completedQuestObjects : [],
 
         //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
-        equippedItemsID : [
-          "mhiss001",
-          "lhu001",
-          "lcu001",
-          "lsu001",
+        equippedItemsIDs : [
+
         ],
-        equippedItemsObject : [
+        equippedItemsObjects : [
 
         ],
         equippedWeapons : [
-          "mhiss001",
+          
         ],
         equippedArmor : [
-          "lhu001",
-          "lcu001",
-          "lsu001",
+
         ],
 
         //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
@@ -311,11 +306,16 @@ export default {
 
         //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
         currentInventoryIDs : [
-          [ "agt001" , 5 ],
-          [ "agr001" , 3 ],
-          [ "agr002" , 2 ],
-          [ "agw001" , 5 ],
-          [ "bhp001" , 3 ],
+          [ "agt001" , 5 , "gear" ],
+          [ "agr001" , 3 , "gear" ],
+          [ "agr002" , 2 , "gear" ],
+          [ "agw001" , 5 , "gear" ],
+          [ "bhp001" , 3 , "gear" ],
+          [ "shu001" , 1, "equipment" ],
+          [ "lhu001" , 1, "equipment" ],
+          [ "lcu001" , 1, "equipment" ],
+          [ "lsu001" , 1, "equipment" ],
+          [ "mhiss001", 1, "equipment" ],
         ],
         currentInventoryObjects : [
           
@@ -374,13 +374,92 @@ export default {
     },
     //builds array of objects for equipped items
     buildEquippedItemArray() {
-      this.player.equippedItemsObject = [];
-      for (var i=0; i<this.player.equippedItemsID.length; i++){
-              this.retrieveByID('equipment', this.player.equippedItemsID[i]);
-              console.log(this.currentItem);
-              this.player.equippedItemsObject.push(this.currentItem);
+      this.player.equippedItemsObjects = [];
+      for (var i=0; i<this.player.equippedItemsIDs.length; i++){
+              this.retrieveByID('equipment', this.player.equippedItemsIDs[i]);
+              this.player.equippedItemsObjects.push(this.currentItem);
             }
-      console.table(this.player.equippedItemsObject);
+    },
+    equipItem(id) {
+      this.retrieveByID('equipment', id);
+      var passedItem = this.currentItem;
+      var passedSlot = passedItem.slot;
+      var slotFilled = false;
+      var existingItem = {};
+
+      for(var i=0; i<this.player.equippedItemsObjects.length; i++){
+        if(this.player.equippedItemsObjects[i].slot == passedSlot){
+          console.log("Slot full. Swapping.")
+          slotFilled = true;
+          existingItem = this.player.equippedItemsObjects[i];
+        }
+      }
+
+      if (slotFilled == false){
+        console.log('Slot empty')
+        this.player.equippedItemsIDs.push(passedItem.id);
+        if (passedItem.slot == "mainhand"){
+          console.log("Item swapped.")
+          this.player.equippedWeapons.push(passedItem.id);
+        }
+        else {
+          console.log("Item swapped.")
+          this.player.equippedArmor.push(passedItem.id);
+        }
+
+        for (var k=0; k<this.player.currentInventoryIDs.length; k++){
+          if (passedItem.id == this.player.currentInventoryIDs[k][0]){
+            this.player.currentInventoryIDs.splice(k, 1);
+          }
+        }
+        this.buildEquippedItemArray()
+        this.buildInventory();
+        this.collatePlayerStats()
+        this.openPane('equipment');
+      }
+      else {
+        console.log("SWAPPING ITEMS TO INVENTORY")
+        console.log("ID: " + existingItem.id)
+        for (var l=0; l<this.player.equippedItemsIDs.length; l++){
+          console.log(this.player.equippedItemsIDs[l])
+          if (this.player.equippedItemsIDs[l] == existingItem.id){
+            this.player.equippedItemsIDs.splice(l, 1);
+          }
+        }
+        for (var y=0; y<this.player.currentInventoryIDs.length; y++){
+          if (passedItem.id == this.player.currentInventoryIDs[y][0]){
+            this.player.currentInventoryIDs.splice(y, 1);
+            var pushedItem = [];
+            pushedItem.push(existingItem.id);
+            pushedItem.push(1);
+            pushedItem.push('equipment');
+            this.player.currentInventoryIDs.push(pushedItem);
+          }
+        }
+        if (existingItem.slot == "mainhand"){
+          for (var h=0; h<this.player.equippedWeapons.length; h++){
+            if (existingItem.id == this.player.equippedWeapons[h]){
+              this.player.equippedWeapons.splice(h, 1);
+            }
+          }
+          this.player.equippedWeapons.push(passedItem.id)
+        }
+        else{
+          for (var g=0; g<this.player.equippedArmor.length; g++){
+            if (existingItem.id == this.player.equippedArmor[g]){
+              console.log("removing helm")
+              this.player.equippedArmor.splice(h, 1);
+            }
+          }
+          this.player.equippedArmor.push(passedItem.id);
+        }
+        this.player.equippedItemsIDs.push(passedItem.id);
+        this.buildEquippedItemArray()
+        this.buildInventory();
+        this.collatePlayerStats()
+        this.openPane('equipment');
+      }
+      ;
     },
     //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
@@ -626,6 +705,7 @@ export default {
           this.townButtonsPane = true;
           break;
         case "adventure":
+          this.collatePlayerStats()
           this.statusPane = true;
           this.adventurePane = true;
           this.adventureButtonsPane = true;
@@ -702,7 +782,6 @@ export default {
       for (var i=0 ; i < sheet.length ; i++)
           {
               if (sheet[i]["id"] == id) {
-                console.table(sheet[i])
                   //bounce the item to "global" so that the calling functions can actually see it
                   this.currentItem = sheet[i];
               }
@@ -712,17 +791,22 @@ export default {
     buildInventory(){
       this.player.currentInventoryObjects = [];
       for (var k=0; k<this.player.currentInventoryIDs.length; k++){
-        this.retrieveByID("adventuringGear", this.player.currentInventoryIDs[k][0]);
-        console.log(this.currentItem)
+        if (this.player.currentInventoryIDs[k][2] == "gear"){
+           this.retrieveByID("adventuringGear", this.player.currentInventoryIDs[k][0]);
+        }
+        else if (this.player.currentInventoryIDs[k][2] == "equipment"){
+          this.retrieveByID("equipment", this.player.currentInventoryIDs[k][0]);
+        }
         var item = {};
         item.name = this.currentItem.name;
         item.id = this.currentItem.id;
         item.amount = this.player.currentInventoryIDs[k][1];
         item.value = this.currentItem.value;
         item.description = this.currentItem.description;
+        item.type = this.currentItem.type;
+        item.slot = this.currentItem.slot;
         this.player.currentInventoryObjects.push(item);
       }
-      console.table(this.player.currentInventoryObjects);
     },
   }
 };

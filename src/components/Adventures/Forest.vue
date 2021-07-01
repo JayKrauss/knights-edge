@@ -4,7 +4,7 @@
     <div class="shop-text"><strong>{{ forestText }}</strong></div>
       <br><br>
     <button class="shop-button">Gather</button><br>
-    <button class="shop-button" @click="randomCombat" @mouseover="collatePlayerStats">Fight</button>
+    <button class="shop-button" @click="randomCombat">Fight</button>
   </div>
 </template>
 
@@ -21,9 +21,6 @@ export default {
     randomCombat() {
       this.$emit("openPane", "randomCombat")
     },
-    collatePlayerStats() {
-      this.$emit("collatePlayerStats")
-    }
   }
 };
 </script>
