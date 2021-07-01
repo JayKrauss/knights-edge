@@ -2,7 +2,7 @@
   <div id="clothier" class="main-screen">
     <br><br>
     <div class="shop-text"><strong>{{ clothierText }}</strong></div>
-    <div id="clothier-image"></div><span id='clothier-greeting'>Greetings. Buy something.</span>
+    <div id="clothier-image"></div><span id='clothier-greeting' class="shop-text">Greetings. Buy something.</span>
     <div id='clothier-buttons'>
       <button class="shop-button">Buy</button>
       <button class="shop-button">Sell</button>
@@ -64,14 +64,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
 #clothier-greeting{
-  color:black;
-  font-weight: bold;
-  position: absolute;
-  top: 42%;
-  right: 33%;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
+  z-index: 100;
   animation: fadeIn 1.5s;
   -webkit-animation: fadeIn 1.5s;
   -moz-animation: fadeIn 1.5s;

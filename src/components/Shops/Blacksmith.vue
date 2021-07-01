@@ -2,7 +2,7 @@
   <div id="blacksmith" class="main-screen">
     <br><br>
     <div class="shop-text"><strong>{{ blacksmithText }}</strong></div>
-    <div id="blacksmith-image"></div><span id='blacksmith-greeting'>What brings you to my shop?</span>
+    <div id="blacksmith-image"></div><span id='blacksmith-greeting' class="shop-text">What brings you to my shop?</span>
   <div id='blacksmith-buttons'>
   <button class="shop-button">Buy</button>
   <button class="shop-button">Sell</button>
@@ -57,14 +57,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
 #blacksmith-greeting{
-  color:black;
-  font-weight: bold;
-  position: absolute;
-  top: 40%;
-  right: 30%;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
+  z-index: 100;
   animation: fadeIn 1.5s;
   -webkit-animation: fadeIn 1.5s;
   -moz-animation: fadeIn 1.5s;

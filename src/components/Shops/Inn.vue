@@ -2,7 +2,7 @@
   <div id="inn" class="main-screen">
     <br><br>
     <div class="shop-text"><strong>{{ innText }}</strong></div>
-    <div id="innkeeper-image"></div><span id='innkeeper-greeting'>Food? Drink? Or a place to rest?</span>
+    <div id="innkeeper-image"></div><span id='innkeeper-greeting' class="shop-text">Food? Drink? Or a place to rest?</span>
     <div id='inn-buttons'>
       <button class="shop-button">Rest</button>
       <button class="shop-button">Drink</button>
@@ -57,14 +57,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
 #innkeeper-greeting{
-  color:black;
-  font-weight: bold;
-  position: absolute;
-  top: 40%;
-  right: 29%;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
+ z-index: 100;
   animation: fadeIn 1.5s;
   -webkit-animation: fadeIn 1.5s;
   -moz-animation: fadeIn 1.5s;

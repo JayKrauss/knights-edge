@@ -2,7 +2,7 @@
   <div id="general-store" class="main-screen">
     <br><br>
     <div class="shop-text"><strong>{{ generalStoreText }}</strong></div>
-    <div id="generalstore-image"></div><span id='generalstore-greeting'>Welcome! Have a look around.</span>
+    <div id="generalstore-image"></div><span id='generalstore-greeting' class="shop-text">Welcome! Have a look around.</span>
     <div id='generalstore-buttons'>
     <button class="shop-button">Buy</button>
     <button class="shop-button">Sell</button>
@@ -64,14 +64,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
 #generalstore-greeting{
-  color:black;
-  font-weight: bold;
-  position: absolute;
-  top: 45%;
-  right: 27%;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
+ z-index: 100;
   animation: fadeIn 1.5s;
   -webkit-animation: fadeIn 1.5s;
   -moz-animation: fadeIn 1.5s;
