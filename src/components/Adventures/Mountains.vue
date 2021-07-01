@@ -4,7 +4,7 @@
     <div class="shop-text"><strong>{{ mountainText }}</strong></div>
       <br><br>
   <button class="shop-button">Gather</button><br>
-  <button class="shop-button">Fight</button>
+  <button @click="randomCombat" class="shop-button">Fight</button>
   </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
     return{
       mountainText : "You go for a climb."
     }
+  },
+  methods:{
+    randomCombat() {
+      this.$emit("openPane", "randomCombat")
+    },
   }
 };
 </script>

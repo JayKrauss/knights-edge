@@ -119,7 +119,9 @@
     />
   </div>
   <div v-if="mountainsPane">
-    <Mountains />
+    <Mountains 
+      @openPane="openPane"
+    />
   </div>
   <div v-if="travelQuestsPane">
     <TravelQuests />
