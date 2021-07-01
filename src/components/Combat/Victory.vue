@@ -1,10 +1,10 @@
 <template>
 <div class="modified-screen">
-  <br><br><br>
+  <br><br><br><br><br>
   <div id="victory">
-      <br><br><br><br>
+      <br><br><br><br><br>
       <div id="victory-stats">
-        <br><br>
+        <br>
         <span id="win-text">You Won!</span><br>
         <img id="death-image" v-bind:src="opponentDeathImage"><br>
         <span class="victory-text">You defeated a {{ opponentName }}</span><br><br>
@@ -45,6 +45,7 @@ export default {
      background-size: 110%;
      background-position: center;
      background-repeat: no-repeat;
+     min-height: 600px;
  }
  #death-image{
    background-size: cover;

@@ -1,7 +1,8 @@
 <template>
+<div id="create-background">
 <br><br><br>
   <div id="character" class="modified-screen">
-      <br><br><br><br>
+      <br><br><br><br><br><br><br>
       <div id="character-create">
 
         <span id="welcome">Welcome!</span><br>
@@ -25,6 +26,7 @@
       </div>
       <br><br>
   </div>
+</div>
 </template>
 
 <script>

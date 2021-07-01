@@ -1,6 +1,6 @@
 <template>
   <div id="level-up" class="modified-screen">
-      <br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br>
       <div id="player-stats">
         <br>
         <span id="player-name">Name: {{ characterName }} </span><br>

@@ -2,7 +2,7 @@
 <div class="modified-screen">
 <br><br><br><br><br>
   <div id="character">
-      <br><br><br>
+      <br><br><br><br>
       <div id="player-stats">
         <br>
         <span id="character-name">Name: {{ characterName }} </span><br/><br/>
@@ -63,6 +63,7 @@ export default {
      background-image: url("../../assets/images/Poster5.png");
      background-size: cover;
      background-position: center;
+     min-height: 600px;
  }
  #player-stats{
      width: 300px;

@@ -1,6 +1,7 @@
 <template>
     <div id="equipment" class="main-screen">
         <span id="equipment-header">EQUIPMENT</span>
+        <br><br><br>
     <table id="equipment-pane">
         <tr>
         <td></td>
@@ -105,7 +106,9 @@ export default {
 }
 #equipment{
   background-image: url("../../assets/images/equipmentbackground.png");
+  background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 #helm-slot{
   background-image: url("../../assets/images/CharacterWindow_Slot_Head.png");

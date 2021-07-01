@@ -1,6 +1,6 @@
 <template>
   <div id="character" class="modified-screen">
-      <br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br>
       <div id="player-stats">
         <br>
         <h3>Name: {{ characterName }} </h3> 
@@ -50,7 +50,7 @@ export default {
 <style scoped>
  #character{
      background-image: url("../../assets/images/Poster6.png");
-     background-size: cover;
+     background-size: 95%;
      background-position: center;
  }
  #player-stats{
@@ -70,7 +70,7 @@ export default {
      opacity: .5;
  }
 .stat-span{
-  font-size: 14px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }

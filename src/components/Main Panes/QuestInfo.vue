@@ -1,10 +1,9 @@
 <template>
 <div class="modified-screen">
-    <br><br><br><br><br>
+    <br><br><br><br>
   <div id="quest-info">
-    <br>
     <div id="quest-screen">
-    <br><br>
+    <br><br><br><br><br><br>
     <span id='quest-banner-text'>QUEST</span><br><br>
     <div id="quest-name" class="info-text"><strong><span>{{ questName }}</span></strong></div><br>
     <div id="quest-text" class="info-text"><span>{{ questText }}</span></div><br>
@@ -62,6 +61,7 @@ ul{
      background-position: center;
      background-size: 93%;
      background-repeat: no-repeat;
+     min-height: 600px;
  }
 #rewards-list{
     width: 250px;
@@ -81,9 +81,9 @@ ul{
     color: white;
 }
 #quest-banner-text{
-    font-size: 24px;
+    font-size: 34px;
     font-weight: bold;
-    ;
+    color: white;
 }
 .quest-reward{
     font-size: 16px;
