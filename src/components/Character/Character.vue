@@ -1,6 +1,6 @@
 <template>
   <div id="character" class="modified-screen">
-      <br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br>
       <div id="player-stats">
         <br>
         <h3>Name: {{ characterName }} </h3> 

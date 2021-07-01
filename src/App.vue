@@ -311,7 +311,6 @@ export default {
           [ "agr002" , 2 , "gear" ],
           [ "agw001" , 5 , "gear" ],
           [ "bhp001" , 3 , "gear" ],
-          [ "shu001" , 1, "equipment" ],
           [ "lhu001" , 1, "equipment" ],
           [ "lcu001" , 1, "equipment" ],
           [ "lsu001" , 1, "equipment" ],
@@ -746,10 +745,16 @@ export default {
           this.adventureButtonsPane = true;
           break;
         case "randomCombat":
+          if (this.player.totalPlayerDamage < 1){
+            alert("You should probably consider at least bringing something sharp with you out there.\nCheck your inventory.")
+            this.openPane('inventory');
+          }
+          else{
           this.retrieveByID("standardEnemies", this.currentOpponent);
           this.statusPane = true;
           this.randomCombatPane = true;
           this.adventureButtonsPane = true;
+          }
           break;
         case "victory":
           this.statusPane = true;
