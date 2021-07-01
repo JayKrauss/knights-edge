@@ -1,7 +1,9 @@
-#app{
-    background-image: url("./images/tweed.png");
-    min-height: 800px;
-}
+body, html, #app {
+    padding: 0;
+    margin: 0;
+    min-width: 100vh;
+    min-height: 100%;
+  }
 span, li{
     /* font-family: 'Akaya Kanadaka', cursive; */
     font-family: 'Julee', cursive;
@@ -12,11 +14,8 @@ button{
     font-family: 'Julee', cursive;
     font-size: 20px;
 }
-#playfield{
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
+#app{
+    background-image: url("./images/binding_dark.png");
 }
 .main-screen{
     background-image: url("./images/staticbackground.png");
@@ -24,8 +23,7 @@ button{
     background-size: cover;
     width: 500px;
     height: 100%;
-    min-height: 600px;
-    max-height: 900px;
+    min-height: 700px;
     background: gray;
     margin-left: auto;
     margin-right: auto;
@@ -36,8 +34,7 @@ button{
     background-size: cover;
     width: 500px;
     height: 100%;
-    min-height: 600px;
-    max-height: 900px;
+    min-height: 700px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -92,3 +89,5 @@ button{
     text-align: center;
     font-size: 22px;
 }
+
+
