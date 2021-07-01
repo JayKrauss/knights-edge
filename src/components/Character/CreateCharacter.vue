@@ -1,7 +1,7 @@
 <template>
-<br><br><br><br>
+<br><br><br>
   <div id="character" class="modified-screen">
-      <br><br>
+      <br><br><br><br>
       <div id="character-create">
 
         <span id="welcome">Welcome!</span><br>

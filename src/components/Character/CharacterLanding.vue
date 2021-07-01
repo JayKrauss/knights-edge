@@ -1,8 +1,8 @@
 <template>
 <div class="modified-screen">
-<br><br>
+<br><br><br><br><br>
   <div id="character">
-      <br><br><br><br>
+      <br><br><br>
       <div id="player-stats">
         <br>
         <span id="character-name">Name: {{ characterName }} </span><br/><br/>
