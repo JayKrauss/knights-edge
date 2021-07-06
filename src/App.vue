@@ -159,7 +159,13 @@
     />
   </div>
   <div v-if="innPane">
-    <Inn />
+    <Inn 
+      @modifyPlayerStats="modifyPlayerStats"
+      @healToFull="healToFull"
+      :playerLevel="this.player.level"
+      :playerHeath="this.player.currentHP"
+      :playerMaxHealth="this.player.maxHP"
+    />
   </div>
   <div v-if="forestPane">
     <Forest 

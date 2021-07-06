@@ -4,7 +4,7 @@
     <div class="shop-text"><strong>{{ innText }}</strong></div>
     <div id="innkeeper-image"></div><span id='innkeeper-greeting' class="shop-text">Food? Drink? Or a place to rest?</span>
     <div id='inn-buttons'>
-      <button class="shop-button">Rest</button>
+      <button @click="restUp" class="shop-button">Rest</button>
       <button class="shop-button">Drink</button>
       <button class="shop-button">Quests</button>
     </div>
@@ -14,10 +14,26 @@
 <script>
 export default {
   name: "Inn",
-  props: [],
+  props: [
+    "playerLevel",
+    "playerHealth",
+    "playerMaxHealth"
+  ],
   data(){
     return{
       innText : "You open the front door to a blast of music and voices. The main floor of the inn serves as a bar and restaurant to travellers and townsfolk alike. Rooms are available upstairs for rent. A quest board stands against a far wall with fliers for jobs that need to be done."
+    }
+  },
+  methods: {
+    restUp(){
+      if (this.playerHealth < this.playerMaxHealth){
+        this.$emit('modifyPlayerStats', "gold", (this.playerLevel * 1), "-");
+        this.$emit('healToFull');
+      }
+      else{
+        alert("You are already at full health.")
+      }
+      
     }
   }
 };
@@ -45,7 +61,7 @@ export default {
 }
 #innkeeper-image{
   width: 250px;
-  height: 320px;
+  height: 250px;
   margin-left: 10px;
   background-image: url('../../assets/images/npcimages/innkeeperidle.png');
   background-size: cover;
