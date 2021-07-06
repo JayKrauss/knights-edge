@@ -11,7 +11,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/armorimages/4.png"),
             type : "equipment",
-            levelRange : [0, 5],     
+            levelRange : 1,     
         },
         {
             name : "Iron Helm",
@@ -22,7 +22,8 @@ export default
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Steel Helm",
@@ -33,7 +34,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/armorimages/12.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Black Helm",
@@ -44,7 +45,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Mithril Helm",
@@ -55,7 +56,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Adamantine Helm",
@@ -66,7 +67,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         {
             name : "Crystal Helm",
@@ -77,7 +78,7 @@ export default
             slot : "helm",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [28, 35],   
+            levelRange : 7,   
         },
         //CHESTS
         {
@@ -89,7 +90,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/armorimages/5.png"),
             type : "equipment",
-            levelRange : [0, 5],           
+            levelRange : 1,           
         },
         {
             name : "Iron Chestpiece",
@@ -100,7 +101,8 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Steel Chestpiece",
@@ -111,7 +113,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Black Chestpiece",
@@ -122,7 +124,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Mithril Chestpiece",
@@ -133,7 +135,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Adamantine Chestpiece",
@@ -144,7 +146,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         {
             name : "Crystal Chestpiece",
@@ -155,7 +157,7 @@ export default
             slot : "chest",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [28, 35],   
+            levelRange : 7,   
         },
         //NECK SLOTS
         {
@@ -167,7 +169,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 2,   
         },
         {
             name : "Gold Necklace",
@@ -178,7 +180,8 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Ruby Necklace",
@@ -189,7 +192,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Emerald Necklace",
@@ -200,7 +203,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Onyx Necklace",
@@ -211,7 +214,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Diamond Necklace",
@@ -222,7 +225,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         //BAGS
         {
@@ -234,7 +237,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 2,   
         },
         {
             name : "Herb Collection Bag",
@@ -245,7 +248,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 2,   
         },
         {
             name : "Runestone Collection Bag",
@@ -256,7 +259,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 2,   
         },
         //MAIN HANDS
         {
@@ -268,7 +271,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 1,   
         },
         {
             name : "Iron Short Sword",
@@ -279,7 +282,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 1,   
         },
         {
             name : "Steel Short Sword",
@@ -290,7 +293,8 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Mithril Short Sword",
@@ -301,7 +305,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Iron Longsword",
@@ -312,7 +316,8 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Steel Longsword",
@@ -323,7 +328,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Black Longsword",
@@ -334,7 +339,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Mithril Longsword",
@@ -345,7 +350,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Adamantine Longsword",
@@ -356,7 +361,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         {
             name : "Crystal Longsword",
@@ -367,7 +372,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [28, 35],   
+            levelRange : 7,   
         },
         //OFFHANDS
         {
@@ -379,7 +384,7 @@ export default
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [0, 5],   
+            levelRange : 1,   
         },
         {
             id : "wks001",
@@ -389,7 +394,8 @@ export default
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             id : "wts001",
@@ -399,7 +405,7 @@ export default
             slot : "offhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         //GREAVES
         {
@@ -411,7 +417,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/armorimages/3.png"),
             type : "equipment",
-            levelRange : [0, 5],          
+            levelRange : 1,          
         },
         {
             name : "Iron Greaves",
@@ -422,7 +428,8 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Steel Greaves",
@@ -433,7 +440,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Black Greaves",
@@ -444,7 +451,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Mithril Greaves",
@@ -455,7 +462,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Adamantine Greaves",
@@ -466,7 +473,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         {
             name : "Crystal Greaves",
@@ -477,7 +484,7 @@ export default
             slot : "legs",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [28, 35],   
+            levelRange : 7,   
         },
         //SABATONS
         {
@@ -489,7 +496,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/armorimages/3.png"),
             type : "equipment",
-            levelRange : [0, 5],           
+            levelRange : 1,           
         },
         {
             name : "Iron Sabatons",
@@ -500,7 +507,8 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [4, 10],   
+            levelRange : 2
+            ,   
         },
         {
             name : "Steel Sabatons",
@@ -511,7 +519,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [7, 15],   
+            levelRange : 3,   
         },
         {
             name : "Black Sabatons",
@@ -522,7 +530,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [10, 20],   
+            levelRange : 4,   
         },
         {
             name : "Mithril Sabatons",
@@ -533,7 +541,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [18, 25],   
+            levelRange : 5,   
         },
         {
             name : "Adamantine Sabatons",
@@ -544,7 +552,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [23, 30],   
+            levelRange : 6,   
         },
         {
             name : "Crystal Sabatons",
@@ -555,7 +563,7 @@ export default
             slot : "feet",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : [28, 35],   
+            levelRange : 7,   
         },
     ],
 }

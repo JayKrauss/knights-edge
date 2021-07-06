@@ -294,9 +294,14 @@ export default {
     this.buildInventory();
     this.addQuestToObjectList();
     this.buildEquippedItemArray();
+    console.table(this.blacksmithInventoryIDs);
+    this.levelShopInventory("blacksmith");
+    this.levelShopInventory("clothier");
     this.buildShopInventory("general");
     this.buildShopInventory("blacksmith");
     this.buildShopInventory("clothier");
+    console.table(this.blacksmithInventoryIDs);
+
   },
   data() {
     //Data store persistent
@@ -394,18 +399,13 @@ export default {
       
       //shop inventories
       blacksmithInventoryIDs : [
-        "mhsss001",
-        "mhmss001",
-        "wrs001",
+
       ],
       blacksmithInventoryObjects : [
 
       ],
       clothierInventoryIDs : [
-        "ihu001",
-        "icu001",
-        "igu001",
-        "isu001",
+
       ],
       clothierInventoryObjects : [
 
@@ -1008,6 +1008,86 @@ export default {
         default:
           console.log("Incorrect shop input");
           break;
+      }
+    },
+    levelShopInventory(store){
+      console.table(equipmentList)
+      for (var l=0; l<equipmentList["equipment"].length; l++){
+        this.retrieveByID('equipment', equipmentList["equipment"][l].id);
+        console.log(this.player.level)
+        if (this.player.level >= 0 && this.player.level < 6){
+          if (this.currentItem.levelRange == 1){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 5 && this.player.level < 11){
+          if (this.currentItem.levelRange == 2){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 10 && this.player.level < 16){
+          if (this.currentItem.levelRange == 3){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 15 && this.player.level < 21){
+          if (this.currentItem.levelRange == 4){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 20 && this.player.level < 26){
+          if (this.currentItem.levelRange == 5){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 25 && this.player.level < 31){
+          if (this.currentItem.levelRange == 6){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else if (this.player.level > 30 && this.player.level < 36){
+          if (this.currentItem.levelRange == 7){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+              this.blacksmithInventoryIDs.push(this.currentItem.id);
+            }
+            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+              this.clothierInventoryIDs.push(this.currentItem.id)
+            }
+          }
+        }
+        else{
+          console.log("How did you get here?")
+        }
       }
     },
     buyItem(id){
