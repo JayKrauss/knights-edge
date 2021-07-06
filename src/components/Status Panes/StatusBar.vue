@@ -6,16 +6,20 @@
                 <button @click="openCharacter">📜</button>
               </td>
               <td>
-                  Level: <span id="player-level">{{ level }}</span>
+                  Level: <br>
+                  <span id="player-level">{{ level }}<span id="level-change" class="shown-changes"></span></span>
               </td>
               <td>
-                  XP: <span id="current-xp">{{ xp }}</span>/ <span id="to-level">{{ toLevel }}</span>
+                  XP: <br>
+                  <span id="current-xp">{{ xp }}</span>/ <span id="to-level">{{ toLevel }}<span id="xp-change" class="shown-changes"></span></span>
               </td>
               <td>
-                  Gold: <span id="gold-amount">{{ gold.toFixed(2) }}</span>
+                  Gold: <br>
+                  <span id="gold-amount">{{ gold.toFixed(2) }}<span id="gold-change" class="shown-changes"></span></span>
               </td>
               <td>
-                  HP: <span id="current-HP">{{ currentHP.toFixed(2) }}</span>/<span id="max-HP">{{ maxHP.toFixed(2) }}</span>
+                  HP: <br>
+                  <span id="current-HP">{{ currentHP.toFixed(2) }}</span>/<span id="max-HP">{{ maxHP.toFixed(2) }}<span id="hp-change" class="shown-changes"></span></span>
               </td>
           </tr>
       </table>
@@ -31,12 +35,54 @@ export default {
     "toLevel",
     "gold",
     "currentHP",
-    "maxHP"
+    "maxHP",
+    "levelChange",
+    "xpChange",
+    "goldChange",
+    "hpChange",
   ],
   methods: {
     openCharacter() {
       this.$emit("openPane", "character")
     },
+    showLevelChange() {
+      var showingLevelChange = document.getElementById("level-change");
+      showingLevelChange.innerHTML = this.levelChange;
+      showingLevelChange.classList.add('show');
+      setTimeout(function() { showingLevelChange.classList.remove('show'); }, 250);
+    },
+    showXPChange(){
+      var showingXPChange = document.getElementById("xp-change");
+      showingXPChange.innerHTML = this.xpChange;
+      showingXPChange.classList.add('show');
+      setTimeout(function() { showingXPChange.classList.remove('show'); }, 250);
+    },
+    showGoldChange() {
+      var showingGoldChange = document.getElementById("gold-change");
+      showingGoldChange.innerHTML = this.goldChange;
+      showingGoldChange.classList.add('show');
+      setTimeout(function() { showingGoldChange.classList.remove('show'); }, 250);
+    },
+    showHPChange() {
+      var showingHPChange = document.getElementById("hp-change");
+      showingHPChange.innerHTML = this.hpChange;
+      showingHPChange.classList.add('show');
+      setTimeout(function() { showingHPChange.classList.remove('show'); }, 250);
+    }
+  },
+  watch: {
+    levelChange: function() { 
+        this.showLevelChange()
+    },
+    xpChange: function() { 
+        this.showXPChange()
+    },
+    goldChange: function() { 
+        this.showGoldChange()
+    },
+    hpChange: function() { 
+        this.showHPChange()
+    }
   }
 };
 </script>
@@ -46,7 +92,7 @@ export default {
 #status-bar{
   top:0;
   width: 500px;
-  height: 50px;
+  height: 60px;
   background: black;
   margin-left: auto;
   margin-right: auto;

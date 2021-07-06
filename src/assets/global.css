@@ -120,7 +120,13 @@ element::-webkit-scrollbar {
     opacity: 0;
     transition: opacity 500ms ease 500ms;
 }
-#coin-spin.show {
+#coin-spin.show, #level-change.show, #xp-change.show, #hp-change.show, #gold-change.show {
     opacity: 1;
     transition: none;
-  }
+}
+
+.shown-changes{
+    margin-left: 5px;
+    opacity: 0;
+    transition: opacity 500ms ease 500ms;
+}

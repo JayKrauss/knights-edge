@@ -10,6 +10,10 @@
       :gold="this.player.gold" 
       :currentHP="this.player.currentHP" 
       :maxHP="this.player.maxHP"
+      :levelChange="this.levelChange"
+      :xpChange="this.xpChange"
+      :goldChange="this.goldChange"
+      :hpChange="this.hpChange"
       @openPane="openPane"
     />
   </div>
@@ -440,6 +444,11 @@ export default {
       opponentLevel : 0,
       opponentXPGain : 0,
       opponentGoldGain : 0,
+
+      goldChange : 0,
+      healthChange : 0,
+      xpChange : 0,
+      levelChange : 0,
     }
   },
   methods: {
@@ -569,37 +578,45 @@ export default {
         case "health":
           if (direction == "-"){
             this.player.currentHP -= amount;
+            this.hpChange = "-" + amount;
             break;
           }
           else{
             this.player.currentHP += amount;
+            this.hpChange = "+" + amount;
             break;
           }
         case "xp":
           if (direction == "-"){
             this.player.xp -= amount;
+            this.xpChange = "-" + amount;
             break;
           }
           else{
             this.player.xp += amount;
+            this.xpChange = "+" + amount;
             break;
           }
         case "gold":
           if (direction == "-"){
             this.player.gold -= amount;
+            this.goldChange = "-" + amount;
             break;
           }
           else{
             this.player.gold += amount;
+            this.goldChange = "+" + amount;
             break;
           }
         case "level":
           if (direction == "-"){
             this.player.level -= amount;
+            this.levelChange = "-" + amount;
             break;
           }
           else{
             this.player.level += amount;
+            this.levelChange = "+" + amount;
             break;
           }
         case "attributePoints":
