@@ -294,14 +294,13 @@ export default {
     this.buildInventory();
     this.addQuestToObjectList();
     this.buildEquippedItemArray();
-    console.table(this.blacksmithInventoryIDs);
     this.levelShopInventory("blacksmith");
     this.levelShopInventory("clothier");
     this.buildShopInventory("general");
     this.buildShopInventory("blacksmith");
     this.buildShopInventory("clothier");
-    console.table(this.blacksmithInventoryIDs);
-
+    this.removeShopDuplicates(this.blacksmithInventoryIDs)
+    this.removeShopDuplicates(this.clothierInventoryIDs)
   },
   data() {
     //Data store persistent
@@ -387,9 +386,7 @@ export default {
           [ "agf002" , 2 , "gear" ],
           [ "agw001" , 5 , "gear" ],
           [ "bhp001" , 3 , "gear" ],
-          [ "lhu001" , 1, "equipment" ],
           [ "lcu001" , 1, "equipment" ],
-          [ "lsu001" , 1, "equipment" ],
           [ "mhiss001", 1, "equipment" ],
         ],
         currentInventoryObjects : [
@@ -546,7 +543,6 @@ export default {
         else{
           for (var g=0; g<this.player.equippedArmor.length; g++){
             if (existingItem.id == this.player.equippedArmor[g]){
-              console.log("removing helm")
               this.player.equippedArmor.splice(h, 1);
             }
           }
@@ -816,6 +812,11 @@ export default {
           this.adventureButtonsPane = true;
           break;
         case "blacksmith":
+          this.levelShopInventory("blacksmith");
+          this.levelShopInventory("clothier");
+          this.buildShopInventory("general");
+          this.buildShopInventory("blacksmith");
+          this.buildShopInventory("clothier");
           this.statusPane = true;
           this.blacksmithPane = true;
           this.townButtonsPane = true;
@@ -831,6 +832,11 @@ export default {
           this.townButtonsPane = true;
           break;
         case "generalstore":
+          this.levelShopInventory("blacksmith");
+          this.levelShopInventory("clothier");
+          this.buildShopInventory("general");
+          this.buildShopInventory("blacksmith");
+          this.buildShopInventory("clothier");
           this.statusPane = true;
           this.generalStorePane = true;
           this.townButtonsPane = true;
@@ -846,6 +852,11 @@ export default {
           this.townButtonsPane = true;
           break;
         case "clothier":
+          this.levelShopInventory("blacksmith");
+          this.levelShopInventory("clothier");
+          this.buildShopInventory("general");
+          this.buildShopInventory("blacksmith");
+          this.buildShopInventory("clothier");
           this.statusPane = true;
           this.clothierPane = true;
           this.townButtonsPane = true;
@@ -1012,9 +1023,14 @@ export default {
     },
     levelShopInventory(store){
       console.table(equipmentList)
+      if (store == "blacksmith"){
+        this.blacksmithInventoryIDs = [];
+      }
+      else if (store == "clothier"){
+        this.clothierInventoryIDs = [];
+      }
       for (var l=0; l<equipmentList["equipment"].length; l++){
         this.retrieveByID('equipment', equipmentList["equipment"][l].id);
-        console.log(this.player.level)
         if (this.player.level >= 0 && this.player.level < 6){
           if (this.currentItem.levelRange == 1){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
@@ -1089,6 +1105,17 @@ export default {
           console.log("How did you get here?")
         }
       }
+    },
+    removeShopDuplicates(arr){
+      var uniques = [];
+      var itemsFound = {};
+      for(var i = 0, l = arr.length; i < l; i++) {
+          var stringified = JSON.stringify(arr[i]);
+          if(itemsFound[stringified]) { continue; }
+          uniques.push(arr[i]);
+          itemsFound[stringified] = true;
+      }
+      return uniques;
     },
     buyItem(id){
       var existing = false;

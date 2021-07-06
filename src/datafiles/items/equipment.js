@@ -305,7 +305,7 @@ export default
             slot : "mainhand",
             image : require("../../assets/images/weaponimages/1.png"),
             type : "equipment",
-            levelRange : 3,   
+            levelRange : 2,   
         },
         {
             name : "Iron Longsword",
@@ -387,6 +387,7 @@ export default
             levelRange : 1,   
         },
         {
+            name : "Wooden Kite Shield",
             id : "wks001",
             armor : 5,
             value : 15,
@@ -398,6 +399,7 @@ export default
             ,   
         },
         {
+            name : "Wooden Tower Shield",
             id : "wts001",
             armor : 15,
             value : 55,
