@@ -4,8 +4,8 @@
     <div class="shop-text"><strong>{{ blacksmithText }}</strong></div>
     <div id="blacksmith-image"></div><span id='blacksmith-greeting' class="shop-text">What brings you to my shop?</span>
   <div id='blacksmith-buttons'>
-  <button class="shop-button">Buy</button>
-  <button class="shop-button">Sell</button>
+  <button @click="openBuy" class="shop-button">Buy</button>
+  <button @click="openSell" class="shop-button">Sell</button>
   <button class="shop-button">Work</button>
   </div>
   </div>
@@ -18,6 +18,14 @@ export default {
   data() {
     return{
       blacksmithText : "You enter a busy blacksmith shop. Around you is an array of weapons and tools across every wall and surface. Behind the counter, you can see the smith and his apprentices working a hot bar of steel, the smith barking orders as the others strike."
+    }
+  },
+  methods: {
+    openBuy(){
+      this.$emit('openPane', 'blacksmithBuy')
+    },
+    openSell(){
+      this.$emit('openPane', 'blacksmithSell')
     }
   }
 };

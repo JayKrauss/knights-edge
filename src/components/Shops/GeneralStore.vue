@@ -4,8 +4,8 @@
     <div class="shop-text"><strong>{{ generalStoreText }}</strong></div>
     <div id="generalstore-image"></div><span id='generalstore-greeting' class="shop-text">Welcome! Have a look around.</span>
     <div id='generalstore-buttons'>
-    <button class="shop-button">Buy</button>
-    <button class="shop-button">Sell</button>
+    <button @click="openBuy" class="shop-button">Buy</button>
+    <button @click="openSell" class="shop-button">Sell</button>
     <button class="shop-button">Talk</button>
     </div>
   </div>
@@ -18,6 +18,14 @@ export default {
   data(){
     return{
       generalStoreText : "You walk into the General Store. In boxes and crate, on shelves and hung from hooks are all manner of tools an equipment for every adventurer. Boxes of perserved rations and empty bottles stand next to stacks of health potions and climbing gear."
+    }
+  },
+  methods: {
+    openBuy(){
+      this.$emit('openPane', 'generalStoreBuy')
+    },
+    openSell(){
+      this.$emit('openPane', 'generalStoreSell')
     }
   }
 };

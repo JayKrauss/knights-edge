@@ -12,7 +12,7 @@
                   XP: <span id="current-xp">{{ xp }}</span>/ <span id="to-level">{{ toLevel }}</span>
               </td>
               <td>
-                  Gold: <span id="gold-amount">{{ gold }}</span>
+                  Gold: <span id="gold-amount">{{ gold.toFixed(2) }}</span>
               </td>
               <td>
                   HP: <span id="current-HP">{{ currentHP.toFixed(2) }}</span>/<span id="max-HP">{{ maxHP.toFixed(2) }}</span>

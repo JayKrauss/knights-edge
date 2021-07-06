@@ -29,7 +29,7 @@ export default {
           let lootItem = `
             <li class="inventory-item">
               <span class='left-side-item'>${this.currentInventoryObjects[i].name}</span>
-              <button class="equip-button" value="${this.currentInventoryObjects[i].id}">EQUIP</button>
+              <button class="equip-button center-item" value="${this.currentInventoryObjects[i].id}">EQUIP</button>
               <span class='right-side-item'>${this.currentInventoryObjects[i].amount}</span>
             </li>
           `

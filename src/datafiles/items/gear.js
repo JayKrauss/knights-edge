@@ -19,7 +19,7 @@ export default
             },
             {
                 name : "Rations",
-                id : "agr002",
+                id : "agf002",
                 value : 1, 
                 description : "Provides a small health boost while adventuring.",
                 type : "gear",

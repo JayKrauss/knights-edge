@@ -102,13 +102,61 @@
     />
   </div>
   <div v-if="blacksmithPane">
-    <Blacksmith />
+    <Blacksmith 
+      @openPane="openPane"
+    />
+  </div>
+  <div v-if="blacksmithBuyPane">
+    <BlacksmithBuy
+      @buyItem="buyGear"
+      :blacksmithInventoryObjects="this.blacksmithInventoryObjects"
+    />
+  </div>
+  <div v-if="blacksmithSellPane">
+    <BlacksmithSell 
+      @sellItem="sellGear"
+      @openPane="openPane"
+      :currentInventoryObjects="this.player.currentInventoryObjects"
+      :currentInventoryIDs="this.player.currentInventoryIDs"
+    />
   </div>
   <div v-if="clothierPane">
-    <Clothier />
+    <Clothier 
+      @openPane="openPane"
+    />
+  </div>
+  <div v-if="clothierBuyPane">
+    <ClothierBuy 
+      @buyItem="buyGear"
+      :clothierInventoryObjects="this.clothierInventoryObjects"
+    />
+  </div>
+  <div v-if="clothierSellPane">
+    <ClothierSell 
+      @sellItem="sellGear"
+      @openPane="openPane"
+      :currentInventoryObjects="this.player.currentInventoryObjects"
+      :currentInventoryIDs="this.player.currentInventoryIDs"
+    />
   </div>
   <div v-if="generalStorePane">
-    <GeneralStore />
+    <GeneralStore 
+      @openPane="openPane"
+    />
+  </div>
+  <div v-if="generalStoreBuyPane">
+    <GeneralStoreBuy
+      @buyItem="buyItem"
+      :generalStoreInventoryObjects="this.generalStoreInventoryObjects"
+    />
+  </div>
+  <div v-if="generalStoreSellPane">
+    <GeneralStoreSell
+      @sellItem="sellItem"
+      @openPane="openPane"
+      :currentInventoryObjects="this.player.currentInventoryObjects"
+      :currentInventoryIDs="this.player.currentInventoryIDs"
+    />
   </div>
   <div v-if="innPane">
     <Inn />
@@ -183,8 +231,14 @@ import Equipment from "./components/Character/Equipment.vue";
 import Inventory from "./components/Character/Inventory.vue";
 import Adventure from "./components/Main Panes/Adventure.vue";
 import Blacksmith from "./components/Shops/Blacksmith.vue";
+import BlacksmithBuy from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithBuy.vue";
+import BlacksmithSell from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithSell.vue";
 import Clothier from "./components/Shops/Clothier.vue";
+import ClothierBuy from"./components/Shops/Shop Panes/Clothier Panes/ClothierBuy.vue";
+import ClothierSell from"./components/Shops/Shop Panes/Clothier Panes/ClothierSell.vue";
 import GeneralStore from "./components/Shops/GeneralStore.vue";
+import GeneralStoreBuy from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreBuy.vue";
+import GeneralStoreSell from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreSell.vue";
 import Inn from "./components/Shops/Inn.vue";
 import Forest from "./components/Adventures/Forest.vue";
 import Mountains from "./components/Adventures/Mountains.vue";
@@ -219,8 +273,14 @@ export default {
     Inventory,
     Adventure,
     Blacksmith,
+    BlacksmithBuy,
+    BlacksmithSell,
     Clothier,
+    ClothierBuy,
+    ClothierSell,
     GeneralStore,
+    GeneralStoreBuy,
+    GeneralStoreSell,
     Inn,
     Forest,
     Mountains,
@@ -233,7 +293,10 @@ export default {
     this.collatePlayerStats();
     this.buildInventory();
     this.addQuestToObjectList();
-    this.buildEquippedItemArray()
+    this.buildEquippedItemArray();
+    this.buildShopInventory("general");
+    this.buildShopInventory("blacksmith");
+    this.buildShopInventory("clothier");
   },
   data() {
     //Data store persistent
@@ -254,8 +317,14 @@ export default {
       shopsPane : false,
       adventurePane : false,
       blacksmithPane : false,
+      blacksmithBuyPane : false,
+      blacksmithSellPane : false,
       clothierPane : false,
+      clothierBuyPane : false,
+      clothierSellPane : false,
       generalStorePane : false,
+      generalStoreBuyPane : false,
+      generalStoreSellPane : false,
       innPane : false,
       forestPane : false,
       mountainsPane : false,
@@ -310,7 +379,7 @@ export default {
         currentInventoryIDs : [
           [ "agt001" , 5 , "gear" ],
           [ "agr001" , 3 , "gear" ],
-          [ "agr002" , 2 , "gear" ],
+          [ "agf002" , 2 , "gear" ],
           [ "agw001" , 5 , "gear" ],
           [ "bhp001" , 3 , "gear" ],
           [ "lhu001" , 1, "equipment" ],
@@ -323,6 +392,35 @@ export default {
         ],
       },
       
+      //shop inventories
+      blacksmithInventoryIDs : [
+        "mhsss001",
+        "mhmss001",
+        "wrs001",
+      ],
+      blacksmithInventoryObjects : [
+
+      ],
+      clothierInventoryIDs : [
+        "ihu001",
+        "icu001",
+        "igu001",
+        "isu001",
+      ],
+      clothierInventoryObjects : [
+
+      ],
+      generalStoreInventoryIDs : [
+        "agt001",
+        "agr001",
+        "agf002",
+        "agw001",
+        "bhp001",
+      ],
+      generalStoreInventoryObjects : [
+
+      ],
+
       //bounces current item being pulled from the datasheet, to be used in other functions.
       currentItem : {},
       currentOpponent : "serous001",
@@ -645,8 +743,14 @@ export default {
       this.shopsPane = false;
       this.adventurePane = false;
       this.blacksmithPane = false;
+      this.blacksmithBuyPane = false;
+      this.blacksmithSellPane = false;
       this.clothierPane = false;
+      this.clothierBuyPane = false;
+      this.clothierSellPane = false;
       this.generalStorePane = false;
+      this.generalStoreBuyPane = false;
+      this.generalStoreSellPane = false;
       this.innPane = false;
       this.forestPane = false;
       this.mountainsPane = false;
@@ -716,14 +820,44 @@ export default {
           this.blacksmithPane = true;
           this.townButtonsPane = true;
           break;
+        case "blacksmithBuy":
+          this.statusPane = true;
+          this.blacksmithBuyPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "blacksmithSell":
+          this.statusPane = true;
+          this.blacksmithSellPane = true;
+          this.townButtonsPane = true;
+          break;
         case "generalstore":
           this.statusPane = true;
           this.generalStorePane = true;
           this.townButtonsPane = true;
           break;
+        case "generalStoreBuy" :
+          this.statusPane = true;
+          this.generalStoreBuyPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "generalStoreSell" :
+          this.statusPane = true;
+          this.generalStoreSellPane = true;
+          this.townButtonsPane = true;
+          break;
         case "clothier":
           this.statusPane = true;
           this.clothierPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "clothierBuy" :
+          this.statusPane = true;
+          this.clothierBuyPane = true;
+          this.townButtonsPane = true;
+          break;
+        case "clothierSell":
+          this.statusPane = true;
+          this.clothierSellPane = true;
           this.townButtonsPane = true;
           break;
         case "inn":
@@ -815,7 +949,183 @@ export default {
         this.player.currentInventoryObjects.push(item);
       }
     },
+    //build shop inventory object arrays
+    buildShopInventory(store){
+      switch (store){
+        case "general":
+          console.log("General Store Loading..")
+          this.generalStoreInventoryObjects = [];
+          for (var k=0; k<this.generalStoreInventoryIDs.length; k++){
+              this.retrieveByID("adventuringGear", this.generalStoreInventoryIDs[k]);
+              var gsitem = {};
+              gsitem.name = this.currentItem.name;
+              gsitem.id = this.currentItem.id;
+              gsitem.value = this.currentItem.value;
+              gsitem.description = this.currentItem.description;
+              gsitem.type = this.currentItem.type;
+              gsitem.slot = this.currentItem.slot;
+              this.generalStoreInventoryObjects.push(gsitem);
+          }
+          console.table(this.generalStoreInventoryObjects)
+          break;
+
+          case "blacksmith":
+          console.log("Blacksmith Loading..")
+          this.blacksmithInventoryObjects = [];
+          for (var o=0; o<this.blacksmithInventoryIDs.length; o++){
+              this.retrieveByID("equipment", this.blacksmithInventoryIDs[o]);
+              var bsitem = {};
+              bsitem.name = this.currentItem.name;
+              bsitem.id = this.currentItem.id;
+              bsitem.value = this.currentItem.value;
+              bsitem.damage = this.currentItem.damage;
+              bsitem.description = this.currentItem.description;
+              bsitem.type = this.currentItem.type;
+              bsitem.slot = this.currentItem.slot;
+              this.blacksmithInventoryObjects.push(bsitem);
+          }
+          console.table(this.blacksmithInventoryObjects)
+          break;
+
+          case "clothier":
+          console.log("Clothier Loading..")
+          this.clothierInventoryObjects = [];
+          for (var p=0; p<this.clothierInventoryIDs.length; p++){
+              this.retrieveByID("equipment", this.clothierInventoryIDs[p]);
+              var chitem = {};
+              chitem.name = this.currentItem.name;
+              chitem.id = this.currentItem.id;
+              chitem.value = this.currentItem.value;
+              chitem.armor = this.currentItem.armor;
+              chitem.description = this.currentItem.description;
+              chitem.type = this.currentItem.type;
+              chitem.slot = this.currentItem.slot;
+              this.clothierInventoryObjects.push(chitem);
+          }
+          console.table(this.clothierInventoryObjects)
+          break;
+
+        default:
+          console.log("Incorrect shop input");
+          break;
+      }
+    },
+    buyItem(id){
+      var existing = false;
+      var existingItemIndex = {};
+      for (var r=0; r<this.player.currentInventoryIDs.length; r++){
+        if (this.player.currentInventoryIDs[r][0] == id){
+         existing = true;
+         existingItemIndex = r;
+        }
+      }
+      this.retrieveByID('adventuringGear', id);
+      if (this.player.gold - this.currentItem.value >= 0){
+        if (existing){
+        this.player.currentInventoryIDs[existingItemIndex][1]++;
+        console.log(this.currentItem.value)
+        this.modifyPlayerStats('gold', this.currentItem.value, "-");
+        this.buildInventory();
+        }
+        else{
+          this.player.currentInventoryIDs.push(
+            [id, 1, 'gear']
+          );
+          this.modifyPlayerStats('gold', this.currentItem.value, "-");
+          this.buildInventory();
+        }
+      }
+      else{
+        alert("You cannot afford this.");
+      }
+    },
+    sellItem(id){
+        var existingSellIndex;
+        var playerHas = false
+        for(var y=0; y<this.player.currentInventoryIDs.length; y++){
+          if (this.player.currentInventoryIDs[y][0] == id){
+            existingSellIndex = y;
+            playerHas = true;
+            console.log(playerHas)
+          }
+        }
+        if (playerHas){
+          this.retrieveByID('adventuringGear', id);
+          this.player.currentInventoryIDs[existingSellIndex][1]--;
+          if (this.player.currentInventoryIDs[existingSellIndex][1] == 0){
+            console.table(this.player.currentInventoryObjects)
+            console.log("Zeroed")
+            this.player.currentInventoryIDs.splice(existingSellIndex, 1);
+            this.buildInventory();
+            console.table(this.player.currentInventoryObjects)
+          }
+          this.modifyPlayerStats('gold', (this.currentItem.value / 2), "+");
+          this.buildInventory();
+          console.table(this.player.currentInventoryObjects)
+        }
+        else{
+          return;
+        }  
+    },
+    buyGear(id){
+      var existing = false;
+      var existingItemIndex = {};
+      for (var r=0; r<this.player.currentInventoryIDs.length; r++){
+        if (this.player.currentInventoryIDs[r][0] == id){
+         existing = true;
+         existingItemIndex = r;
+        }
+      }
+      this.retrieveByID('equipment', id);
+      if (this.player.gold - this.currentItem.value >= 0){
+        if (existing){
+        this.player.currentInventoryIDs[existingItemIndex][1]++;
+        console.log(this.currentItem.value)
+        this.modifyPlayerStats('gold', this.currentItem.value, "-");
+        this.buildInventory();
+        }
+        else{
+          this.player.currentInventoryIDs.push(
+            [id, 1, 'equipment']
+          );
+          this.modifyPlayerStats('gold', this.currentItem.value, "-");
+          this.buildInventory();
+        }
+      }
+      else{
+        alert("You cannot afford this.");
+      }
+    },
+    sellGear(id){
+       var existingSellIndex;
+        var playerHas = false
+        for(var y=0; y<this.player.currentInventoryIDs.length; y++){
+          if (this.player.currentInventoryIDs[y][0] == id){
+            existingSellIndex = y;
+            playerHas = true;
+            console.log(playerHas)
+          }
+        }
+        if (playerHas){
+          this.retrieveByID('equipment', id);
+          this.player.currentInventoryIDs[existingSellIndex][1]--;
+          if (this.player.currentInventoryIDs[existingSellIndex][1] == 0){
+            console.table(this.player.currentInventoryObjects)
+            console.log("Zeroed")
+            this.player.currentInventoryIDs.splice(existingSellIndex, 1);
+            this.buildInventory();
+            console.table(this.player.currentInventoryObjects)
+          }
+          this.modifyPlayerStats('gold', (this.currentItem.value / 2), "+");
+          this.buildInventory();
+          console.table(this.player.currentInventoryObjects)
+        }
+        else{
+          return;
+        }
+    }
   }
+
 };
 </script>
 

@@ -4,8 +4,8 @@
     <div class="shop-text"><strong>{{ clothierText }}</strong></div>
     <div id="clothier-image"></div><span id='clothier-greeting' class="shop-text">Greetings. Buy something.</span>
     <div id='clothier-buttons'>
-      <button class="shop-button">Buy</button>
-      <button class="shop-button">Sell</button>
+      <button @click="openBuy" class="shop-button">Buy</button>
+      <button @click="openSell" class="shop-button">Sell</button>
     </div>
   </div>
 </template>
@@ -17,6 +17,14 @@ export default {
   data(){
     return{
       clothierText : "You enter the Clothier shop. All over the large room are mannequins displaying an assortment of clothing and armor sets for all occations. The shop owner can be seen fitting a customer for a set of leather armor."
+    }
+  },
+  methods: {
+    openBuy() {
+      this.$emit('openPane', 'clothierBuy');
+    },
+    openSell() {
+      this.$emit('openPane', 'clothierSell');
     }
   }
 };
