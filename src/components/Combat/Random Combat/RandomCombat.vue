@@ -1,7 +1,8 @@
 <template>
   <div id="random-combat" class="main-screen">
-    <br><br>
+    <br>
     <div v-show="mounted">
+    <div><span id="opponent-name">{{ opponentName }}</span></div><br>
     <div class="intro-text"><strong>{{ randomCombatText }}</strong></div>
     <br>
     <img id="combat-image" v-bind:src="opponentImage"><div id="attack-animation"></div><br>
@@ -136,6 +137,10 @@ export default {
  }
  .random-combat-text{
    color: white;
+ }
+ #opponent-name{
+   color: white;
+   font-size: 34px;
  }
  #attack-animation{
    background-image: url("../../../assets/images/ezgif.com-gif-maker (2).gif");
