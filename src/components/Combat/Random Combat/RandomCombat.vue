@@ -13,7 +13,7 @@
     <span id="status-text2">{{ statusText2 }}</span><br/>
     </div>
     <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
-    <button class="shop-button">Defend</button>
+    <button class="shop-button" disabled>Defend</button>
     <button @click="playerHeal" class="shop-button">Heal</button>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <br><br><br>
     <div class="shop-text"><strong>{{ mountainText }}</strong></div>
       <br><br>
-  <button class="shop-button">Gather</button><br>
+  <button class="shop-button" disabled>Gather</button><br>
   <button @click="randomCombat" class="shop-button">Fight</button>
   </div>
 </template>

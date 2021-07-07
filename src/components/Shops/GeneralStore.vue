@@ -6,7 +6,7 @@
     <div id='generalstore-buttons'>
     <button @click="openBuy" class="shop-button">Buy</button>
     <button @click="openSell" class="shop-button">Sell</button>
-    <button class="shop-button">Talk</button>
+    <button class="shop-button" disabled>Talk</button>
     </div>
   </div>
 </template>

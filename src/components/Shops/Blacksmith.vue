@@ -6,7 +6,7 @@
   <div id='blacksmith-buttons'>
   <button @click="openBuy" class="shop-button">Buy</button>
   <button @click="openSell" class="shop-button">Sell</button>
-  <button class="shop-button">Work</button>
+  <button class="shop-button" disabled>Work</button>
   </div>
   </div>
 </template>

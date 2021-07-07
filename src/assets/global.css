@@ -14,6 +14,14 @@ button{
     font-family: 'Julee', cursive;
     font-size: 20px;
 }
+button:disabled{
+    background-image: url("../assets/images/disabledbutton.png");
+    background-size: cover;
+}
+button:disabled:hover{
+    background-image: url("../assets/images/disabledbutton.png");
+    background-size: cover;
+}
 .main-screen{
     background-image: url("./images/staticbackground.png");
     background-repeat: no-repeat;

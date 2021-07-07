@@ -5,8 +5,8 @@
     <div id="innkeeper-image"></div><span id='innkeeper-greeting' class="shop-text">Food? Drink? Or a place to rest?</span>
     <div id='inn-buttons'>
       <button @click="restUp" class="shop-button">Rest</button>
-      <button class="shop-button">Drink</button>
-      <button class="shop-button">Quests</button>
+      <button class="shop-button" disabled>Drink</button>
+      <button class="shop-button" disabled>Quests</button>
     </div>
   </div>
 </template>
