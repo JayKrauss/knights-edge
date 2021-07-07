@@ -89,7 +89,6 @@ export default {
       if (e.target.matches('.gear-preview')) {
         var itemID = "";
         itemID = e.target.value
-        console.log(itemID)
         if (itemID != undefined){
            this.$emit('unequipItem', itemID);
         }

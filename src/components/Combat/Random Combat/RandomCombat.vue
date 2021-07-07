@@ -28,6 +28,7 @@ export default {
       "playerMaxHP",
       "playerDamage",
       "playerArmor",
+      "playerLevel",
       "opponent",
       "opponentImage",
       "opponentDeathImage",
@@ -57,11 +58,11 @@ export default {
       generateOpponent(){
         this.opponentName = this.opponent.name;
         this.opponentLevel = this.opponent.level;
-        this.opponentMaxHP = this.opponent.maxHP;
-        this.opponentCurrentHP = this.opponent.maxHP;
-        this.opponentDamage = ((this.opponent.attack + (Math.random() / 10)) - (this.playerArmor / 100));
-        this.opponentXPValue = this.opponent.xpValue;
-        this.opponentGoldValue = this.opponent.goldValue;
+        this.opponentMaxHP = 7 * this.playerLevel;
+        this.opponentCurrentHP = 7 * this.playerLevel;
+        this.opponentDamage = ((1.5 * this.playerLevel) - (this.playerArmor / 100));
+        this.opponentXPValue = 10 * this.playerLevel;
+        this.opponentGoldValue = 2 * this.playerLevel;
         this.opponentSpeech = this.opponent.speech;
         this.randomCombatText = this.opponent.introduction;
         this.deathImage = this.opponentDeathImage;
@@ -149,7 +150,7 @@ export default {
  }
  #combat-image{
     background-size: cover;
-     width: 350px;
+     width: 200px;
      height: 200px;
      margin-left: auto;
      margin-right: auto;

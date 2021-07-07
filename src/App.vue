@@ -170,7 +170,7 @@
       @modifyPlayerStats="modifyPlayerStats"
       @healToFull="healToFull"
       :playerLevel="this.player.level"
-      :playerHeath="this.player.currentHP"
+      :playerHealth="this.player.currentHP"
       :playerMaxHealth="this.player.maxHP"
     />
   </div>
@@ -193,6 +193,7 @@
       :playerMaxHP="this.player.maxHP"
       :playerDamage="this.player.totalPlayerDamage"
       :playerArmor="this.player.totalPlayerArmor"
+      :playerLevel="this.player.level"
       :opponent="this.currentItem"
       :opponentImage="this.currentItem.image"
       :opponentDeathImage="this.currentItem.deathImage"
@@ -435,7 +436,7 @@ export default {
 
       //bounces current item being pulled from the datasheet, to be used in other functions.
       currentItem : {},
-      currentOpponent : "serous001",
+      currentOpponent : "",
       opponentDeathImage : "",
 
       //quest variables
@@ -443,7 +444,7 @@ export default {
       questID : "",
       questInfo : "",
       questRewards : [
-        
+
       ],
 
       //victory variables
@@ -787,6 +788,12 @@ export default {
 
       console.log("Oh look, you survived.")
     },
+    //Pulls a random enemy from the database
+    generateRandomEnemy() {
+      var pickedEnemy = standardEnemies["standardEnemies"][Math.floor(Math.random() * standardEnemies["standardEnemies"].length)];
+      console.log(pickedEnemy)
+      this.currentOpponent = pickedEnemy.id;
+    },
     //This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
     openPane(pane){
       this.statusPane = false;
@@ -960,6 +967,7 @@ export default {
             this.openPane('inventory');
           }
           else{
+          this.generateRandomEnemy();
           this.retrieveByID("standardEnemies", this.currentOpponent);
           this.statusPane = true;
           this.randomCombatPane = true;

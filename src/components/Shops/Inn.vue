@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     restUp(){
+      console.log(this.playerHealth)
       if (this.playerHealth < this.playerMaxHealth){
         this.$emit('modifyPlayerStats', "gold", (this.playerLevel * 1), "-");
         this.$emit('healToFull');

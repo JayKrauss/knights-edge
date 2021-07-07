@@ -49,7 +49,7 @@ export default {
  }
  #death-image{
    background-size: cover;
-     width: 250px;
+     width: 180px;
      height: 150px;
      margin-left: auto;
      margin-right: auto;
