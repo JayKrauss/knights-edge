@@ -53,7 +53,7 @@ export default {
       if (e.target.matches('.sell-button')) {
         this.coinSpin();
         var itemID = e.target.value;
-        this.$emit('sellItem', itemID);
+        this.$emit('sellGear', itemID);
         this.$emit('openPane', 'blacksmithSell');
         this.buildInventory();
       }
@@ -120,7 +120,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
  #gear-shop-list{
-     width: 350px;
+     width: 400px;
      height: 250px;
      overflow-y: scroll; 
      margin-left: auto;

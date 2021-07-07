@@ -100,7 +100,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
  #gear-shop-list{
-     width: 350px;
+     width: 400px;
      height: 250px;
      overflow-y: scroll; 
      margin-left: auto;

@@ -48,8 +48,8 @@ export default {
             'generateQuest', 
             'Welcome Wagon', 
             'sqsqww001',
-            'Welcome to town! You should head to the Shops and take a look around before heading out on an adventure!',
-            [{ name: "Gold", amount : 10 }, { name : "XP", amount : 10 }]
+            'Welcome to town! Welcome to town! You should check out your inventory- we left you a few gifts!',
+            [{ name: "Leather Vest", amount : 1 }, { name : "Leather Gloves", amount : 1 }, { name : "Leather Boots", amount : 1}, { name : "Iron Dagger", amount : 1 }, { name : "Starting Gear" , amount : 1 }]
             )
     }
   }

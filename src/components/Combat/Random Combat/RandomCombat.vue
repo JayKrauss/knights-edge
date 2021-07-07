@@ -59,7 +59,7 @@ export default {
         this.opponentLevel = this.opponent.level;
         this.opponentMaxHP = this.opponent.maxHP;
         this.opponentCurrentHP = this.opponent.maxHP;
-        this.opponentDamage = (this.opponent.attack - (this.playerArmor / 100));
+        this.opponentDamage = ((this.opponent.attack + (Math.random() / 10)) - (this.playerArmor / 100));
         this.opponentXPValue = this.opponent.xpValue;
         this.opponentGoldValue = this.opponent.goldValue;
         this.opponentSpeech = this.opponent.speech;

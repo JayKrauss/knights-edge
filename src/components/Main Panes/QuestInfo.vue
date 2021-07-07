@@ -4,7 +4,6 @@
   <div id="quest-info">
     <div id="quest-screen">
     <br><br><br><br><br><br>
-    <span id='quest-banner-text'>QUEST</span><br><br>
     <div id="quest-name" class="info-text"><strong><span>{{ questName }}</span></strong></div><br>
     <div id="quest-text" class="info-text"><span>{{ questText }}</span></div><br>
     <div id="quest-rewards" class="info-text"><strong><span>Rewards:</span></strong></div>

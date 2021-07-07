@@ -26,11 +26,23 @@ export default {
           document.getElementById("gear-inventory-list").innerHTML += gearItem 
         }
         else if (this.currentInventoryObjects[i].type == "equipment"){
+          var itemAttr;
+          if (this.currentInventoryObjects[i].slot == "mainhand"){
+            itemAttr = this.currentInventoryObjects[i].damage + " dmg"
+          }
+          else if (this.currentInventoryObjects[i].slot == "neck"){
+            itemAttr = this.currentInventoryObjects[i].health + " hp"
+          }
+          else{
+            itemAttr = this.currentInventoryObjects[i].armor + " ac"
+          }
+
           let lootItem = `
             <li class="inventory-item">
               <span class='left-side-item'>${this.currentInventoryObjects[i].name}</span>
               <button class="equip-button center-item" value="${this.currentInventoryObjects[i].id}">EQUIP</button>
               <span class='right-side-item'>${this.currentInventoryObjects[i].amount}</span>
+              <span class='right-side-item'>${itemAttr}</span>
             </li>
           `
           document.getElementById("loot-inventory-list").innerHTML += lootItem 
@@ -63,7 +75,7 @@ export default {
      background-position: center;
  }
  #gear-inventory-list, #loot-inventory-list{
-     width: 350px;
+     width: 400px;
      height: 250px;
      overflow-y: scroll; 
      margin-left: auto;

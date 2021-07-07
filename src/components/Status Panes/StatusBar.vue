@@ -46,28 +46,48 @@ export default {
       this.$emit("openPane", "character")
     },
     showLevelChange() {
+      if (this.levelChange == 0){
+        console.log("0")
+      } 
+      else{
       var showingLevelChange = document.getElementById("level-change");
       showingLevelChange.innerHTML = this.levelChange;
       showingLevelChange.classList.add('show');
       setTimeout(function() { showingLevelChange.classList.remove('show'); }, 250);
+      }
     },
     showXPChange(){
+      if (this.xpChange == 0){
+        console.log("0")
+      }
+      else{
       var showingXPChange = document.getElementById("xp-change");
       showingXPChange.innerHTML = this.xpChange;
       showingXPChange.classList.add('show');
       setTimeout(function() { showingXPChange.classList.remove('show'); }, 250);
+      }
     },
     showGoldChange() {
+      if (this.goldChange == 0){
+        console.log("0")
+      }
+      else{
       var showingGoldChange = document.getElementById("gold-change");
       showingGoldChange.innerHTML = this.goldChange;
       showingGoldChange.classList.add('show');
       setTimeout(function() { showingGoldChange.classList.remove('show'); }, 250);
+      }
     },
     showHPChange() {
+      if (this.hpChange == 0){
+        console.log("0")
+      }
+      else{
       var showingHPChange = document.getElementById("hp-change");
       showingHPChange.innerHTML = this.hpChange;
       showingHPChange.classList.add('show');
       setTimeout(function() { showingHPChange.classList.remove('show'); }, 250);
+      }
     }
   },
   watch: {

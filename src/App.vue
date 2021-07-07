@@ -92,6 +92,9 @@
   <div v-if="equipmentPane">
     <Equipment 
       :equippedItemsArray="this.player.equippedItemsObjects"
+      :playerDamage="this.player.totalPlayerDamage"
+      :playerArmor="this.player.totalPlayerArmor"
+      @unequipItem="unequipItem"
     />
   </div>
   <div v-if="inventoryPane">
@@ -118,7 +121,7 @@
   </div>
   <div v-if="blacksmithSellPane">
     <BlacksmithSell 
-      @sellItem="sellGear"
+      @sellGear="sellGear"
       @openPane="openPane"
       :currentInventoryObjects="this.player.currentInventoryObjects"
       :currentInventoryIDs="this.player.currentInventoryIDs"
@@ -137,7 +140,7 @@
   </div>
   <div v-if="clothierSellPane">
     <ClothierSell 
-      @sellItem="sellGear"
+      @sellGear="sellGear"
       @openPane="openPane"
       :currentInventoryObjects="this.player.currentInventoryObjects"
       :currentInventoryIDs="this.player.currentInventoryIDs"
@@ -396,8 +399,10 @@ export default {
           [ "agf002" , 2 , "gear" ],
           [ "agw001" , 5 , "gear" ],
           [ "bhp001" , 3 , "gear" ],
-          [ "lcu001" , 1, "equipment" ],
-          [ "mhiss001", 1, "equipment" ],
+          [ "lvcu001" , 1, "equipment" ],
+          [ "mhid001", 1, "equipment" ],
+          [ "lfsu001", 1, "equipment" ],
+          [ "hlshu001", 1, "equipment" ],
         ],
         currentInventoryObjects : [
           
@@ -437,7 +442,9 @@ export default {
       questName : "",
       questID : "",
       questInfo : "",
-      questRewards : [],
+      questRewards : [
+        
+      ],
 
       //victory variables
       opponentName : "",
@@ -571,6 +578,31 @@ export default {
       }
       ;
     },
+    unequipItem(id){
+      console.log(id)
+      for (var a=0;a<this.player.equippedItemsIDs.length; a++){
+        if (this.player.equippedItemsIDs[a] == id){
+          this.player.equippedItemsIDs.splice(a, 1);
+          this.buildEquippedItemArray();
+        }
+      }
+      for (var b=0;b<this.player.equippedWeapons.length; b++){
+        if (this.player.equippedWeapons[b] == id){
+          this.player.equippedWeapons.splice(b, 1);
+          this.collatePlayerStats();
+        }
+      }
+      for (var c=0;c<this.player.equippedArmor.length; c++){
+        if (this.player.equippedArmor[c] == id){
+          this.player.equippedArmor.splice(c, 1);
+          this.collatePlayerStats();
+        }
+      }
+      this.player.currentInventoryIDs.push(
+        [id, 1, "equipment"]
+      );
+      this.openPane('inventory');
+    },
     //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
       console.log("changing stats")
@@ -578,45 +610,53 @@ export default {
         case "health":
           if (direction == "-"){
             this.player.currentHP -= amount;
-            this.hpChange = "-" + amount;
+            this.hpChange = "-" + amount.toFixed(2);
+            // setTimeout(function() {this.hpChange = 0;}, 250)
             break;
           }
           else{
             this.player.currentHP += amount;
-            this.hpChange = "+" + amount;
+            this.hpChange = "+" + amount.toFixed(2);
+            // setTimeout(function() {this.hpChange = 0;}, 250)
             break;
           }
         case "xp":
           if (direction == "-"){
             this.player.xp -= amount;
             this.xpChange = "-" + amount;
+            // setTimeout(function() {this.xpChange = 0;}, 250)
             break;
           }
           else{
             this.player.xp += amount;
             this.xpChange = "+" + amount;
+            // setTimeout(function() {this.xpchange = 0;}, 250)
             break;
           }
         case "gold":
           if (direction == "-"){
             this.player.gold -= amount;
             this.goldChange = "-" + amount;
+            // setTimeout(function() {this.goldChange = 0;}, 250)
             break;
           }
           else{
             this.player.gold += amount;
             this.goldChange = "+" + amount;
+            // setTimeout(function() {this.goldChange = 0}, 250)
             break;
           }
         case "level":
           if (direction == "-"){
             this.player.level -= amount;
             this.levelChange = "-" + amount;
+            // setTimeout(function() {this.levelChange = 0;}, 250)
             break;
           }
           else{
             this.player.level += amount;
             this.levelChange = "+" + amount;
+            // setTimeout(function() {this.levelChange = 0;}, 250)
             break;
           }
         case "attributePoints":
@@ -978,6 +1018,15 @@ export default {
         item.amount = this.player.currentInventoryIDs[k][1];
         item.value = this.currentItem.value;
         item.description = this.currentItem.description;
+        if(this.currentItem.armor){
+          item.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+        }
+        if(this.currentItem.damage){
+          item.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+        }
+        if(this.currentItem.health){
+          item.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+        }
         item.type = this.currentItem.type;
         item.slot = this.currentItem.slot;
         this.player.currentInventoryObjects.push(item);
@@ -996,6 +1045,15 @@ export default {
               gsitem.id = this.currentItem.id;
               gsitem.value = this.currentItem.value;
               gsitem.description = this.currentItem.description;
+               if(this.currentItem.armor){
+                  gsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+               }
+                if(this.currentItem.damage){
+                  gsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+               }
+                if(this.currentItem.health){
+                  gsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+               }
               gsitem.type = this.currentItem.type;
               gsitem.slot = this.currentItem.slot;
               this.generalStoreInventoryObjects.push(gsitem);
@@ -1014,6 +1072,15 @@ export default {
               bsitem.value = this.currentItem.value;
               bsitem.damage = this.currentItem.damage;
               bsitem.description = this.currentItem.description;
+              if(this.currentItem.armor){
+                  bsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+               }
+                if(this.currentItem.damage){
+                  bsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+               }
+                if(this.currentItem.health){
+                  bsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+               }
               bsitem.type = this.currentItem.type;
               bsitem.slot = this.currentItem.slot;
               this.blacksmithInventoryObjects.push(bsitem);
@@ -1032,6 +1099,15 @@ export default {
               chitem.value = this.currentItem.value;
               chitem.armor = this.currentItem.armor;
               chitem.description = this.currentItem.description;
+              if(this.currentItem.armor){
+                  chitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+               }
+                if(this.currentItem.damage){
+                  chitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+               }
+                if(this.currentItem.health){
+                  chitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+               }
               chitem.type = this.currentItem.type;
               chitem.slot = this.currentItem.slot;
               this.clothierInventoryObjects.push(chitem);
@@ -1044,6 +1120,7 @@ export default {
           break;
       }
     },
+    //sets up the shop inventory ID arrays based on player level
     levelShopInventory(store){
       console.table(equipmentList)
       if (store == "blacksmith"){
@@ -1056,70 +1133,70 @@ export default {
         this.retrieveByID('equipment', equipmentList["equipment"][l].id);
         if (this.player.level >= 0 && this.player.level < 6){
           if (this.currentItem.levelRange == 1){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 5 && this.player.level < 11){
           if (this.currentItem.levelRange == 2){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 10 && this.player.level < 16){
           if (this.currentItem.levelRange == 3){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 15 && this.player.level < 21){
           if (this.currentItem.levelRange == 4){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 20 && this.player.level < 26){
           if (this.currentItem.levelRange == 5){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 25 && this.player.level < 31){
           if (this.currentItem.levelRange == 6){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
         }
         else if (this.player.level > 30 && this.player.level < 36){
           if (this.currentItem.levelRange == 7){
-            if (store == "blacksmith" && this.currentItem.slot == "mainhand" || this.currentItem.slot == "offhand"){
+            if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
-            else if (store == "clothier" && this.currentItem.slot != "mainhand" && this.currentItem.slot != "offhand") {
+            else if (store == "clothier" && this.currentItem.slot != "mainhand") {
               this.clothierInventoryIDs.push(this.currentItem.id)
             }
           }
@@ -1129,6 +1206,7 @@ export default {
         }
       }
     },
+    //removes duplicate items from shop sell inventory
     removeShopDuplicates(arr){
       var uniques = [];
       var itemsFound = {};
@@ -1140,6 +1218,7 @@ export default {
       }
       return uniques;
     },
+    //sells a piece of adventuring gear to player
     buyItem(id){
       var existing = false;
       var existingItemIndex = {};
@@ -1169,6 +1248,7 @@ export default {
         alert("You cannot afford this.");
       }
     },
+    //buys a piece of adventuring gear from players
     sellItem(id){
         var existingSellIndex;
         var playerHas = false
@@ -1197,6 +1277,7 @@ export default {
           return;
         }  
     },
+    //sells a piece of equipment to player
     buyGear(id){
       var existing = false;
       var existingItemIndex = {};
@@ -1226,17 +1307,20 @@ export default {
         alert("You cannot afford this.");
       }
     },
+    //buys a piece of equipment from player
     sellGear(id){
        var existingSellIndex;
         var playerHas = false
         for(var y=0; y<this.player.currentInventoryIDs.length; y++){
           if (this.player.currentInventoryIDs[y][0] == id){
+            console.log("Has")
             existingSellIndex = y;
             playerHas = true;
             console.log(playerHas)
           }
         }
         if (playerHas){
+          console.log("Selling")
           this.retrieveByID('equipment', id);
           this.player.currentInventoryIDs[existingSellIndex][1]--;
           if (this.player.currentInventoryIDs[existingSellIndex][1] == 0){

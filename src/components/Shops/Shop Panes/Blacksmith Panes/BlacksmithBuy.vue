@@ -21,10 +21,21 @@ export default {
   methods: {
       buildInventory() {
         for (var i=0; i<this.blacksmithInventoryObjects.length; i++){
+          var itemAttr;
+          if (this.blacksmithInventoryObjects[i].slot == "mainhand"){
+            itemAttr = this.blacksmithInventoryObjects[i].damage + " dmg"
+          }
+          else if (this.currentInventoryObjects[i].slot == "neck"){
+            itemAttr = this.blacksmithInventoryObjects[i].health + " hp"
+          }
+          else{
+            itemAttr = this.blacksmithInventoryObjects[i].armor + " ac"
+          }
             let gearItem = `
                 <li class="inventory-item">
                 <span class='left-side-item'>${this.blacksmithInventoryObjects[i].name}</span>
-                <span class='center-item'>${this.blacksmithInventoryObjects[i].value}GP</span>
+                <span class='right-side-item'>${this.blacksmithInventoryObjects[i].value}GP</span>
+                <span class='center-item'>${itemAttr}</span>
                 <button class="buy-button right-side-item" value="${this.blacksmithInventoryObjects[i].id}">Buy</button>
                 </li>
             `
@@ -100,7 +111,7 @@ export default {
   -ms-animation: fadeIn 1.5s;
 }
  #blacksmith-shop-list{
-     width: 350px;
+     width: 400px;
      height: 250px;
      overflow-y: scroll; 
      margin-left: auto;
