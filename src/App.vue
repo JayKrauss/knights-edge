@@ -105,6 +105,8 @@
       :equippedItemsArray="this.player.equippedItemsObjects"
       :playerDamage="this.player.totalPlayerDamage"
       :playerArmor="this.player.totalPlayerArmor"
+      :playerKills="this.player.kills"
+      :playerDeaths="this.player.deaths"
       @unequipItem="unequipItem"
     />
   </div>
@@ -379,6 +381,7 @@ export default {
         gold : 0,
         currentHP : 0,
         maxHP : 0,
+        healthBuff : 0,
         profession : " ",
         attributePoints : 0,
         characterStrength : 0,
@@ -404,6 +407,9 @@ export default {
         
         ],
         equippedArmor : [
+
+        ],
+        equippedAccessories : [
 
         ],
 
@@ -509,6 +515,7 @@ export default {
             gold : 0,
             currentHP : 0,
             maxHP : 0,
+            healthBuff : 0,
             characterProfession : "",
             profession : "",
             attributePoints : 0,
@@ -543,6 +550,9 @@ export default {
             equippedArmor : [
               "",
             ],
+            equippedAccessories : [
+              "",        
+            ],
             currentInventoryIDs : [
               "",
             ],
@@ -563,6 +573,7 @@ export default {
       },
     updateServerData(){
       if (this.serverCharacter != ""){
+        console.table(this.player)
           firebase.database().ref('users/' + this.serverCharacter).update({
           characterName : this.player.characterName,
           level : this.player.level,
@@ -573,6 +584,7 @@ export default {
           gold : this.player.gold,
           currentHP : this.player.currentHP,
           maxHP : this.player.maxHP,
+          healthBuff : this.player.healthBuff,
           profession : this.player.characterProfession,
           attributePoints : this.player.attributePoints,
           characterStrength : this.player.characterStrength,
@@ -582,6 +594,7 @@ export default {
           characterIntellect : this.player.characterIntellect,
           openQuestsIDs : [""],
           completedQuestIDs : [""],
+          equippedAccessories : this.player.equippedAccessories,
           equippedItemsIDs : this.player.equippedItemsIDs,
           equippedWeapons : this.player.equippedWeapons,
           equippedArmor : this.player.equippedArmor,
@@ -604,15 +617,26 @@ export default {
     collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
-
+    console.table(this.player)
       for (var i=0; i<this.player.equippedWeapons.length; i++){
-        this.retrieveByID("equipment", this.player.equippedWeapons[i]);
+        if (this.player.equippedWeapons[i] != ""){
+          this.retrieveByID("equipment", this.player.equippedWeapons[i]);
         playerDamage += this.currentItem.damage;
+        }
       }
       for (var j=0; j<this.player.equippedArmor.length; j++){
-        this.retrieveByID("equipment", this.player.equippedArmor[j]);
+        if (this.player.equippedArmor[j] != ""){
+          this.retrieveByID("equipment", this.player.equippedArmor[j]);
         playerArmor += this.currentItem.armor;
+        }
       }
+      for (var w=0; w<this.player.equippedAccessories.length; w++){
+        if (this.player.equippedAccessories[w] != ""){
+           this.retrieveByID("equipment", this.player.equippedAccessories[j]);
+           console.log(this.currentItem.health)
+        }
+      }
+      
       //modify the player's damage by strength stat and armor by dexterity stat
       this.player.totalPlayerDamage = playerDamage * (1 + (this.player.characterStrength / 10));
       this.player.totalPlayerArmor = playerArmor * (1 + (this.player.characterDexterity / 10));
@@ -621,15 +645,18 @@ export default {
     },
     //builds array of objects for equipped items
     buildEquippedItemArray() {
-      this.player.equippedItemsObjects = [];
+      if (this.player.equippedItemsIDs){
+        this.player.equippedItemsObjects = [];
       for (var i=0; i<this.player.equippedItemsIDs.length; i++){
-              this.retrieveByID('equipment', this.player.equippedItemsIDs[i]);
-              this.player.equippedItemsObjects.push(this.currentItem);
-            }
+        this.retrieveByID('equipment', this.player.equippedItemsIDs[i]);
+        this.player.equippedItemsObjects.push(this.currentItem);
+      }
+      }
     },
     equipItem(id) {
       this.retrieveByID('equipment', id);
       var passedItem = this.currentItem;
+      console.table(passedItem);
       var passedSlot = passedItem.slot;
       var slotFilled = false;
       var existingItem = {};
@@ -649,8 +676,10 @@ export default {
           console.log("Item swapped.")
           this.player.equippedWeapons.push(passedItem.id);
         }
+        else if(passedItem.slot == "neck") {
+          this.player.equippedAccessories.push(passedItem.id);
+        }
         else {
-          console.log("Item swapped.")
           this.player.equippedArmor.push(passedItem.id);
         }
 
@@ -676,11 +705,11 @@ export default {
         for (var y=0; y<this.player.currentInventoryIDs.length; y++){
           if (passedItem.id == this.player.currentInventoryIDs[y][0]){
             this.player.currentInventoryIDs.splice(y, 1);
-            var pushedItem = [];
-            pushedItem.push(existingItem.id);
-            pushedItem.push(1);
-            pushedItem.push('equipment');
-            this.player.currentInventoryIDs.push(pushedItem);
+            // var pushedItem = [];
+            // pushedItem.push(existingItem.id);
+            // pushedItem.push(1);
+            // pushedItem.push('equipment');
+            // this.player.currentInventoryIDs.push(pushedItem);
           }
         }
         if (existingItem.slot == "mainhand"){
@@ -690,11 +719,17 @@ export default {
             }
           }
           this.player.equippedWeapons.push(passedItem.id)
+          this.player.currentInventoryIDs.push(
+            [existingItem.id, 1, 'equipment']
+          )
         }
         else{
           for (var g=0; g<this.player.equippedArmor.length; g++){
             if (existingItem.id == this.player.equippedArmor[g]){
               this.player.equippedArmor.splice(h, 1);
+              this.player.currentInventoryIDs.push(
+            [existingItem.id, 1, 'equipment']
+          )
             }
           }
           this.player.equippedArmor.push(passedItem.id);
@@ -712,7 +747,6 @@ export default {
       for (var a=0;a<this.player.equippedItemsIDs.length; a++){
         if (this.player.equippedItemsIDs[a] == id){
           this.player.equippedItemsIDs.splice(a, 1);
-          this.buildEquippedItemArray();
         }
       }
       for (var b=0;b<this.player.equippedWeapons.length; b++){
@@ -727,9 +761,16 @@ export default {
           this.collatePlayerStats();
         }
       }
+      for (var d=0;d<this.player.equippedArmor.length; d++){
+        if (this.player.equippedAccessories[d] == id){
+          this.player.equippedArmor.splice(c, 1);
+          this.collatePlayerStats();
+        }
+      }
       this.player.currentInventoryIDs.push(
         [id, 1, "equipment"]
       );
+      this.buildEquippedItemArray();
       this.openPane('inventory');
     },
     //allows for stat modification
@@ -910,6 +951,7 @@ export default {
       this.player.deaths = 0;
       this.player.gold = charisma * 5;
       this.player.maxHP = constitution * 5;
+      this.player.healthBuff = 0;
       this.player.currentHP = this.player.maxHP;
       this.player.characterStrength = strength;
       this.player.characterConstitution = constitution;
@@ -917,6 +959,18 @@ export default {
       this.player.characterCharisma = charisma;
       this.player.characterIntellect = intellect;
       this.player.attributePoints = attributePoints;
+      this.player.equippedWeapons = [
+        "",
+      ]
+      this.player.equippedArmor = [
+        "",
+      ]
+      this.player.equippedAccessories = [
+        "",
+      ],
+      this.player.equippedItemsIDs = [
+        "",
+      ]
       this.player.currentInventoryIDs = [
             [ "agt001" , 5 , "gear" ],
             [ "agr001" , 3 , "gear" ],
@@ -928,10 +982,10 @@ export default {
             [ "lfsu001", 1, "equipment" ],
             [ "hlshu001", 1, "equipment" ],
           ],
-      this.collatePlayerStats();
       this.buildInventory();
       this.addQuestToObjectList();
       this.buildEquippedItemArray();
+      this.collatePlayerStats();
       this.updateServerData();
       this.openPane('characterLanding');
       console.log("Welcome to the game.");

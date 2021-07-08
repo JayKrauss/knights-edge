@@ -19,9 +19,9 @@
         <td class="slot"><div value="" id="offhand-slot" class="gear-preview"><span id="unequip-offhand" class="unequip">UNEQUIP</span></div></td>
         </tr>
         <tr>
-        <td></td>
+        <td><span class="player-stats">Kills: <span id="player-kills"></span></span></td>
         <td class="slot"><div value="" id="feet-slot" class="gear-preview"><span id="unequip-feet" class="unequip">UNEQUIP</span></div></td>
-        <td></td>
+        <td><span class="player-stats">Deaths: <span id="player-deaths"></span></span></td>
         </tr>
     </table>
     </div>
@@ -33,11 +33,18 @@ export default {
   props: [
     "equippedItemsArray",
     "playerDamage",
-    "playerArmor"
+    "playerArmor",
+    "playerKills",
+    "playerDeaths"
   ],
   mounted(){
     this.fillSlots();
     this.updateStatDisplay();
+  },
+   watch: { 
+    equippedItemsArray: function() { 
+        this.fillSlots()
+    }
   },
   data() {
     return {
@@ -131,6 +138,8 @@ export default {
     updateStatDisplay() {
       document.querySelector("#player-damage").innerHTML = this.playerDamage.toFixed(2);
       document.querySelector("#player-armor").innerHTML = this.playerArmor.toFixed(2);
+      document.querySelector("#player-kills").innerHTML = this.playerKills;
+      document.querySelector("#player-deaths").innerHTML = this.playerDeaths;
     },
     showUnequip(e){
       if (e.target.matches('.gear-preview')) {
