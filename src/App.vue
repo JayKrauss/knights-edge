@@ -372,6 +372,8 @@ export default {
         characterName : "",
         password : "",
         level : 0,
+        kills : 0,
+        deaths : 0,
         xp : 0,
         toLevel : 100,
         gold : 0,
@@ -500,6 +502,8 @@ export default {
             email : email,
             characterName : "",
             level : 0,
+            kills : 0,
+            deaths : 0,
             xp : 0,
             toLevel : 0,
             gold : 0,
@@ -563,6 +567,8 @@ export default {
           characterName : this.player.characterName,
           level : this.player.level,
           xp : this.player.xp,
+          kills : this.player.kills,
+          deaths : this.player.deaths,
           toLevel : this.player.toLevel,
           gold : this.player.gold,
           currentHP : this.player.currentHP,
@@ -853,6 +859,7 @@ export default {
       this.player.currentHP = this.player.maxHP;
     },
     playerDeath() {
+      this.player.deaths++;
       this.openPane('inn');
       this.healToFull();
       this.modifyPlayerStats("gold", this.player.level * 5, "-");
@@ -899,6 +906,8 @@ export default {
       this.player.characterProfession = profession;
       this.player.level = level;
       this.player.xp = xp;
+      this.player.kills = 0;
+      this.player.deaths = 0;
       this.player.gold = charisma * 5;
       this.player.maxHP = constitution * 5;
       this.player.currentHP = this.player.maxHP;
@@ -1139,6 +1148,7 @@ export default {
           }
           break;
         case "victory":
+          this.player.kills++;
           this.statusPane = true;
           this.victoryPane = true;
           this.adventureButtonsPane = true;
