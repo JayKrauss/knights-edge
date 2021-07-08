@@ -370,7 +370,6 @@ export default {
       //Player statistics, to be moved to the server once authentication is live
       player :{
         characterName : "",
-        characterProfession : "",
         password : "",
         level : 0,
         xp : 0,
@@ -502,6 +501,7 @@ export default {
             currentHP : 0,
             maxHP : 0,
             characterProfession : "",
+            profession : "",
             attributePoints : 0,
             characterStrength : 0,
             characterConstitution : 0,
