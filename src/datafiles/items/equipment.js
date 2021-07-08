@@ -315,7 +315,6 @@ export default
             image : require("../../assets/images/gearimages/necklaces/goldnecklace.png"),
             type : "equipment",
             levelRange : 8,
-            ,   
         },
         {
             name : "Ruby Necklace",
