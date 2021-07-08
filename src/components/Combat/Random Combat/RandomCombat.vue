@@ -149,7 +149,7 @@ export default {
    height: 200px;
    z-index: 100;
    position: absolute;
-   top: 15%;
+   top: 22%;
    left: 45%;
    display: none;
  }

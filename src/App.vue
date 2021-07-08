@@ -486,9 +486,6 @@ export default {
           this.buildEquippedItemArray();
           this.serverCharacter = user.user.uid;
           this.openPane('character');
-          if (this.serverCharacter = "0bp3RVQ0HzOPX6SKO06cumVzfvy1"){
-            alert(`Hello Brian. You have died ${this.player.deaths} times so far. Get it together.`);
-          }
 });
         },
         err => {
