@@ -303,7 +303,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/silvernecklace.png"),
             type : "equipment",
-            levelRange : 2,   
+            levelRange : 8,   
         },
         {
             name : "Gold Necklace",
@@ -314,7 +314,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/goldnecklace.png"),
             type : "equipment",
-            levelRange : 2
+            levelRange : 8,
             ,   
         },
         {
@@ -326,7 +326,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/rubynecklace.png"),
             type : "equipment",
-            levelRange : 3,   
+            levelRange : 8,   
         },
         {
             name : "Emerald Necklace",
@@ -337,7 +337,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/emeraldnecklace.png"),
             type : "equipment",
-            levelRange : 4,   
+            levelRange : 8,   
         },
         {
             name : "Onyx Necklace",
@@ -348,7 +348,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/onyxnecklace.png"),
             type : "equipment",
-            levelRange : 5,   
+            levelRange : 8,   
         },
         {
             name : "Diamond Necklace",
@@ -359,7 +359,7 @@ export default
             slot : "neck",
             image : require("../../assets/images/gearimages/necklaces/diamondnecklace.png"),
             type : "equipment",
-            levelRange : 6,   
+            levelRange : 8,   
         },
         //BAGS
         {
@@ -371,7 +371,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/gearimages/necklaces/diamondnecklace.png"),
             type : "equipment",
-            levelRange : 6,   
+            levelRange : 8,   
         },
         {
             name : "Herb Collection Bag",
@@ -382,7 +382,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/gearimages/necklaces/diamondnecklace.png"),
             type : "equipment",
-            levelRange : 6,   
+            levelRange : 8,   
         },
         {
             name : "Runestone Collection Bag",
@@ -393,7 +393,7 @@ export default
             slot : "shoulder",
             image : require("../../assets/images/gearimages/necklaces/diamondnecklace.png"),
             type : "equipment",
-            levelRange : 6,   
+            levelRange : 8,   
         },
         //MAIN HANDS
         {
