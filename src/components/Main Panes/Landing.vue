@@ -1,7 +1,8 @@
 <template>
   <div id="landing" class="main-screen">
-    <br><br><br>
+    <br><br><br><br><br><br>
     <div class="shop-text"><strong>{{ logInText }}</strong></div>
+    <br><br><br><br><br><br><br>
     <button class="shop-button" @click="createCharacter">Create Character</button><br><br>
     <button class="shop-button" @click="logIn">Login</button>
   </div>
