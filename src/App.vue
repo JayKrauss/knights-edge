@@ -763,7 +763,7 @@ export default {
       }
       for (var d=0;d<this.player.equippedArmor.length; d++){
         if (this.player.equippedAccessories[d] == id){
-          this.player.equippedArmor.splice(c, 1);
+          this.player.equippedAccessories.splice(d, 1);
           this.collatePlayerStats();
         }
       }
