@@ -482,6 +482,7 @@ export default {
           this.buildInventory();
           this.addQuestToObjectList();
           this.buildEquippedItemArray();
+          this.serverCharacter = user.user.uid;
           this.openPane('character');
 });
         },
@@ -557,28 +558,33 @@ export default {
         )
       },
     updateServerData(){
-      firebase.database().ref('users/' + this.serverCharacter).update({
-        characterName : this.player.characterName,
-        level : this.player.level,
-        xp : this.player.xp,
-        toLevel : this.player.toLevel,
-        gold : this.player.gold,
-        currentHP : this.player.currentHP,
-        maxHP : this.player.maxHP,
-        profession : this.player.characterProfession,
-        attributePoints : this.player.attributePoints,
-        characterStrength : this.player.characterStrength,
-        characterConstitution : this.player.characterConstitution,
-        characterDexterity : this.player.characterDexterity,
-        characterCharisma : this.player.characterCharisma,
-        characterIntellect : this.player.characterIntellect,
-        openQuestsIDs : this.player.openQuestsIDs,
-        completedQuestIDs : this.player.completedQuestIDs,
-        equippedItemsIDs : this.player.equippedItemsIDs,
-        equippedWeapons : this.player.equippedWeapons,
-        equippedArmor : this.player.equippedArmor,
-        currentInventoryIDs : this.player.currentInventoryIDs,
-      })
+      if (this.serverCharacter != ""){
+          firebase.database().ref('users/' + this.serverCharacter).update({
+          characterName : this.player.characterName,
+          level : this.player.level,
+          xp : this.player.xp,
+          toLevel : this.player.toLevel,
+          gold : this.player.gold,
+          currentHP : this.player.currentHP,
+          maxHP : this.player.maxHP,
+          profession : this.player.characterProfession,
+          attributePoints : this.player.attributePoints,
+          characterStrength : this.player.characterStrength,
+          characterConstitution : this.player.characterConstitution,
+          characterDexterity : this.player.characterDexterity,
+          characterCharisma : this.player.characterCharisma,
+          characterIntellect : this.player.characterIntellect,
+          openQuestsIDs : [""],
+          completedQuestIDs : [""],
+          equippedItemsIDs : this.player.equippedItemsIDs,
+          equippedWeapons : this.player.equippedWeapons,
+          equippedArmor : this.player.equippedArmor,
+          currentInventoryIDs : this.player.currentInventoryIDs,
+        })
+      }
+      else{
+        console.log(this.serverCharacter + "not found")
+      }
     },
     //check if the player is ready to level up, and then give attribute points on true
     checkLevel() {
@@ -728,6 +734,9 @@ export default {
           if (direction == "-"){
             this.player.currentHP -= amount;
             this.hpChange = "-" + amount.toFixed(2);
+            if (this.player.currentHP <= 0){
+              this.playerDeath();
+            }
             // setTimeout(function() {this.hpChange = 0;}, 250)
             break;
           }
@@ -753,6 +762,9 @@ export default {
         case "gold":
           if (direction == "-"){
             this.player.gold -= amount;
+            if (this.player.gold <= 0){
+              this.player.gold = 0;
+            }
             this.goldChange = "-" + amount;
             // setTimeout(function() {this.goldChange = 0;}, 250)
             break;
@@ -839,6 +851,12 @@ export default {
     //heals to full to avoid over-healing
     healToFull(){
       this.player.currentHP = this.player.maxHP;
+    },
+    playerDeath() {
+      this.openPane('inn');
+      this.healToFull();
+      this.modifyPlayerStats("gold", this.player.level * 5, "-");
+      alert("You have been found unconcious outside of town. You were brought to the Inn to rest. Gold has been deducted to pay for the doctor fees.")
     },
     //update HP and combat stats after leveling up
     updateStats(points){
