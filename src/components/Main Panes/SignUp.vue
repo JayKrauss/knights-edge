@@ -3,6 +3,7 @@
     <br><br><br>
     <div class="shop-text"><strong>{{ logInText }}</strong></div>
     <br><br>
+    <div id="loading"></div>
     <h4>Tell us your Email.</h4>
     <input type="text" id="email-input"><br>
     <h4>Tell us your passcode.</h4>
@@ -25,6 +26,7 @@ export default {
       var email = document.getElementById("email-input").value;
       var password = document.getElementById("password-input").value;
       this.$emit('signUp', email, password);
+      document.querySelector("#loading").classList.add('show');
     }
   },
 };
