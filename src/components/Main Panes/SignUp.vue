@@ -2,11 +2,11 @@
   <div id="log-in" class="main-screen">
     <br><br><br>
     <div class="shop-text"><strong>{{ logInText }}</strong></div>
-    <br><br>
+    <br><br><br><br><br><br>
     <div id="loading"></div>
-    <h4>Tell us your Email.</h4>
-    <input type="text" id="email-input"><br>
-    <h4>Tell us your passcode.</h4>
+    <span class="shop-text">Tell us your Email.</span><br><br><br>
+    <input type="text" id="email-input"><br><br><br>
+    <span class="shop-text">Tell us your passcode.</span><br><br><br>
     <input type="text" id="password-input"><br>
     <button class="shop-button" @click="signUp">Sign Up</button>
   </div>
@@ -34,6 +34,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
  #log-in{
      background-image: url("../../assets/images/DxRz37sXcAEQ6Cm.jpg");
      background-size: cover;
