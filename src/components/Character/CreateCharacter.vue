@@ -2,16 +2,14 @@
 <div id="create-background">
 <br>
   <div id="character" class="modified-screen">
-      <br><br><br>
+      <br><br><br><br><br><br><br>
       <div id="character-create">
 
-        <span id="welcome">Welcome!</span><br>
+        <span id="welcome">Welcome!</span><br><br><br>
         <span class="welcome-text">This is the start of a great journey, but like any great journey, it starts simple.</span><br><br>
-        <span class="welcome-text">Tell us your name.</span><br>
+        <span class="welcome-text">Tell us your name.</span><br><br>
         <input type="text" id="name-input"><br><br>
-        <span class="welcome-text">Set a password.</span><br>
-        <input type="text" id="password-input"><br><br>
-        <span class="welcome-text">What did you do before coming to town?</span><br>
+        <span class="welcome-text">What did you do before coming to town?</span><br><br>
         <form id="way-selection">
             <select id="jobs">
                 <option value="strength">I was a Blacksmith</option>
@@ -22,8 +20,6 @@
             </select>
         </form>
         <button @click="giveCharacterStats" class="shop-button">Begin</button><br>
-        <span class="welcome-text">Already in town?</span><br>
-        <button @click="openLogIn" class="shop-button">Sign in.</button>
         <br>
       </div>
 
@@ -38,6 +34,7 @@ export default {
   data() {
       return {
           characterName : "",
+          characterProfession : "",
           characterLevel : 1,
           characterXP : 0,
           characterStrength : 5,
@@ -54,7 +51,7 @@ export default {
           this.$emit(
               'createCharacter', 
               this.characterName, 
-              this.password,
+              this.characterProfession,
               this.characterLevel, 
               this.characterXP, 
               this.characterStrength, 
@@ -68,7 +65,6 @@ export default {
 
       giveCharacterStats(){
         this.characterName = document.getElementById("name-input").value;
-        this.password = document.getElementById("password-input").value;
         this.characterStrength = 3, 
         this.characterConstitution = 3,
         this.characterDexterity = 3,
@@ -78,22 +74,27 @@ export default {
 
         switch (this.primaryStat){
             case "strength":
+                this.characterProfession = "Blacksmith"
                 this.characterStrength += 3;
                 this.characterConstitution += 2;
                 break;
             case "constitution":
+                this.characterProfession = "Stonemason"
                 this.characterConstitution += 3;
                 this.characterStrength += 2;
                 break;
             case "dexterity":
+                this.characterProfession = "Thief"
                 this.characterDexterity += 3;
                 this.characterCharisma += 2;
                 break;
             case "charisma":
+                this.characterProfession = "Merchant"
                 this.characterCharisma += 3;
                 this.characterIntellect += 2;
                 break;
             case "intellect":
+                this.characterProfession = "Teacher"
                 this.characterIntellect += 3;
                 this.characterCharisma += 2;
                 break;

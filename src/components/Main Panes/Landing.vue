@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     createCharacter(){
-        this.$emit('openPane', 'createCharacter')
+        this.$emit('openPane', 'signUp')
     },
     logIn(){
         this.$emit('openPane', 'login');

@@ -7,6 +7,11 @@
       @openPane="openPane"
     />
   </div>
+  <div v-if="signUpPane">
+    <SignUp 
+      @signUp="signUpRequest"
+    />
+  </div>
   <div v-if="statusPane">
     <StatusBar 
       :level="this.player.level" 
@@ -238,6 +243,7 @@
 
 <script>
 import Landing from "./components/Main Panes/Landing.vue";
+import SignUp from "./components/Main Panes/SignUp.vue";
 import StatusBar from "./components/Status Panes/StatusBar.vue";
 import TopSpacer from "./components/Status Panes/TopSpacer.vue";
 import LogIn from "./components/Main Panes/LogIn.vue";
@@ -268,19 +274,20 @@ import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
 import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
 import Victory from "./components/Combat/Victory.vue";
 import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
+import firebase from 'firebase';
 
 import { default as equipmentList } from "./datafiles/items/equipment.js";
 import { default as gearList } from "./datafiles/items/gear.js";
 import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
-import { default as playerList } from "./datafiles/player/player.js";
+// import { default as playerList } from "./datafiles/player/player.js";
 
-import getPlayers from  "./database/firebaseGetPlayer.js";
 import standardEnemies from './datafiles/enemies/standardEnemies';
 
 export default {
   name: "App",
   components: {
     Landing,
+    SignUp,
     LogIn,
     StatusBar,
     TopSpacer,
@@ -326,7 +333,7 @@ export default {
     //Data store persistent
     return {
       playerList : [],
-      serverCharacter : {},
+      serverCharacter : "",
       //flags for which pane(s) should be active
       topSpacerPane : false,
       statusPane : false,
@@ -362,53 +369,54 @@ export default {
 
       //Player statistics, to be moved to the server once authentication is live
       player :{
-         characterName : "",
-            password : "",
-            level : 0,
-            xp : 0,
-            toLevel : 100,
-            gold : 0,
-            currentHP : 0,
-            maxHP : 0,
-            profession : " ",
-            attributePoints : 0,
-            characterStrength : 0,
-            characterConstitution : 0,
-            characterDexterity : 0,
-            characterCharisma : 0,
-            characterIntellect :0 ,
+        characterName : "",
+        characterProfession : "",
+        password : "",
+        level : 0,
+        xp : 0,
+        toLevel : 100,
+        gold : 0,
+        currentHP : 0,
+        maxHP : 0,
+        profession : " ",
+        attributePoints : 0,
+        characterStrength : 0,
+        characterConstitution : 0,
+        characterDexterity : 0,
+        characterCharisma : 0,
+        characterIntellect :0 ,
 
-            //to hold quest IDs that can then be pulled and displayed, or completed
-            openQuestsIDs : [],
-            openQuestObjects : [],
-            completedQuestIDs : [],
-            completedQuestObjects : [],
+        //to hold quest IDs that can then be pulled and displayed, or completed
+        openQuestsIDs : [],
+        openQuestObjects : [],
+        completedQuestIDs : [],
+        completedQuestObjects : [],
 
-            //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
-            equippedItemsIDs : [
+        //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
+        equippedItemsIDs : [
 
-            ],
-            equippedItemsObjects : [
+        ],
+        equippedItemsObjects : [
 
-            ],
-            equippedWeapons : [
-            
-            ],
-            equippedArmor : [
+        ],
+        equippedWeapons : [
+        
+        ],
+        equippedArmor : [
 
-            ],
+        ],
 
-            //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
-            totalPlayerDamage : 0,
-            totalPlayerArmor : 0,
+        //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
+        totalPlayerDamage : 0,
+        totalPlayerArmor : 0,
 
-            //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
-            currentInventoryIDs : [
-            
-            ],
-            currentInventoryObjects : [
-            
-            ],
+        //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
+        currentInventoryIDs : [
+        
+        ],
+        currentInventoryObjects : [
+        
+        ],
       },
       
       //shop inventories
@@ -462,23 +470,108 @@ export default {
   },
   methods: {
     //to be continued for databasing
-    getPlayerList(){
-      this.playerList = getPlayers();
-    },
-    sendLoginRequest(username, password){
-      for (var p=0; p<playerList["playerList"].length; p++){
-        if (username == playerList["playerList"][p].characterName){
-          if (password == playerList["playerList"][p].password){
-            this.player = playerList["playerList"][p];
-            console.table(this.player.currentInventoryIDs);
-            this.collatePlayerStats();
-            this.buildInventory();
-            this.addQuestToObjectList();
-            this.buildEquippedItemArray();
-            this.openPane('characterLanding');
-          }
+    async sendLoginRequest(email, password){
+      console.log(email, password)
+      await firebase.auth().signInWithEmailAndPassword(email, password).then(
+        user => {
+          var serverPlayerData = firebase.database().ref('users/' + user.user.uid);
+          serverPlayerData.on('value', (snapshot) => {
+          const data = snapshot.val();
+          this.player = data;
+          console.log(this.player)
+          this.openPane('character');
+});
+        },
+        err => {
+          console.log(err)
         }
-      }
+        )
+      },
+    signUpRequest(email, password) {
+
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(
+        user => {
+          console.log(user)
+          firebase.database().ref('users/' + user.user.uid).set({
+            email : email,
+            characterName : "",
+            level : 0,
+            xp : 0,
+            toLevel : 0,
+            gold : 0,
+            currentHP : 0,
+            maxHP : 0,
+            characterProfession : "",
+            attributePoints : 0,
+            characterStrength : 0,
+            characterConstitution : 0,
+            characterDexterity : 0,
+            characterCharisma : 0,
+            characterIntellect : 0,
+            totalPlayerDamage : 0,
+            totalPlayerArmor : 0,
+            openQuestsIDs : [
+              "",
+            ],
+            openQuestObjects : [
+              "",
+            ],
+            completedQuestIDs : [
+              "",
+            ],
+            completedQuestObjects : [
+              "",
+            ],
+            equippedItemsIDs : [
+              "",
+            ],
+            equippedItemsObjects : [
+              "",
+            ],
+            equippedWeapons : [
+              "",
+            ],
+            equippedArmor : [
+              "",
+            ],
+            currentInventoryIDs : [
+              "",
+            ],
+            currentInventoryObjects : [
+              "",
+            ],
+          });
+          this.serverCharacter = user.user.uid;
+          this.openPane('createCharacter');
+        },
+        err => {
+          console.log(err)
+        }
+        )
+      },
+    updateServerData(){
+      firebase.database().ref('users/' + this.serverCharacter).update({
+        characterName : this.player.characterName,
+        level : this.player.level,
+        xp : this.player.xp,
+        toLevel : this.player.toLevel,
+        gold : this.player.gold,
+        currentHP : this.player.currentHP,
+        maxHP : this.player.maxHP,
+        profession : this.player.characterProfession,
+        attributePoints : this.player.attributePoints,
+        characterStrength : this.player.characterStrength,
+        characterConstitution : this.player.characterConstitution,
+        characterDexterity : this.player.characterDexterity,
+        characterCharisma : this.player.characterCharisma,
+        characterIntellect : this.player.characterIntellect,
+        openQuestsIDs : this.player.openQuestsIDs,
+        completedQuestIDs : this.player.completedQuestIDs,
+        equippedItemsIDs : this.player.equippedItemsIDs,
+        equippedWeapons : this.player.equippedWeapons,
+        equippedArmor : this.player.equippedArmor,
+        currentInventoryIDs : this.player.currentInventoryIDs,
+      })
     },
     //check if the player is ready to level up, and then give attribute points on true
     checkLevel() {
@@ -776,9 +869,9 @@ export default {
       console.table(this.player.openQuestObjects)
     },
     //takes in data from createCharacter pane to build the local character to be uploaded to the server
-    createCharacter(name, password, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
+    createCharacter(name, profession, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
       this.player.characterName = name;
-      this.player.password = password;
+      this.player.characterProfession = profession;
       this.player.level = level;
       this.player.xp = xp;
       this.player.gold = charisma * 5;
@@ -805,11 +898,12 @@ export default {
       this.buildInventory();
       this.addQuestToObjectList();
       this.buildEquippedItemArray();
+      this.updateServerData();
       this.openPane('characterLanding');
       console.log("Welcome to the game.");
     },
     saveCharacter() {
-      alert("Sorry, you cannot save your game yet.")
+      this.updateServerData();
     },
     //In the off chance the player kills something
     playerVictory(name, level, xp, gold, deathImage) {
@@ -832,6 +926,7 @@ export default {
     //This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
     openPane(pane){
       this.landingPane = false;
+      this.signUpPane = false;
       this.statusPane = false;
       this.loginPane = false;
       this.topSpacerPane = false;
@@ -867,6 +962,10 @@ export default {
         case "landing":
           this.landingPane = true;
           this.bottomSpacerPane = true;
+          break;
+        case "signUp":
+          this.signUpPane = true;
+          this.bottomSpacePane = true;
           break;
         case "login":
           this.topSpacerPane = true;

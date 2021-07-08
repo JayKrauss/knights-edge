@@ -7,24 +7,24 @@
     <input type="text" id="email-input"><br>
     <h4>Tell us your passcode.</h4>
     <input type="text" id="password-input"><br>
-    <button class="shop-button" @click="logIn">Login</button>
+    <button class="shop-button" @click="signUp">Sign Up</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LogIn",
+  name: "SignUp",
   props: [],
   data(){
     return{
-      logInText : "Welcome back, adventurer.",
+      logInText : "Welcome to town, adventurer.",
     }
   },
   methods: {
-    logIn(){
+    signUp(){
       var email = document.getElementById("email-input").value;
       var password = document.getElementById("password-input").value;
-      this.$emit('sendLoginRequest', email, password);
+      this.$emit('signUp', email, password);
     }
   },
 };
