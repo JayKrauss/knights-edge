@@ -545,6 +545,9 @@ export default {
           this.openPane('createCharacter');
         },
         err => {
+          if (err == 'auth/email-already-in-use'){
+            alert("Email already in use. Please log in.")
+          }
           console.log(err)
         }
         )
