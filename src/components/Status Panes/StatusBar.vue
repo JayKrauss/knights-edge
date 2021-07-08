@@ -21,6 +21,9 @@
                   HP: <br>
                   <span id="current-HP">{{ currentHP.toFixed(2) }}</span>/<span id="max-HP">{{ maxHP.toFixed(2) }}<span id="hp-change" class="shown-changes"></span></span>
               </td>
+              <td>
+                <button @click="saveCharacter">💾</button>
+              </td>
           </tr>
       </table>
   </div>
@@ -44,6 +47,9 @@ export default {
   methods: {
     openCharacter() {
       this.$emit("openPane", "character")
+    },
+    saveCharacter(){
+      this.$emit("saveCharacter")
     },
     showLevelChange() {
       if (this.levelChange == 0){

@@ -2,6 +2,11 @@
 <!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
 <!-- Onions have layers? Games have layers. Just roll with it. -->
 <div id="playfield">
+  <div v-if="landingPane">
+    <Landing 
+      @openPane="openPane"
+    />
+  </div>
   <div v-if="statusPane">
     <StatusBar 
       :level="this.player.level" 
@@ -15,13 +20,14 @@
       :goldChange="this.goldChange"
       :hpChange="this.hpChange"
       @openPane="openPane"
+      @saveCharacter="saveCharacter"
     />
   </div>
   <div v-if="topSpacerPane">
     <TopSpacer />
   </div>
   <div v-if="loginPane">
-    <LogIn @openShops="openPane"/>
+    <LogIn @sendLoginRequest="sendLoginRequest"/>
   </div>
   <div v-if="createCharacterPane">
     <CreateCharacter 
@@ -231,6 +237,7 @@
 </template>
 
 <script>
+import Landing from "./components/Main Panes/Landing.vue";
 import StatusBar from "./components/Status Panes/StatusBar.vue";
 import TopSpacer from "./components/Status Panes/TopSpacer.vue";
 import LogIn from "./components/Main Panes/LogIn.vue";
@@ -265,6 +272,7 @@ import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
 import { default as equipmentList } from "./datafiles/items/equipment.js";
 import { default as gearList } from "./datafiles/items/gear.js";
 import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
+import { default as playerList } from "./datafiles/player/player.js";
 
 import getPlayers from  "./database/firebaseGetPlayer.js";
 import standardEnemies from './datafiles/enemies/standardEnemies';
@@ -272,6 +280,7 @@ import standardEnemies from './datafiles/enemies/standardEnemies';
 export default {
   name: "App",
   components: {
+    Landing,
     LogIn,
     StatusBar,
     TopSpacer,
@@ -304,10 +313,7 @@ export default {
     BottomSpacer,
   },
   mounted(){
-    this.collatePlayerStats();
-    this.buildInventory();
-    this.addQuestToObjectList();
-    this.buildEquippedItemArray();
+    this.openPane('landing');
     this.levelShopInventory("blacksmith");
     this.levelShopInventory("clothier");
     this.buildShopInventory("general");
@@ -322,11 +328,12 @@ export default {
       playerList : [],
       serverCharacter : {},
       //flags for which pane(s) should be active
-      statusPane : false,
       topSpacerPane : false,
+      statusPane : false,
+      landingPane : false,
       loginPane : false,
       characterPane : false,
-      createCharacterPane : true,
+      createCharacterPane : false,
       characterLandingPane : false,
       levelUpPane : false,
       questInfoPane : false,
@@ -355,59 +362,53 @@ export default {
 
       //Player statistics, to be moved to the server once authentication is live
       player :{
-        characterName : "Adventurer",
-        level : 0,
-        xp : 0,
-        toLevel : 100,
-        gold : 0,
-        currentHP : 0,
-        maxHP : 0,
-        attributePoints : 0,
-        characterStrength : 0,
-        characterConstitution : 0,
-        characterDexterity : 0,
-        characterCharisma : 0,
-        characterIntellect : 0,
+         characterName : "",
+            password : "",
+            level : 0,
+            xp : 0,
+            toLevel : 100,
+            gold : 0,
+            currentHP : 0,
+            maxHP : 0,
+            profession : " ",
+            attributePoints : 0,
+            characterStrength : 0,
+            characterConstitution : 0,
+            characterDexterity : 0,
+            characterCharisma : 0,
+            characterIntellect :0 ,
 
-        //to hold quest IDs that can then be pulled and displayed, or completed
-        openQuestsIDs : [],
-        openQuestObjects : [],
-        completedQuestIDs : [],
-        completedQuestObjects : [],
+            //to hold quest IDs that can then be pulled and displayed, or completed
+            openQuestsIDs : [],
+            openQuestObjects : [],
+            completedQuestIDs : [],
+            completedQuestObjects : [],
 
-        //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
-        equippedItemsIDs : [
+            //objects to hold equipped weapons and armor IDs so that attack and defend values may be calculated. Passed to collatePlayerStats()
+            equippedItemsIDs : [
 
-        ],
-        equippedItemsObjects : [
+            ],
+            equippedItemsObjects : [
 
-        ],
-        equippedWeapons : [
-          
-        ],
-        equippedArmor : [
+            ],
+            equippedWeapons : [
+            
+            ],
+            equippedArmor : [
 
-        ],
+            ],
 
-        //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
-        totalPlayerDamage : 0,
-        totalPlayerArmor : 0,
+            //calculated by collatePlayerStats(), damage and defense values to be passed to Combat components to determine outcomes
+            totalPlayerDamage : 0,
+            totalPlayerArmor : 0,
 
-        //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
-        currentInventoryIDs : [
-          [ "agt001" , 5 , "gear" ],
-          [ "agr001" , 3 , "gear" ],
-          [ "agf002" , 2 , "gear" ],
-          [ "agw001" , 5 , "gear" ],
-          [ "bhp001" , 3 , "gear" ],
-          [ "lvcu001" , 1, "equipment" ],
-          [ "mhid001", 1, "equipment" ],
-          [ "lfsu001", 1, "equipment" ],
-          [ "hlshu001", 1, "equipment" ],
-        ],
-        currentInventoryObjects : [
-          
-        ],
+            //inventory array with objects holding all items in the player's inventory, to be passed to the Inventory component
+            currentInventoryIDs : [
+            
+            ],
+            currentInventoryObjects : [
+            
+            ],
       },
       
       //shop inventories
@@ -463,6 +464,21 @@ export default {
     //to be continued for databasing
     getPlayerList(){
       this.playerList = getPlayers();
+    },
+    sendLoginRequest(username, password){
+      for (var p=0; p<playerList["playerList"].length; p++){
+        if (username == playerList["playerList"][p].characterName){
+          if (password == playerList["playerList"][p].password){
+            this.player = playerList["playerList"][p];
+            console.table(this.player.currentInventoryIDs);
+            this.collatePlayerStats();
+            this.buildInventory();
+            this.addQuestToObjectList();
+            this.buildEquippedItemArray();
+            this.openPane('characterLanding');
+          }
+        }
+      }
     },
     //check if the player is ready to level up, and then give attribute points on true
     checkLevel() {
@@ -760,8 +776,9 @@ export default {
       console.table(this.player.openQuestObjects)
     },
     //takes in data from createCharacter pane to build the local character to be uploaded to the server
-    createCharacter(name, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
+    createCharacter(name, password, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
       this.player.characterName = name;
+      this.player.password = password;
       this.player.level = level;
       this.player.xp = xp;
       this.player.gold = charisma * 5;
@@ -773,8 +790,26 @@ export default {
       this.player.characterCharisma = charisma;
       this.player.characterIntellect = intellect;
       this.player.attributePoints = attributePoints;
+      this.player.currentInventoryIDs = [
+            [ "agt001" , 5 , "gear" ],
+            [ "agr001" , 3 , "gear" ],
+            [ "agf002" , 2 , "gear" ],
+            [ "agw001" , 5 , "gear" ],
+            [ "bhp001" , 3 , "gear" ],
+            [ "lvcu001" , 1, "equipment" ],
+            [ "mhid001", 1, "equipment" ],
+            [ "lfsu001", 1, "equipment" ],
+            [ "hlshu001", 1, "equipment" ],
+          ],
+      this.collatePlayerStats();
+      this.buildInventory();
+      this.addQuestToObjectList();
+      this.buildEquippedItemArray();
       this.openPane('characterLanding');
       console.log("Welcome to the game.");
+    },
+    saveCharacter() {
+      alert("Sorry, you cannot save your game yet.")
     },
     //In the off chance the player kills something
     playerVictory(name, level, xp, gold, deathImage) {
@@ -796,6 +831,7 @@ export default {
     },
     //This does the heavy lifting for switching between panes based on button press and other factors. Vue Router doesnt make sense here, unfortunately.
     openPane(pane){
+      this.landingPane = false;
       this.statusPane = false;
       this.loginPane = false;
       this.topSpacerPane = false;
@@ -828,6 +864,10 @@ export default {
       this.bottomSpacerPane = false;
 
       switch (pane){
+        case "landing":
+          this.landingPane = true;
+          this.bottomSpacerPane = true;
+          break;
         case "login":
           this.topSpacerPane = true;
           this.loginPane = true;
@@ -1150,7 +1190,7 @@ export default {
           }
         }
         else if (this.player.level > 5 && this.player.level < 11){
-          if (this.currentItem.levelRange == 2){
+          if (this.currentItem.levelRange == 1 || this.currentItem.levelRange == 2){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
@@ -1160,7 +1200,7 @@ export default {
           }
         }
         else if (this.player.level > 10 && this.player.level < 16){
-          if (this.currentItem.levelRange == 3){
+          if (this.currentItem.levelRange == 1 || this.currentItem.levelRange == 2 || this.currentItem.levelRange == 3){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
@@ -1170,7 +1210,7 @@ export default {
           }
         }
         else if (this.player.level > 15 && this.player.level < 21){
-          if (this.currentItem.levelRange == 4){
+          if (this.currentItem.levelRange == 2 || this.currentItem.levelRange == 3 || this.currentItem.levelRange == 4){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
@@ -1180,7 +1220,7 @@ export default {
           }
         }
         else if (this.player.level > 20 && this.player.level < 26){
-          if (this.currentItem.levelRange == 5){
+          if (this.currentItem.levelRange == 3 || this.currentItem.levelRange == 4 || this.currentItem.levelRange == 5){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
@@ -1190,7 +1230,7 @@ export default {
           }
         }
         else if (this.player.level > 25 && this.player.level < 31){
-          if (this.currentItem.levelRange == 6){
+          if (this.currentItem.levelRange == 3 || this.currentItem.levelRange == 4 || this.currentItem.levelRange == 5 || this.currentItem.levelRange == 6){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
@@ -1200,7 +1240,7 @@ export default {
           }
         }
         else if (this.player.level > 30 && this.player.level < 36){
-          if (this.currentItem.levelRange == 7){
+          if (this.currentItem.levelRange == 4 || this.currentItem.levelRange == 5 || this.currentItem.levelRange == 6 || this.currentItem.levelRange == 7){
             if (store == "blacksmith" && this.currentItem.slot == "mainhand"){
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }

@@ -1,30 +1,27 @@
 <template>
-  <div id="log-in" class="main-screen">
+  <div id="landing" class="main-screen">
     <br><br><br>
     <div class="shop-text"><strong>{{ logInText }}</strong></div>
-    <br><br>
-    <h4>Tell us your name.</h4>
-    <input type="text" id="username-input"><br>
-    <h4>Tell us your passcode.</h4>
-    <input type="text" id="password-input"><br>
+    <button class="shop-button" @click="createCharacter">Create Character</button><br><br>
     <button class="shop-button" @click="logIn">Login</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LogIn",
+  name: "Landing",
   props: [],
   data(){
     return{
-      logInText : "Welcome back, adventurer.",
+      logInText : "Greetings! Are you new, or returning?"
     }
   },
   methods: {
+    createCharacter(){
+        this.$emit('openPane', 'createCharacter')
+    },
     logIn(){
-      var username = document.getElementById("username-input").value;
-      var password = document.getElementById("password-input").value;
-      this.$emit('sendLoginRequest', username, password);
+        this.$emit('openPane', 'login');
     }
   },
 };
@@ -32,7 +29,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
- #log-in{
+ #landing{
      background-image: url("../../assets/images/DxRz37sXcAEQ6Cm.jpg");
      background-size: cover;
  }

@@ -456,7 +456,7 @@ export default
         {
             name : "Steel Longsword",
             id : "mhsls001",
-            damage : 8,
+            damage : 12,
             value : 25,
             description : "A steel longsword.",
             slot : "mainhand",
@@ -467,7 +467,7 @@ export default
         {
             name : "Black Longsword",
             id : "mhbls001",
-            damage : 12,
+            damage : 18,
             value : 55,
             description : "A black steel longsword.",
             slot : "mainhand",
@@ -478,7 +478,7 @@ export default
         {
             name : "Mithril Longsword",
             id : "mhmls001",
-            damage : 16,
+            damage : 24,
             value : 100,
             description : "Mithril longsword.",
             slot : "mainhand",
@@ -489,7 +489,7 @@ export default
         {
             name : "Adamantine Longsword",
             id : "mhals001",
-            damage : 22,
+            damage : 30,
             value : 260,
             description : "Adamantine longsword.",
             slot : "mainhand",
@@ -500,7 +500,7 @@ export default
         {
             name : "Crystal Longsword",
             id : "mhcls001",
-            damage : 30,
+            damage : 38,
             value : 500,
             description : "Crystal longsword.",
             slot : "mainhand",

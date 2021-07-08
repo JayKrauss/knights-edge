@@ -58,6 +58,11 @@ export default {
       }
     }
   },
+  watch:{
+    currentInventoryObjects: function() { 
+        this.buildInventories();
+    }
+  },
   mounted(){
     this.buildInventories();
   }
