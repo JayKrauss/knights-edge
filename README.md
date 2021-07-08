@@ -1,5 +1,7 @@
 # knights-edge
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/25e25d3a-2a39-402c-b2b7-ac726b46e5df/deploy-status)](https://app.netlify.com/sites/vigorous-boyd-fccfdb/deploys)
+
 There is nothing quite so educational as building a game in a new framework or language.
 The complexity and intricacy inherent in game design really lends itself to requiring desperate googling and "Lets see if this works"..s.
 This is a text-based RPG game that is being built in VueJS. As will become apparent in the code, there are several "panes" that allow the player to 
