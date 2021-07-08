@@ -478,6 +478,10 @@ export default {
           const data = snapshot.val();
           this.player = data;
           console.log(this.player)
+          this.collatePlayerStats();
+          this.buildInventory();
+          this.addQuestToObjectList();
+          this.buildEquippedItemArray();
           this.openPane('character');
 });
         },
