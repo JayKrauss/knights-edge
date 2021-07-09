@@ -369,7 +369,7 @@ export default {
       victoryPane : false,
       bottomSpacerPane : false,
 
-      //Player statistics, to be moved to the server once authentication is live
+      //Player statistics, to be moved to the server 
       player :{
         characterName : "",
         password : "",
@@ -476,7 +476,7 @@ export default {
     }
   },
   methods: {
-    //to be continued for databasing
+    //server controls
     async sendLoginRequest(email, password){
       console.log(email, password)
       await firebase.auth().signInWithEmailAndPassword(email, password).then(
@@ -653,6 +653,7 @@ export default {
       }
       }
     },
+    //equips an item and updates player stats
     equipItem(id) {
       this.retrieveByID('equipment', id);
       var passedItem = this.currentItem;
@@ -742,6 +743,7 @@ export default {
       }
       ;
     },
+    //unequips an item and updates player stats
     unequipItem(id){
       console.log(id)
       for (var a=0;a<this.player.equippedItemsIDs.length; a++){
@@ -899,6 +901,7 @@ export default {
     healToFull(){
       this.player.currentHP = this.player.maxHP;
     },
+    //Woops, player died
     playerDeath() {
       this.player.deaths++;
       this.openPane('inn');
