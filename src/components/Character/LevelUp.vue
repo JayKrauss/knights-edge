@@ -1,5 +1,5 @@
 <template>
-  <div id="level-up" class="modified-screen">
+  <div id="level-up" class="modified-screen col-12">
       <br><br><br><br><br><br><br><br>
       <div id="player-stats">
         <br>

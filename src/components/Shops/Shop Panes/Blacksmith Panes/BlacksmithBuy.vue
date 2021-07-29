@@ -1,5 +1,5 @@
 <template>
-  <div id="blacksmith-buy" class="main-screen">
+  <div id="blacksmith-buy" class="main-screen col-12">
     <br>
     <ul @click="buyItem" id="blacksmith-shop-list"></ul>
     <div id="blacksmithbuy-image"></div><span id='blacksmithbuy-greeting' class="shop-text">Heres what I've got.</span>

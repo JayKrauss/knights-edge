@@ -1,5 +1,5 @@
 <template>
-  <div id="town-buttons">
+  <div id="town-buttons" class="col-12">
       <button @click="openEquipment" class="town-button" >Equipment</button>
       <button @click="openInventory" class="town-button" >Inventory</button>
       <button @click="openShops" class="town-button" >Shops</button>

@@ -1,5 +1,5 @@
 <template>
-  <div id="blacksmith" class="main-screen">
+  <div id="blacksmith" class="main-screen col-12">
     <br><br>
     <div class="shop-text"><strong>{{ blacksmithText }}</strong></div>
     <div id="blacksmith-image"></div><span id='blacksmith-greeting' class="shop-text">What brings you to my shop?</span>

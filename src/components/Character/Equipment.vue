@@ -1,5 +1,5 @@
 <template>
-    <div id="equipment" class="main-screen">
+    <div id="equipment" class="main-screen col-12">
         <span id="equipment-header">EQUIPMENT</span>
         <br>
     <table id="equipment-pane" @mouseover="showUnequip" @click="unequipGear">

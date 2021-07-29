@@ -1,5 +1,5 @@
 <template>
-  <div id="adventure-buttons">
+  <div id="adventure-buttons" class="col-12">
       <button @click="openShops" class="town-button">Retreat</button>
   </div>
 </template>

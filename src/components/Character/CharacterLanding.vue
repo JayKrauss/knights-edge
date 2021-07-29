@@ -1,5 +1,5 @@
 <template>
-<div class="modified-screen">
+<div class="modified-screen col-12">
 <br><br><br><br><br>
   <div id="character">
       <br><br><br><br>

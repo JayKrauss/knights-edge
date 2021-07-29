@@ -1,5 +1,5 @@
 <template>
-  <div id="adventure" class="main-screen">
+  <div id="adventure" class="main-screen col-12">
     <br><br><br>
     <div class="shop-text"><strong>{{ adventureText }}</strong></div>
     <br><br>

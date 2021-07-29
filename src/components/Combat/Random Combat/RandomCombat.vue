@@ -1,5 +1,5 @@
 <template>
-  <div id="random-combat" class="main-screen">
+  <div id="random-combat" class="main-screen col-12">
     <br>
     <div v-show="mounted">
     <div><span id="opponent-name">{{ opponentName }}</span></div><br>
@@ -13,7 +13,7 @@
     <span id="status-text2">{{ statusText2 }}</span><br/>
     </div>
     <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
-    <button class="shop-button" disabled>Defend</button>
+    <button @click="playerDefend" class="shop-button" >Defend</button>
     <button @click="playerHeal" class="shop-button">Heal</button>
     </div>
   </div>
@@ -73,7 +73,7 @@ export default {
       //   return require(opponent.image);
       // },
       playerAttack() {
-        if (this.playerDamage > this.opponentCurrentHP){
+        if (this.playerDamage >= this.opponentCurrentHP){
           this.opponentCurrentHP = 0;
           this.combatWon();
         }
@@ -86,7 +86,18 @@ export default {
         }
       },
       playerDefend() {
-          
+        let defendingAttack = this.playerDamage / 1.25;
+        if (defendingAttack >= this.opponentCurrentHP){
+          this.opponentCurrentHP = 0;
+          this.combatWon();
+        }
+        else{
+          this.attackAnimation()
+          this.opponentCurrentHP -= defendingAttack;
+          this.statusText = "";
+          this.statusText += `You swing your weapon and do ${defendingAttack.toFixed(2)} damage to ${this.opponentName}. `
+          this.opponentDefendedAttack();
+        }
       },
       attackAnimation(){
         document.getElementById("attackbutton").disabled = true;
@@ -101,6 +112,12 @@ export default {
         this.statusText2 = "";
         this.statusText2 += `${this.opponentName} hits you for ${this.opponentDamage.toFixed(2)} damage.\n`
         this.$emit('modifyPlayerStats', "health", this.opponentDamage, "-");
+      },
+      opponentDefendedAttack() {
+        let defendedOpponentAttack = this.opponentDamage / 2;
+        this.statusText2 = "";
+        this.statusText2 += `${this.opponentName} hits you for ${defendedOpponentAttack.toFixed(2)} damage.\n`
+        this.$emit('modifyPlayerStats', "health", defendedOpponentAttack, "-");
       },
       playerHeal() {
         if (this.playerCurrentHP < this.playerMaxHP){

@@ -1,5 +1,5 @@
 <template>
-  <div id="general-store" class="main-screen">
+  <div id="general-store" class="main-screen col-12">
     <br><br>
     <div class="shop-text"><strong>{{ generalStoreText }}</strong></div>
     <div id="generalstore-image"></div><span id='generalstore-greeting' class="shop-text">Welcome! Have a look around.</span>

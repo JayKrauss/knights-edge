@@ -1,5 +1,5 @@
 <template>
-  <div id="status-bar">
+  <div id="status-bar" class="col-12">
       <table>
           <tr>
               <td>

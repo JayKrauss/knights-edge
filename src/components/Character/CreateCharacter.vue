@@ -1,7 +1,7 @@
 <template>
 <div id="create-background">
 <br>
-  <div id="character" class="modified-screen">
+  <div id="character" class="modified-screen col-12">
       <br><br><br><br><br><br><br>
       <div id="character-create">
 

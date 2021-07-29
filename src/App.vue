@@ -498,7 +498,7 @@ export default {
           console.log(err)
         }
         )
-      },
+    },
     signUpRequest(email, password) {
 
         firebase.auth().createUserWithEmailAndPassword(email, password).then(
@@ -570,7 +570,7 @@ export default {
           console.log(err)
         }
         )
-      },
+    },
     updateServerData(){
       if (this.serverCharacter != ""){
         console.table(this.player)

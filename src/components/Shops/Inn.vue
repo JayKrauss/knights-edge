@@ -1,5 +1,5 @@
 <template>
-  <div id="inn" class="main-screen">
+  <div id="inn" class="main-screen col-12">
     <br><br>
     <div class="shop-text"><strong>{{ innText }}</strong></div>
     <div id="innkeeper-image"></div><span id='innkeeper-greeting' class="shop-text">Food? Drink? Or a place to rest?</span>

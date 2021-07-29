@@ -1,5 +1,5 @@
 <template>
-  <div id="inventory" class="main-screen">
+  <div id="inventory" class="main-screen col-12">
       <br><br>
       <span id='inventory-title'>INVENTORY</span>
       <ul id="gear-inventory-list"></ul>

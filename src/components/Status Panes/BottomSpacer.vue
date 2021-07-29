@@ -1,5 +1,5 @@
 <template>
-  <div id="bottom-spacer">
+  <div id="bottom-spacer" class="col-12">
      
   </div>
 </template>

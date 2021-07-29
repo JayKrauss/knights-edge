@@ -1,5 +1,5 @@
 <template>
-  <div id="shops" class="main-screen">
+  <div id="shops" class="main-screen col-12">
     <br><br><br>
     <div class="shop-text">
       <strong> {{ introText }} </strong>

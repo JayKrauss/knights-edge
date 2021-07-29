@@ -1,5 +1,5 @@
 <template>
-  <div id="general-store-sell" class="main-screen">
+  <div id="general-store-sell" class="main-screen col-12">
     <br>
     <ul @click="sellItem" id="gear-shop-list"></ul>
     <div id="generalstoresell-image"></div><span id='generalstoresell-greeting' class="shop-text">What can I do for you?</span>

@@ -1,5 +1,5 @@
 <template>
-  <div id="clothier" class="main-screen">
+  <div id="clothier" class="main-screen col-12">
     <br><br>
     <div class="shop-text"><strong>{{ clothierText }}</strong></div>
     <div id="clothier-image"></div><span id='clothier-greeting' class="shop-text">Greetings. Buy something.</span>
