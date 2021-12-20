@@ -1,24 +1,28 @@
 <template>
-  <div id="adventure-buttons" class="col-12">
+  <div id="adventure-buttons-continue" class="col-12">
     <button @click="openShops" class="town-button">Retreat</button>
+    <button @click="continueFighting" class="town-button">Keep Fighting</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AdventureButtons",
+  name: "AdventureButtonsContinue",
   props: [],
   methods: {
     openShops() {
       this.$emit("openPane", "shops")
     },
+    continueFighting() {
+      this.$emit("openPane", "randomCombat")
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#adventure-buttons {
+#adventure-buttons-continue {
   bottom: 0;
   width: 500px;
   height: 70px;

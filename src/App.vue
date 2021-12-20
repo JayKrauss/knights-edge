@@ -1,246 +1,221 @@
 <template>
-<!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
-<!-- Onions have layers? Games have layers. Just roll with it. -->
-<div id="playfield">
-  <div v-if="landingPane">
-    <Landing 
-      @openPane="openPane"
-    />
+  <!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
+  <!-- Onions have layers? Games have layers. Just roll with it. -->
+  <div id="playfield">
+    <div v-if="landingPane">
+      <Landing @openPane="openPane" />
+    </div>
+    <div v-if="signUpPane">
+      <SignUp @signUp="signUpRequest" />
+    </div>
+    <div v-if="statusPane">
+      <StatusBar
+        :level="this.player.level"
+        :xp="this.player.xp"
+        :toLevel="this.player.toLevel"
+        :gold="this.player.gold"
+        :currentHP="this.player.currentHP"
+        :maxHP="this.player.maxHP"
+        :levelChange="this.levelChange"
+        :xpChange="this.xpChange"
+        :goldChange="this.goldChange"
+        :hpChange="this.hpChange"
+        @openPane="openPane"
+        @saveCharacter="saveCharacter"
+      />
+    </div>
+    <div v-if="topSpacerPane">
+      <TopSpacer />
+    </div>
+    <div v-if="loginPane">
+      <LogIn @sendLoginRequest="sendLoginRequest" />
+    </div>
+    <div v-if="createCharacterPane">
+      <CreateCharacter @createCharacter="createCharacter" @openPane="openPane" />
+    </div>
+    <div v-if="characterPane">
+      <Character
+        :characterName="this.player.characterName"
+        :characterStrength="this.player.characterStrength"
+        :characterConstitution="this.player.characterConstitution"
+        :characterDexterity="this.player.characterDexterity"
+        :characterCharisma="this.player.characterCharisma"
+        :characterIntellect="this.player.characterIntellect"
+        :characterXP="this.player.xp"
+        :toLevel="this.player.toLevel"
+        :characterLevel="this.player.level"
+        :attributePoints="this.player.attributePoints"
+        @openPane="openPane"
+      />
+    </div>
+    <div v-if="characterLandingPane">
+      <CharacterLanding
+        :characterName="this.player.characterName"
+        :characterStrength="this.player.characterStrength"
+        :characterConstitution="this.player.characterConstitution"
+        :characterDexterity="this.player.characterDexterity"
+        :characterCharisma="this.player.characterCharisma"
+        :characterIntellect="this.player.characterIntellect"
+        :characterXP="this.player.xp"
+        :toLevel="this.player.toLevel"
+        :characterLevel="this.player.level"
+        :attributePoints="this.player.attributePoints"
+        @generateQuest="generateQuest"
+      />
+    </div>
+    <div v-if="levelUpPane">
+      <LevelUp
+        :characterName="this.player.characterName"
+        :characterStrength="this.player.characterStrength"
+        :characterConstitution="this.player.characterConstitution"
+        :characterDexterity="this.player.characterDexterity"
+        :characterCharisma="this.player.characterCharisma"
+        :characterIntellect="this.player.characterIntellect"
+        :attributePoints="this.player.attributePoints"
+        @openPane="openPane"
+        @modifyPlayerStats="modifyPlayerStats"
+        @updateStats="updateStats"
+      />
+    </div>
+    <div v-if="questInfoPane">
+      <QuestInfo
+        :questName="this.questName"
+        :questText="this.questInfo"
+        :questRewards="this.questRewards"
+        :questID="this.questID"
+        @openPane="openPane"
+        @addQuestToIDList="addQuestToIDList"
+        @addQuestToObjectList="addQuestToObjectList"
+      />
+    </div>
+    <div v-if="shopsPane">
+      <Shops @openPane="openPane" />
+    </div>
+    <div v-if="equipmentPane">
+      <Equipment
+        :equippedItemsArray="this.player.equippedItemsObjects"
+        :playerDamage="this.player.totalPlayerDamage"
+        :playerArmor="this.player.totalPlayerArmor"
+        :playerKills="this.player.kills"
+        :playerDeaths="this.player.deaths"
+        @unequipItem="unequipItem"
+      />
+    </div>
+    <div v-if="inventoryPane">
+      <Inventory
+        :currentInventoryObjects="this.player.currentInventoryObjects"
+        @equipItem="equipItem"
+      />
+    </div>
+    <div v-if="adventurePane">
+      <Adventure @openPane="openPane" />
+    </div>
+    <div v-if="blacksmithPane">
+      <Blacksmith @openPane="openPane" />
+    </div>
+    <div v-if="blacksmithBuyPane">
+      <BlacksmithBuy
+        @buyItem="buyGear"
+        :blacksmithInventoryObjects="this.blacksmithInventoryObjects"
+      />
+    </div>
+    <div v-if="blacksmithSellPane">
+      <BlacksmithSell
+        @sellGear="sellGear"
+        @openPane="openPane"
+        :currentInventoryObjects="this.player.currentInventoryObjects"
+        :currentInventoryIDs="this.player.currentInventoryIDs"
+      />
+    </div>
+    <div v-if="clothierPane">
+      <Clothier @openPane="openPane" />
+    </div>
+    <div v-if="clothierBuyPane">
+      <ClothierBuy @buyItem="buyGear" :clothierInventoryObjects="this.clothierInventoryObjects" />
+    </div>
+    <div v-if="clothierSellPane">
+      <ClothierSell
+        @sellGear="sellGear"
+        @openPane="openPane"
+        :currentInventoryObjects="this.player.currentInventoryObjects"
+        :currentInventoryIDs="this.player.currentInventoryIDs"
+      />
+    </div>
+    <div v-if="generalStorePane">
+      <GeneralStore @openPane="openPane" />
+    </div>
+    <div v-if="generalStoreBuyPane">
+      <GeneralStoreBuy
+        @buyItem="buyItem"
+        :generalStoreInventoryObjects="this.generalStoreInventoryObjects"
+      />
+    </div>
+    <div v-if="generalStoreSellPane">
+      <GeneralStoreSell
+        @sellItem="sellItem"
+        @openPane="openPane"
+        :currentInventoryObjects="this.player.currentInventoryObjects"
+        :currentInventoryIDs="this.player.currentInventoryIDs"
+      />
+    </div>
+    <div v-if="innPane">
+      <Inn
+        @modifyPlayerStats="modifyPlayerStats"
+        @healToFull="healToFull"
+        :playerLevel="this.player.level"
+        :playerHealth="this.player.currentHP"
+        :playerMaxHealth="this.player.maxHP"
+      />
+    </div>
+    <div v-if="forestPane">
+      <Forest @openPane="openPane" />
+    </div>
+    <div v-if="mountainsPane">
+      <Mountains @openPane="openPane" />
+    </div>
+    <div v-if="travelQuestsPane">
+      <TravelQuests />
+    </div>
+    <div v-if="randomCombatPane">
+      <RandomCombat
+        :playerCurrentHP="this.player.currentHP"
+        :playerMaxHP="this.player.maxHP"
+        :playerDamage="this.player.totalPlayerDamage"
+        :playerArmor="this.player.totalPlayerArmor"
+        :playerLevel="this.player.level"
+        :opponent="this.currentItem"
+        :opponentImage="this.currentItem.image"
+        :opponentDeathImage="this.currentItem.deathImage"
+        @modifyPlayerStats="modifyPlayerStats"
+        @playerVictory="playerVictory"
+        @healToFull="healToFull"
+      />
+    </div>
+    <div v-if="victoryPane">
+      <Victory
+        :opponentName="this.opponentName"
+        :opponentLevel="this.opponentLevel"
+        :opponentXPGain="this.opponentXPGain"
+        :opponentGoldGain="this.opponentGoldGain"
+        :opponentDeathImage="this.opponentDeathImage"
+        :characterXP="this.player.xp"
+        :toLevel="this.player.toLevel"
+        @checkLevel="checkLevel"
+      />
+    </div>
+    <div v-if="townButtonsPane">
+      <TownButtons @openPane="openPane" />
+    </div>
+    <div v-if="adventureButtonsPane">
+      <AdventureButtons @openPane="openPane" />
+    </div>
+    <div v-if="adventureButtonsContinuePane">
+      <AdventureButtonsContinue @openPane="openPane" />
+    </div>
+    <div v-if="bottomSpacerPane">
+      <BottomSpacer />
+    </div>
   </div>
-  <div v-if="signUpPane">
-    <SignUp 
-      @signUp="signUpRequest"
-    />
-  </div>
-  <div v-if="statusPane">
-    <StatusBar 
-      :level="this.player.level" 
-      :xp="this.player.xp" 
-      :toLevel="this.player.toLevel" 
-      :gold="this.player.gold" 
-      :currentHP="this.player.currentHP" 
-      :maxHP="this.player.maxHP"
-      :levelChange="this.levelChange"
-      :xpChange="this.xpChange"
-      :goldChange="this.goldChange"
-      :hpChange="this.hpChange"
-      @openPane="openPane"
-      @saveCharacter="saveCharacter"
-    />
-  </div>
-  <div v-if="topSpacerPane">
-    <TopSpacer />
-  </div>
-  <div v-if="loginPane">
-    <LogIn @sendLoginRequest="sendLoginRequest"/>
-  </div>
-  <div v-if="createCharacterPane">
-    <CreateCharacter 
-      @createCharacter="createCharacter"
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="characterPane">
-    <Character 
-      :characterName="this.player.characterName"
-      :characterStrength="this.player.characterStrength"
-      :characterConstitution="this.player.characterConstitution"
-      :characterDexterity="this.player.characterDexterity"
-      :characterCharisma="this.player.characterCharisma"
-      :characterIntellect="this.player.characterIntellect"
-      :characterXP="this.player.xp"
-      :toLevel="this.player.toLevel"
-      :characterLevel="this.player.level"
-      :attributePoints="this.player.attributePoints"
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="characterLandingPane">
-    <CharacterLanding 
-      :characterName="this.player.characterName"
-      :characterStrength="this.player.characterStrength"
-      :characterConstitution="this.player.characterConstitution"
-      :characterDexterity="this.player.characterDexterity"
-      :characterCharisma="this.player.characterCharisma"
-      :characterIntellect="this.player.characterIntellect"
-      :characterXP="this.player.xp"
-      :toLevel="this.player.toLevel"
-      :characterLevel="this.player.level"
-      :attributePoints="this.player.attributePoints"
-      @generateQuest="generateQuest"
-    />
-  </div>
-  <div v-if="levelUpPane">
-    <LevelUp 
-      :characterName="this.player.characterName"
-      :characterStrength="this.player.characterStrength"
-      :characterConstitution="this.player.characterConstitution"
-      :characterDexterity="this.player.characterDexterity"
-      :characterCharisma="this.player.characterCharisma"
-      :characterIntellect="this.player.characterIntellect"
-      :attributePoints="this.player.attributePoints"
-      @openPane="openPane"
-      @modifyPlayerStats="modifyPlayerStats"
-      @updateStats="updateStats"
-    />
-  </div>
-  <div v-if="questInfoPane">
-    <QuestInfo 
-      :questName="this.questName"
-      :questText="this.questInfo"
-      :questRewards="this.questRewards"
-      :questID="this.questID"
-      @openPane="openPane"
-      @addQuestToIDList="addQuestToIDList"
-      @addQuestToObjectList="addQuestToObjectList"
-    />
-  </div>
-  <div v-if="shopsPane">
-    <Shops 
-      @openPane="openPane" 
-    />
-  </div>
-  <div v-if="equipmentPane">
-    <Equipment 
-      :equippedItemsArray="this.player.equippedItemsObjects"
-      :playerDamage="this.player.totalPlayerDamage"
-      :playerArmor="this.player.totalPlayerArmor"
-      :playerKills="this.player.kills"
-      :playerDeaths="this.player.deaths"
-      @unequipItem="unequipItem"
-    />
-  </div>
-  <div v-if="inventoryPane">
-    <Inventory 
-      :currentInventoryObjects="this.player.currentInventoryObjects"
-      @equipItem="equipItem"
-    />
-  </div>
-  <div v-if="adventurePane">
-    <Adventure 
-      @openPane="openPane" 
-    />
-  </div>
-  <div v-if="blacksmithPane">
-    <Blacksmith 
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="blacksmithBuyPane">
-    <BlacksmithBuy
-      @buyItem="buyGear"
-      :blacksmithInventoryObjects="this.blacksmithInventoryObjects"
-    />
-  </div>
-  <div v-if="blacksmithSellPane">
-    <BlacksmithSell 
-      @sellGear="sellGear"
-      @openPane="openPane"
-      :currentInventoryObjects="this.player.currentInventoryObjects"
-      :currentInventoryIDs="this.player.currentInventoryIDs"
-    />
-  </div>
-  <div v-if="clothierPane">
-    <Clothier 
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="clothierBuyPane">
-    <ClothierBuy 
-      @buyItem="buyGear"
-      :clothierInventoryObjects="this.clothierInventoryObjects"
-    />
-  </div>
-  <div v-if="clothierSellPane">
-    <ClothierSell 
-      @sellGear="sellGear"
-      @openPane="openPane"
-      :currentInventoryObjects="this.player.currentInventoryObjects"
-      :currentInventoryIDs="this.player.currentInventoryIDs"
-    />
-  </div>
-  <div v-if="generalStorePane">
-    <GeneralStore 
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="generalStoreBuyPane">
-    <GeneralStoreBuy
-      @buyItem="buyItem"
-      :generalStoreInventoryObjects="this.generalStoreInventoryObjects"
-    />
-  </div>
-  <div v-if="generalStoreSellPane">
-    <GeneralStoreSell
-      @sellItem="sellItem"
-      @openPane="openPane"
-      :currentInventoryObjects="this.player.currentInventoryObjects"
-      :currentInventoryIDs="this.player.currentInventoryIDs"
-    />
-  </div>
-  <div v-if="innPane">
-    <Inn 
-      @modifyPlayerStats="modifyPlayerStats"
-      @healToFull="healToFull"
-      :playerLevel="this.player.level"
-      :playerHealth="this.player.currentHP"
-      :playerMaxHealth="this.player.maxHP"
-    />
-  </div>
-  <div v-if="forestPane">
-    <Forest 
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="mountainsPane">
-    <Mountains 
-      @openPane="openPane"
-    />
-  </div>
-  <div v-if="travelQuestsPane">
-    <TravelQuests />
-  </div>
-  <div v-if="randomCombatPane">
-    <RandomCombat 
-      :playerCurrentHP="this.player.currentHP"
-      :playerMaxHP="this.player.maxHP"
-      :playerDamage="this.player.totalPlayerDamage"
-      :playerArmor="this.player.totalPlayerArmor"
-      :playerLevel="this.player.level"
-      :opponent="this.currentItem"
-      :opponentImage="this.currentItem.image"
-      :opponentDeathImage="this.currentItem.deathImage"
-      @modifyPlayerStats="modifyPlayerStats"
-      @playerVictory="playerVictory"
-      @healToFull="healToFull"
-    />
-  </div>
-  <div v-if="victoryPane">
-    <Victory 
-      :opponentName="this.opponentName"
-      :opponentLevel="this.opponentLevel"
-      :opponentXPGain="this.opponentXPGain"
-      :opponentGoldGain="this.opponentGoldGain"
-      :opponentDeathImage="this.opponentDeathImage"
-      :characterXP="this.player.xp"
-      :toLevel="this.player.toLevel"
-      @checkLevel="checkLevel"
-    />
-  </div>
-  <div v-if="townButtonsPane">
-  <TownButtons 
-    @openPane="openPane" 
-  />
-  </div>
-  <div v-if="adventureButtonsPane">
-    <AdventureButtons 
-    @openPane="openPane"  
-  />
-  </div>
-  <div v-if="bottomSpacerPane">
-    <BottomSpacer />
-  </div>
-</div>
 </template>
 
 <script>
@@ -273,6 +248,7 @@ import Forest from "./components/Adventures/Forest.vue";
 import Mountains from "./components/Adventures/Mountains.vue";
 import TravelQuests from "./components/Adventures/Quests.vue";
 import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
+import AdventureButtonsContinue from "./components/Status Panes/AdventureButtonsContinue.vue";
 import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
 import Victory from "./components/Combat/Victory.vue";
 import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
@@ -301,6 +277,7 @@ export default {
     Shops,
     TownButtons,
     AdventureButtons,
+    AdventureButtonsContinue,
     Equipment,
     Inventory,
     Adventure,
@@ -365,6 +342,7 @@ export default {
       travelQuestsPane : false,
       townButtonsPane : false,
       adventureButtonsPane : false,
+      adventureButtonsContinuePane : false,
       randomCombatPane : false,
       victoryPane : false,
       bottomSpacerPane : false,
@@ -1045,6 +1023,7 @@ export default {
       this.travelQuestsPane = false;
       this.townButtonsPane = false;
       this.adventureButtonsPane = false;
+      this.adventureButtonsContinuePane = false;
       this.randomCombatPane = false;
       this.victoryPane = false;
       this.bottomSpacerPane = false;
@@ -1208,7 +1187,7 @@ export default {
           this.player.kills++;
           this.statusPane = true;
           this.victoryPane = true;
-          this.adventureButtonsPane = true;
+          this.adventureButtonsContinuePane = true;
           break;
         default:
           break;
