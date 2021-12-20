@@ -1,7 +1,7 @@
 <template>
   <div id="adventure-buttons-continue" class="col-12">
     <button @click="openShops" class="town-button">Retreat</button>
-    <button @click="continueFighting" class="town-button">Keep Fighting</button>
+    <button @click="continueFighting" class="town-button">Fight On</button>
   </div>
 </template>
 
