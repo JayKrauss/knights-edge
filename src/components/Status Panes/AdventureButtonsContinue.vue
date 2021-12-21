@@ -11,10 +11,10 @@ export default {
   props: [],
   methods: {
     openShops() {
-      this.$emit("openPane", "shops")
+      this.$emit("openPane", "shops");
     },
     continueFighting() {
-      this.$emit("openPane", "randomCombat")
+      this.$emit("openPane", "randomCombat");
     }
   }
 };

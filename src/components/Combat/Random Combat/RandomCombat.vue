@@ -1,20 +1,36 @@
 <template>
   <div id="random-combat" class="main-screen col-12">
-    <br>
+    <br />
     <div v-show="mounted">
-    <div><span id="opponent-name">{{ opponentName }}</span></div><br>
-    <div class="intro-text"><strong>{{ randomCombatText }}</strong></div>
-    <br>
-    <img id="combat-image" v-bind:src="opponentImage"><div id="attack-animation"></div><br>
-    <span id="enemy-chat"><strong>{{ opponentSpeech }}</strong></span><br>
-    <span id="enemy-hp-bar">HP: {{ opponentCurrentHP.toFixed(2) }} / {{ opponentMaxHP.toFixed(2) }}</span><br/><br/>
-    <div id="status-pane">
-    <span id="status-text">{{ statusText }}</span><br/>
-    <span id="status-text2">{{ statusText2 }}</span><br/>
-    </div>
-    <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
-    <button @click="playerDefend" class="shop-button" >Defend</button>
-    <button @click="playerHeal" class="shop-button">Heal</button>
+      <div>
+        <span id="opponent-name">{{ opponentName }}</span>
+      </div>
+      <br />
+      <div class="intro-text">
+        <strong>{{ randomCombatText }}</strong>
+      </div>
+      <br />
+      <img id="combat-image" v-bind:src="opponentImage" />
+      <div id="attack-animation"></div>
+      <br />
+      <span id="enemy-chat">
+        <strong>{{ opponentSpeech }}</strong>
+      </span>
+      <br />
+      <span
+        id="enemy-hp-bar"
+      >HP: {{ opponentCurrentHP.toFixed(2) }} / {{ opponentMaxHP.toFixed(2) }}</span>
+      <br />
+      <br />
+      <div id="status-pane">
+        <span id="status-text">{{ statusText }}</span>
+        <br />
+        <span id="status-text2">{{ statusText2 }}</span>
+        <br />
+      </div>
+      <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
+      <button @click="playerDefend" class="shop-button">Defend</button>
+      <button @click="playerHeal" class="shop-button">Heal</button>
     </div>
   </div>
 </template>
@@ -78,7 +94,7 @@ export default {
           this.combatWon();
         }
         else{
-          this.attackAnimation()
+          this.attackAnimation();
           this.opponentCurrentHP -= this.playerDamage
           this.statusText = "";
           this.statusText += `You swing your weapon and do ${this.playerDamage.toFixed(2)} damage to ${this.opponentName}. `
@@ -92,10 +108,10 @@ export default {
           this.combatWon();
         }
         else{
-          this.attackAnimation()
+          this.attackAnimation();
           this.opponentCurrentHP -= defendingAttack;
           this.statusText = "";
-          this.statusText += `You swing your weapon and do ${defendingAttack.toFixed(2)} damage to ${this.opponentName}. `
+          this.statusText += `You swing your weapon and do ${defendingAttack.toFixed(2)} damage to ${this.opponentName}. `;
           this.opponentDefendedAttack();
         }
       },
@@ -129,7 +145,7 @@ export default {
           }
         }
         else {
-          alert("You cannot heal above maximum.")
+          alert("You cannot heal above maximum.");
         }
         
       },
@@ -148,48 +164,48 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#random-combat{
-     background-image: url("../../../assets/images/game_background_3.png");
-     background-size: cover;
- }
- .random-combat-text{
-   color: white;
- }
- #opponent-name{
-   color: white;
-   font-size: 34px;
- }
- #attack-animation{
-   background-image: url("../../../assets/images/ezgif.com-gif-maker (2).gif");
-   background-size: cover;
-   width: 200px;
-   height: 200px;
-   z-index: 100;
-   position: absolute;
-   top: 22%;
-   left: 45%;
-   display: none;
- }
- #combat-image{
-    background-size: cover;
-     width: 200px;
-     height: 200px;
-     margin-left: auto;
-     margin-right: auto;
- }
- #enemy-chat{
-    font-size: 18px;
-    color: darkblue;
- }
- #enemy-hp-bar{
-     color: red;
-     font-size: 18px;
-     font-weight: bold;
- }
- #status-pane{
-   background: rgba(0,0,0,.5);
-   color: white;
-   font-size: 14px;
-   font-weight: bold;
- }
+#random-combat {
+  background-image: url("../../../assets/images/game_background_3.png");
+  background-size: cover;
+}
+.random-combat-text {
+  color: white;
+}
+#opponent-name {
+  color: white;
+  font-size: 34px;
+}
+#attack-animation {
+  background-image: url("../../../assets/images/ezgif.com-gif-maker (2).gif");
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  z-index: 100;
+  position: absolute;
+  top: 22%;
+  left: 45%;
+  display: none;
+}
+#combat-image {
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#enemy-chat {
+  font-size: 18px;
+  color: darkblue;
+}
+#enemy-hp-bar {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+}
+#status-pane {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
 </style>

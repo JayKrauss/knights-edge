@@ -2,6 +2,9 @@
   <!-- Here lives the playfield, built with many, MANY components that Im calling Panes. -->
   <!-- Onions have layers? Games have layers. Just roll with it. -->
   <div id="playfield">
+    <br />
+    <br />
+    <br />
     <div v-if="landingPane">
       <Landing @openPane="openPane" />
     </div>
@@ -219,47 +222,47 @@
 </template>
 
 <script>
-import Landing from "./components/Main Panes/Landing.vue";
-import SignUp from "./components/Main Panes/SignUp.vue";
-import StatusBar from "./components/Status Panes/StatusBar.vue";
-import TopSpacer from "./components/Status Panes/TopSpacer.vue";
-import LogIn from "./components/Main Panes/LogIn.vue";
-import Character from "./components/Character/Character.vue";
-import CreateCharacter from "./components/Character/CreateCharacter.vue";
-import CharacterLanding from "./components/Character/CharacterLanding.vue";
-import LevelUp from "./components/Character/LevelUp.vue";
-import QuestInfo from "./components/Main Panes/QuestInfo.vue";
-import Shops from "./components/Main Panes/Shops.vue";
-import TownButtons from "./components/Status Panes/TownButtons.vue";
-import Equipment from "./components/Character/Equipment.vue";
-import Inventory from "./components/Character/Inventory.vue";
-import Adventure from "./components/Main Panes/Adventure.vue";
-import Blacksmith from "./components/Shops/Blacksmith.vue";
-import BlacksmithBuy from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithBuy.vue";
-import BlacksmithSell from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithSell.vue";
-import Clothier from "./components/Shops/Clothier.vue";
-import ClothierBuy from"./components/Shops/Shop Panes/Clothier Panes/ClothierBuy.vue";
-import ClothierSell from"./components/Shops/Shop Panes/Clothier Panes/ClothierSell.vue";
-import GeneralStore from "./components/Shops/GeneralStore.vue";
-import GeneralStoreBuy from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreBuy.vue";
-import GeneralStoreSell from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreSell.vue";
-import Inn from "./components/Shops/Inn.vue";
-import Forest from "./components/Adventures/Forest.vue";
-import Mountains from "./components/Adventures/Mountains.vue";
-import TravelQuests from "./components/Adventures/Quests.vue";
-import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
-import AdventureButtonsContinue from "./components/Status Panes/AdventureButtonsContinue.vue";
-import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
-import Victory from "./components/Combat/Victory.vue";
-import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
-import firebase from 'firebase';
+  import Landing from "./components/Main Panes/Landing.vue";
+  import SignUp from "./components/Main Panes/SignUp.vue";
+  import StatusBar from "./components/Status Panes/StatusBar.vue";
+  import TopSpacer from "./components/Status Panes/TopSpacer.vue";
+  import LogIn from "./components/Main Panes/LogIn.vue";
+  import Character from "./components/Character/Character.vue";
+  import CreateCharacter from "./components/Character/CreateCharacter.vue";
+  import CharacterLanding from "./components/Character/CharacterLanding.vue";
+  import LevelUp from "./components/Character/LevelUp.vue";
+  import QuestInfo from "./components/Main Panes/QuestInfo.vue";
+  import Shops from "./components/Main Panes/Shops.vue";
+  import TownButtons from "./components/Status Panes/TownButtons.vue";
+  import Equipment from "./components/Character/Equipment.vue";
+  import Inventory from "./components/Character/Inventory.vue";
+  import Adventure from "./components/Main Panes/Adventure.vue";
+  import Blacksmith from "./components/Shops/Blacksmith.vue";
+  import BlacksmithBuy from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithBuy.vue";
+  import BlacksmithSell from"./components/Shops/Shop Panes/Blacksmith Panes/BlacksmithSell.vue";
+  import Clothier from "./components/Shops/Clothier.vue";
+  import ClothierBuy from"./components/Shops/Shop Panes/Clothier Panes/ClothierBuy.vue";
+  import ClothierSell from"./components/Shops/Shop Panes/Clothier Panes/ClothierSell.vue";
+  import GeneralStore from "./components/Shops/GeneralStore.vue";
+  import GeneralStoreBuy from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreBuy.vue";
+  import GeneralStoreSell from "./components/Shops/Shop Panes/General Store Panes/GeneralStoreSell.vue";
+  import Inn from "./components/Shops/Inn.vue";
+  import Forest from "./components/Adventures/Forest.vue";
+  import Mountains from "./components/Adventures/Mountains.vue";
+  import TravelQuests from "./components/Adventures/Quests.vue";
+  import AdventureButtons from "./components/Status Panes/AdventureButtons.vue";
+  import AdventureButtonsContinue from "./components/Status Panes/AdventureButtonsContinue.vue";
+  import RandomCombat from "./components/Combat/Random Combat/RandomCombat.vue";
+  import Victory from "./components/Combat/Victory.vue";
+  import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
+  import firebase from 'firebase';
 
-import { default as equipmentList } from "./datafiles/items/equipment.js";
-import { default as gearList } from "./datafiles/items/gear.js";
-import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
-// import { default as playerList } from "./datafiles/player/player.js";
+  import { default as equipmentList } from "./datafiles/items/equipment.js";
+  import { default as gearList } from "./datafiles/items/gear.js";
+  import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
+  // import { default as playerList } from "./datafiles/player/player.js";
 
-import standardEnemies from './datafiles/enemies/standardEnemies';
+  import standardEnemies from './datafiles/enemies/standardEnemies';
 
 export default {
   name: "App",
@@ -463,19 +466,19 @@ export default {
           serverPlayerData.on('value', (snapshot) => {
           const data = snapshot.val();
           this.player = data;
-          console.log(this.player)
+          console.log(this.player);
           this.collatePlayerStats();
           this.buildInventory();
           this.addQuestToObjectList();
           this.buildEquippedItemArray();
           this.serverCharacter = user.user.uid;
           this.openPane('character');
-});
+          });
         },
         err => {
           console.log(err)
         }
-        )
+        );
     },
     signUpRequest(email, password) {
 
@@ -543,7 +546,7 @@ export default {
         },
         err => {
           if (err == 'auth/email-already-in-use'){
-            alert("Email already in use. Please log in.")
+            alert("Email already in use. Please log in.");
           }
           console.log(err)
         }
@@ -580,7 +583,7 @@ export default {
         })
       }
       else{
-        console.log(this.serverCharacter + "not found")
+        console.log(this.serverCharacter + "not found");
       }
     },
     //check if the player is ready to level up, and then give attribute points on true
@@ -595,7 +598,7 @@ export default {
     collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
-    console.table(this.player)
+    console.table(this.player);
       for (var i=0; i<this.player.equippedWeapons.length; i++){
         if (this.player.equippedWeapons[i] != ""){
           this.retrieveByID("equipment", this.player.equippedWeapons[i]);
@@ -611,7 +614,7 @@ export default {
       for (var w=0; w<this.player.equippedAccessories.length; w++){
         if (this.player.equippedAccessories[w] != ""){
            this.retrieveByID("equipment", this.player.equippedAccessories[j]);
-           console.log(this.currentItem.health)
+           console.log(this.currentItem.health);
         }
       }
       
@@ -655,7 +658,7 @@ export default {
           console.log("Item swapped.")
           this.player.equippedWeapons.push(passedItem.id);
         }
-        else if(passedItem.slot == "neck") {
+        else if(passedItem.slot === "neck") {
           this.player.equippedAccessories.push(passedItem.id);
         }
         else {
@@ -714,9 +717,9 @@ export default {
           this.player.equippedArmor.push(passedItem.id);
         }
         this.player.equippedItemsIDs.push(passedItem.id);
-        this.buildEquippedItemArray()
+        this.buildEquippedItemArray();
         this.buildInventory();
-        this.collatePlayerStats()
+        this.collatePlayerStats();
         this.openPane('equipment');
       }
       ;
@@ -755,7 +758,7 @@ export default {
     },
     //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
-      console.log("changing stats")
+      console.log("changing stats");
       switch (stat){
         case "health":
           if (direction == "-"){
@@ -918,9 +921,9 @@ export default {
       for (var i=0; i<this.player.openQuestsIDs.length; i++){
         this.retrieveByID('standardQuests', this.player.openQuestsIDs[i])
         console.log(this.currentItem);
-        this.player.openQuestObjects.push(this.currentItem)
+        this.player.openQuestObjects.push(this.currentItem);
       }
-      console.table(this.player.openQuestObjects)
+      console.table(this.player.openQuestObjects);
     },
     //takes in data from createCharacter pane to build the local character to be uploaded to the server
     createCharacter(name, profession, level, xp, strength, constitution, dexterity, charisma, intellect, attributePoints) {
@@ -984,7 +987,7 @@ export default {
       
       this.openPane('victory');
 
-      console.log("Oh look, you survived.")
+      console.log("Oh look, you survived.");
     },
     //Pulls a random enemy from the database
     generateRandomEnemy() {
@@ -1237,13 +1240,13 @@ export default {
         item.value = this.currentItem.value;
         item.description = this.currentItem.description;
         if(this.currentItem.armor){
-          item.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+          item.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2);
         }
         if(this.currentItem.damage){
-          item.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+          item.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2);
         }
         if(this.currentItem.health){
-          item.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+          item.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2);
         }
         item.type = this.currentItem.type;
         item.slot = this.currentItem.slot;
@@ -1264,13 +1267,13 @@ export default {
               gsitem.value = this.currentItem.value;
               gsitem.description = this.currentItem.description;
                if(this.currentItem.armor){
-                  gsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+                  gsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2);
                }
                 if(this.currentItem.damage){
-                  gsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+                  gsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2);
                }
                 if(this.currentItem.health){
-                  gsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+                  gsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2);
                }
               gsitem.type = this.currentItem.type;
               gsitem.slot = this.currentItem.slot;
@@ -1291,13 +1294,13 @@ export default {
               bsitem.damage = this.currentItem.damage;
               bsitem.description = this.currentItem.description;
               if(this.currentItem.armor){
-                  bsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+                  bsitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2);
                }
                 if(this.currentItem.damage){
-                  bsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+                  bsitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2);
                }
                 if(this.currentItem.health){
-                  bsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+                  bsitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2);
                }
               bsitem.type = this.currentItem.type;
               bsitem.slot = this.currentItem.slot;
@@ -1318,19 +1321,19 @@ export default {
               chitem.armor = this.currentItem.armor;
               chitem.description = this.currentItem.description;
               if(this.currentItem.armor){
-                  chitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2)
+                  chitem.armor = (this.currentItem.armor * (1 + (this.player.characterDexterity / 10))).toFixed(2);
                }
                 if(this.currentItem.damage){
-                  chitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2)
+                  chitem.damage = (this.currentItem.damage * (1 + (this.player.characterStrength / 10))).toFixed(2);
                }
                 if(this.currentItem.health){
-                  chitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2)
+                  chitem.health = (this.currentItem.health * (1 + (this.player.characterIntellect / 10))).toFixed(2);
                }
               chitem.type = this.currentItem.type;
               chitem.slot = this.currentItem.slot;
               this.clothierInventoryObjects.push(chitem);
           }
-          console.table(this.clothierInventoryObjects)
+          console.table(this.clothierInventoryObjects);
           break;
 
         default:
@@ -1340,7 +1343,7 @@ export default {
     },
     //sets up the shop inventory ID arrays based on player level
     levelShopInventory(store){
-      console.table(equipmentList)
+      console.table(equipmentList);
       if (store == "blacksmith"){
         this.blacksmithInventoryIDs = [];
       }
@@ -1355,7 +1358,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1365,7 +1368,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1375,7 +1378,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1385,7 +1388,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1395,7 +1398,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1405,7 +1408,7 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
@@ -1415,12 +1418,12 @@ export default {
               this.blacksmithInventoryIDs.push(this.currentItem.id);
             }
             else if (store == "clothier" && this.currentItem.slot != "mainhand") {
-              this.clothierInventoryIDs.push(this.currentItem.id)
+              this.clothierInventoryIDs.push(this.currentItem.id);
             }
           }
         }
         else{
-          console.log("How did you get here?")
+          console.log("How did you get here?");
         }
       }
     },
@@ -1474,22 +1477,22 @@ export default {
           if (this.player.currentInventoryIDs[y][0] == id){
             existingSellIndex = y;
             playerHas = true;
-            console.log(playerHas)
+            console.log(playerHas);
           }
         }
         if (playerHas){
           this.retrieveByID('adventuringGear', id);
           this.player.currentInventoryIDs[existingSellIndex][1]--;
           if (this.player.currentInventoryIDs[existingSellIndex][1] == 0){
-            console.table(this.player.currentInventoryObjects)
+            console.table(this.player.currentInventoryObjects);
             console.log("Zeroed")
             this.player.currentInventoryIDs.splice(existingSellIndex, 1);
             this.buildInventory();
-            console.table(this.player.currentInventoryObjects)
+            console.table(this.player.currentInventoryObjects);
           }
           this.modifyPlayerStats('gold', (this.currentItem.value / 2), "+");
           this.buildInventory();
-          console.table(this.player.currentInventoryObjects)
+          console.table(this.player.currentInventoryObjects);
         }
         else{
           return;
@@ -1509,7 +1512,7 @@ export default {
       if (this.player.gold - this.currentItem.value >= 0){
         if (existing){
         this.player.currentInventoryIDs[existingItemIndex][1]++;
-        console.log(this.currentItem.value)
+        console.log(this.currentItem.value);
         this.modifyPlayerStats('gold', this.currentItem.value, "-");
         this.buildInventory();
         }
@@ -1531,10 +1534,10 @@ export default {
         var playerHas = false
         for(var y=0; y<this.player.currentInventoryIDs.length; y++){
           if (this.player.currentInventoryIDs[y][0] == id){
-            console.log("Has")
+            console.log("Has");
             existingSellIndex = y;
             playerHas = true;
-            console.log(playerHas)
+            console.log(playerHas);
           }
         }
         if (playerHas){
@@ -1542,22 +1545,21 @@ export default {
           this.retrieveByID('equipment', id);
           this.player.currentInventoryIDs[existingSellIndex][1]--;
           if (this.player.currentInventoryIDs[existingSellIndex][1] == 0){
-            console.table(this.player.currentInventoryObjects)
-            console.log("Zeroed")
+            console.table(this.player.currentInventoryObjects);
+            console.log("Zeroed");
             this.player.currentInventoryIDs.splice(existingSellIndex, 1);
             this.buildInventory();
-            console.table(this.player.currentInventoryObjects)
+            console.table(this.player.currentInventoryObjects);
           }
           this.modifyPlayerStats('gold', (this.currentItem.value / 2), "+");
           this.buildInventory();
-          console.table(this.player.currentInventoryObjects)
+          console.table(this.player.currentInventoryObjects);
         }
         else{
           return;
         }
     }
   }
-
 };
 </script>
 

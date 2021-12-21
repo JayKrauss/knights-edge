@@ -25,7 +25,7 @@ button:disabled:hover{
 .main-screen{
     background-image: url("./images/staticbackground.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% auto;
     width: 500px;
     height: 100%;
     min-height: 700px;
@@ -36,7 +36,7 @@ button:disabled:hover{
 .modified-screen{
     background-image: url("./images/staticbackground.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% auto;
     width: 500px;
     height: 100%;
     min-height: 700px;
