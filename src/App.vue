@@ -256,12 +256,10 @@
   import Victory from "./components/Combat/Victory.vue";
   import BottomSpacer from "./components/Status Panes/BottomSpacer.vue";
   import firebase from 'firebase';
-
   import { default as equipmentList } from "./datafiles/items/equipment.js";
   import { default as gearList } from "./datafiles/items/gear.js";
   import { default as standardQuests } from "./datafiles/quests/standardQuests.js";
   // import { default as playerList } from "./datafiles/player/player.js";
-
   import standardEnemies from './datafiles/enemies/standardEnemies';
 
 export default {
@@ -457,7 +455,7 @@ export default {
     }
   },
   methods: {
-    //server controls
+    //Sends request to log into existing player model on server
     async sendLoginRequest(email, password){
       console.log(email, password)
       await firebase.auth().signInWithEmailAndPassword(email, password).then(
@@ -480,8 +478,8 @@ export default {
         }
         );
     },
+    //Sends request to server for new (blank) player model
     signUpRequest(email, password) {
-
         firebase.auth().createUserWithEmailAndPassword(email, password).then(
         user => {
           console.log(user)
@@ -552,6 +550,7 @@ export default {
         }
         )
     },
+    //Updates serverside player model with current statistics
     updateServerData(){
       if (this.serverCharacter != ""){
         console.table(this.player)
@@ -598,7 +597,7 @@ export default {
     collatePlayerStats() {
       var playerDamage = 0;
       var playerArmor = 0;
-    console.table(this.player);
+      console.table(this.player);
       for (var i=0; i<this.player.equippedWeapons.length; i++){
         if (this.player.equippedWeapons[i] != ""){
           this.retrieveByID("equipment", this.player.equippedWeapons[i]);
@@ -644,17 +643,17 @@ export default {
       var existingItem = {};
 
       for(var i=0; i<this.player.equippedItemsObjects.length; i++){
-        if(this.player.equippedItemsObjects[i].slot == passedSlot){
+        if(this.player.equippedItemsObjects[i].slot === passedSlot){
           console.log("Slot full. Swapping.")
           slotFilled = true;
           existingItem = this.player.equippedItemsObjects[i];
         }
       }
 
-      if (slotFilled == false){
+      if (slotFilled === false){
         console.log('Slot empty')
         this.player.equippedItemsIDs.push(passedItem.id);
-        if (passedItem.slot == "mainhand"){
+        if (passedItem.slot === "mainhand"){
           console.log("Item swapped.")
           this.player.equippedWeapons.push(passedItem.id);
         }
@@ -680,12 +679,12 @@ export default {
         console.log("ID: " + existingItem.id)
         for (var l=0; l<this.player.equippedItemsIDs.length; l++){
           console.log(this.player.equippedItemsIDs[l])
-          if (this.player.equippedItemsIDs[l] == existingItem.id){
+          if (this.player.equippedItemsIDs[l] === existingItem.id){
             this.player.equippedItemsIDs.splice(l, 1);
           }
         }
         for (var y=0; y<this.player.currentInventoryIDs.length; y++){
-          if (passedItem.id == this.player.currentInventoryIDs[y][0]){
+          if (passedItem.id === this.player.currentInventoryIDs[y][0]){
             this.player.currentInventoryIDs.splice(y, 1);
             // var pushedItem = [];
             // pushedItem.push(existingItem.id);
@@ -694,9 +693,9 @@ export default {
             // this.player.currentInventoryIDs.push(pushedItem);
           }
         }
-        if (existingItem.slot == "mainhand"){
+        if (existingItem.slot === "mainhand"){
           for (var h=0; h<this.player.equippedWeapons.length; h++){
-            if (existingItem.id == this.player.equippedWeapons[h]){
+            if (existingItem.id === this.player.equippedWeapons[h]){
               this.player.equippedWeapons.splice(h, 1);
             }
           }
@@ -707,7 +706,7 @@ export default {
         }
         else{
           for (var g=0; g<this.player.equippedArmor.length; g++){
-            if (existingItem.id == this.player.equippedArmor[g]){
+            if (existingItem.id === this.player.equippedArmor[g]){
               this.player.equippedArmor.splice(h, 1);
               this.player.currentInventoryIDs.push(
             [existingItem.id, 1, 'equipment']
@@ -888,6 +887,7 @@ export default {
       this.openPane('inn');
       this.healToFull();
       this.modifyPlayerStats("gold", this.player.level * 5, "-");
+      this.saveCharacter();
       alert("You have been found unconcious outside of town. You were brought to the Inn to rest. Gold has been deducted to pay for the doctor fees.")
     },
     //update HP and combat stats after leveling up
@@ -974,6 +974,7 @@ export default {
       this.openPane('characterLanding');
       console.log("Welcome to the game.");
     },
+    //Easier calling of the server update function
     saveCharacter() {
       this.updateServerData();
     },
