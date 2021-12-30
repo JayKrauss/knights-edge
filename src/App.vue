@@ -644,17 +644,17 @@ export default {
 
       for(var i=0; i<this.player.equippedItemsObjects.length; i++){
         if(this.player.equippedItemsObjects[i].slot === passedSlot){
-          console.log("Slot full. Swapping.")
+          console.log("Slot full. Swapping.");
           slotFilled = true;
           existingItem = this.player.equippedItemsObjects[i];
         }
       }
 
       if (slotFilled === false){
-        console.log('Slot empty')
+        console.log('Slot empty');
         this.player.equippedItemsIDs.push(passedItem.id);
         if (passedItem.slot === "mainhand"){
-          console.log("Item swapped.")
+          console.log("Item swapped.");
           this.player.equippedWeapons.push(passedItem.id);
         }
         else if(passedItem.slot === "neck") {
@@ -669,16 +669,16 @@ export default {
             this.player.currentInventoryIDs.splice(k, 1);
           }
         }
-        this.buildEquippedItemArray()
+        this.buildEquippedItemArray();
         this.buildInventory();
-        this.collatePlayerStats()
+        this.collatePlayerStats();
         this.openPane('equipment');
       }
       else {
         console.log("SWAPPING ITEMS TO INVENTORY")
         console.log("ID: " + existingItem.id)
         for (var l=0; l<this.player.equippedItemsIDs.length; l++){
-          console.log(this.player.equippedItemsIDs[l])
+          console.log(this.player.equippedItemsIDs[l]);
           if (this.player.equippedItemsIDs[l] === existingItem.id){
             this.player.equippedItemsIDs.splice(l, 1);
           }
