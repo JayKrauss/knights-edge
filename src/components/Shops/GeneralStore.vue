@@ -17,7 +17,7 @@ export default {
   props: [],
   data(){
     return{
-      generalStoreText : "You walk into the General Store. In boxes and crate, on shelves and hung from hooks are all manner of tools an equipment for every adventurer. Boxes of perserved rations and empty bottles stand next to stacks of health potions and climbing gear."
+      generalStoreText : "You walk into the General Store. In boxes and crates, on shelves and hung from hooks are all manner of tools an equipment for an adventurer."
     }
   },
   methods: {
@@ -79,9 +79,7 @@ export default {
   -o-animation: fadeIn 1.5s;
   -ms-animation: fadeIn 1.5s;
 }
-#generalstore-buttons{
-  margin-top: 20px;
-}
+
 button{
   margin: 5px;
 }

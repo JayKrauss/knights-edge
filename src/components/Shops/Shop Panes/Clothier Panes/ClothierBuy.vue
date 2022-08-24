@@ -101,7 +101,7 @@ export default {
 }
  #clothier-shop-list{
      width: 400px;
-     height: 250px;
+     height: 60%;
      overflow-y: scroll; 
      margin-left: auto;
      margin-right: auto;

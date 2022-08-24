@@ -48,21 +48,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
- #character{
-     background-image: url("../../assets/images/Poster6.png");
-     background-size: 95%;
-     background-position: center;
- }
  #player-stats{
-     width: 300px;
-     min-height: 200px;
      margin-left: auto;
      margin-right: auto;
-     background: rgba(0,0,0,.7);
      color: white;
      list-style: none;
-     justify-content: space-evenly;
- }
+     background-image: url("../../assets/images/Poster6.png");
+     background-size:cover;
+  }
  #inventory-item{
      background: gray;
  }

@@ -3,6 +3,11 @@ import App from "./App.vue";
 import "./assets/global.css";
 import firebase from 'firebase';
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+import './assets/css/main.css';
+
 var firebaseConfig = {
     apiKey: "AIzaSyCk4QP59AgPRLK_iHzKfpXyAGrlnKtTnIQ",
     authDomain: "knights-edge.firebaseapp.com",

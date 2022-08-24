@@ -18,7 +18,7 @@ export default {
 <style scoped>
  #bottom-spacer{
      bottom:0;
-     width: 500px;
+     width: 100%;
      height: 70px;
      background: black;
      margin-left: auto;

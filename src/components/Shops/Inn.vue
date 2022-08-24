@@ -64,6 +64,7 @@ export default {
   width: 250px;
   height: 250px;
   margin-left: 10px;
+  margin-bottom: 10px;
   background-image: url('../../assets/images/npcimages/innkeeperidle.png');
   background-size: cover;
   background-position: center;
@@ -80,9 +81,6 @@ export default {
   -moz-animation: fadeIn 1.5s;
   -o-animation: fadeIn 1.5s;
   -ms-animation: fadeIn 1.5s;
-}
-#inn-buttons{
-  margin-top: 50px;
 }
 button{
   margin: 5px;

@@ -116,8 +116,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #status-bar{
+  position: fixed;
   top:0;
-  width: 500px;
+  width: 100%;
   height: 60px;
   background: black;
   margin-left: auto;

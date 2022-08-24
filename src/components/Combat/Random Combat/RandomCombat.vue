@@ -28,9 +28,11 @@
         <span id="status-text2">{{ statusText2 }}</span>
         <br />
       </div>
-      <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
-      <button @click="playerDefend" class="shop-button">Defend</button>
-      <button @click="playerHeal" class="shop-button">Heal</button>
+      <div class="combat-buttons">
+        <button @click="playerAttack" class="shop-button" id="attackbutton">Attack</button>
+        <button @click="playerDefend" class="shop-button">Defend</button>
+        <button @click="playerHeal" class="shop-button">Heal</button>
+      </div>
     </div>
   </div>
 </template>
@@ -192,6 +194,9 @@ export default {
   height: 200px;
   margin-left: auto;
   margin-right: auto;
+}
+.combat-buttons button{
+  margin-bottom: -10px;
 }
 #enemy-chat {
   font-size: 18px;

@@ -2,7 +2,7 @@
     <div id="equipment" class="main-screen col-12">
         <span id="equipment-header">EQUIPMENT</span>
         <br>
-    <table id="equipment-pane" @mouseover="showUnequip" @click="unequipGear">
+    <table id="equipment-pane" class="col-12" @mouseover="showUnequip" @click="unequipGear">
         <tr>
         <td><span class="player-stats">Damage: <span id="player-damage"></span></span></td>
         <td class="slot"><div value="" id="helm-slot" class="gear-preview"><span id="unequip-helm" class="unequip">UNEQUIP</span></div></td>
@@ -163,10 +163,10 @@ export default {
   font-size: 40px;
   margin-bottom: -20px;
 }
-#equipment{
+#equipment-pane{
   background-image: url("../../assets/images/equipmentbackground.png");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 .player-stats{

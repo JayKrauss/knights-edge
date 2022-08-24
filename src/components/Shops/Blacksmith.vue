@@ -4,9 +4,9 @@
     <div class="shop-text"><strong>{{ blacksmithText }}</strong></div>
     <div id="blacksmith-image"></div><span id='blacksmith-greeting' class="shop-text">What brings you to my shop?</span>
   <div id='blacksmith-buttons'>
-  <button @click="openBuy" class="shop-button">Buy</button>
-  <button @click="openSell" class="shop-button">Sell</button>
-  <button class="shop-button" disabled>Work</button>
+    <button @click="openBuy" class="shop-button">Buy</button>
+    <button @click="openSell" class="shop-button">Sell</button>
+    <button class="shop-button" disabled>Work</button>
   </div>
   </div>
 </template>
@@ -71,9 +71,6 @@ export default {
   -moz-animation: fadeIn 1.5s;
   -o-animation: fadeIn 1.5s;
   -ms-animation: fadeIn 1.5s;
-}
-#blacksmith-buttons{
-  margin-top: 50px;
 }
 button{
   margin: 5px;

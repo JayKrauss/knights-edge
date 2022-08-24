@@ -112,7 +112,7 @@ export default {
 }
  #blacksmith-shop-list{
      width: 400px;
-     height: 250px;
+     height: 50%;
      overflow-y: scroll; 
      margin-left: auto;
      margin-right: auto;

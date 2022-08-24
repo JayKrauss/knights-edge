@@ -79,9 +79,6 @@ export default {
   -o-animation: fadeIn 1.5s;
   -ms-animation: fadeIn 1.5s;
 }
-#clothier-buttons{
-  margin-top: 40px;
-}
 button{
   margin: 5px;
 }

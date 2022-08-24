@@ -19,7 +19,7 @@ export default {
 <style scoped>
 #status-bar{
   top:0;
-  width: 500px;
+  width: 100%;
   height: 50px;
   background: black;
   margin-left: auto;
