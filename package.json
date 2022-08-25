@@ -12,6 +12,7 @@
     "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "aws-cli": "0.0.2",
     "bootstrap": "^5.2.0",
     "bootstrap-vue": "^2.21.2",
