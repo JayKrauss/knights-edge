@@ -4,7 +4,7 @@
 
 There is nothing quite so educational as building a game in a new framework or language.
 The complexity and intricacy inherent in game design really lends itself to requiring desperate googling and "Lets see if this works"..s.
-This is a text-based RPG game that is being built in VueJS. As will become apparent in the code, there are several "panes" that allow the player to 
+This is a turn-based RPG game that is being built in VueJS. As will become apparent in the code, there are several "panes" that allow the player to 
 navigate the town and surrounding areas to find fights, materials, xp and gold. I plan to flesh it out considerably as I go, with
 gear set bonuses, quests and dungeons, and a full leveling system.
 And when Im done with all that?
