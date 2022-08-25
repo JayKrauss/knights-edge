@@ -78,6 +78,7 @@ export default {
   methods: {
     fillSlots() {
       this.clearSlots();
+      this.clearImages();
       for (var i=0; i<this.equippedItemsArray.length; i++){
         switch (this.equippedItemsArray[i].slot){
           case "helm":
