@@ -625,12 +625,10 @@ export default {
     },
     //builds array of objects for equipped items
     buildEquippedItemArray() {
-      if (this.player.equippedItemsIDs){
-        this.player.equippedItemsObjects = [];
+      this.player.equippedItemsObjects = [];
       for (var i=0; i<this.player.equippedItemsIDs.length; i++){
         this.retrieveByID('equipment', this.player.equippedItemsIDs[i]);
         this.player.equippedItemsObjects.push(this.currentItem);
-      }
       }
     },
     //equips an item and updates player stats
@@ -725,7 +723,7 @@ export default {
     },
     //unequips an item and updates player stats
     unequipItem(id){
-      console.log(id)
+      console.log(id);
       for (var a=0;a<this.player.equippedItemsIDs.length; a++){
         if (this.player.equippedItemsIDs[a] == id){
           this.player.equippedItemsIDs.splice(a, 1);
@@ -734,21 +732,19 @@ export default {
       for (var b=0;b<this.player.equippedWeapons.length; b++){
         if (this.player.equippedWeapons[b] == id){
           this.player.equippedWeapons.splice(b, 1);
-          this.collatePlayerStats();
         }
       }
       for (var c=0;c<this.player.equippedArmor.length; c++){
         if (this.player.equippedArmor[c] == id){
           this.player.equippedArmor.splice(c, 1);
-          this.collatePlayerStats();
         }
       }
       for (var d=0;d<this.player.equippedArmor.length; d++){
         if (this.player.equippedAccessories[d] == id){
           this.player.equippedAccessories.splice(d, 1);
-          this.collatePlayerStats();
         }
       }
+      this.collatePlayerStats();
       this.player.currentInventoryIDs.push(
         [id, 1, "equipment"]
       );

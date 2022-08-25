@@ -15,6 +15,8 @@ export default {
   ],
   methods: {
     buildInventories() {
+      document.querySelector('#gear-inventory-list').innerHTML = '';
+      document.querySelector('#loot-inventory-list').innerHTML = '';
       for (var i=0; i<this.currentInventoryObjects.length; i++){
         if (this.currentInventoryObjects[i].type == "gear"){
           let gearItem = `

@@ -4,24 +4,24 @@
         <br>
     <table id="equipment-pane" class="col-12" @mouseover="showUnequip" @click="unequipGear">
         <tr>
-        <td><span class="player-stats">Damage: <span id="player-damage"></span></span></td>
-        <td class="slot"><div value="" id="helm-slot" class="gear-preview"><span id="unequip-helm" class="unequip">UNEQUIP</span></div></td>
-        <td><span class="player-stats">Armor: <span id="player-armor"></span></span></td>
+        <td><span class="player-stats">Damage: <span id="player-damage"></span>{{playerDamage.toFixed(2)}}</span></td>
+        <td class="slot"><img :src=images.helmImage :alt=helm.id id="helm-slot" class="gear-preview"><span id="unequip-helm" class="unequip">UNEQUIP</span></td>
+        <td><span class="player-stats">Armor: <span id="player-armor"></span>{{playerArmor.toFixed(2)}}</span></td>
         </tr>
         <tr>
-        <td class="slot"><div value="" id="shoulder-slot" class="gear-preview"><span id="unequip-shoulder" class="unequip">UNEQUIP</span></div></td>
-        <td class="slot"><div value="" id="chest-slot" class="gear-preview"><span id="unequip-chest" class="unequip">UNEQUIP</span></div></td>
-        <td class="slot"><div value="" id="neck-slot" class="gear-preview"><span id="unequip-neck" class="unequip">UNEQUIP</span></div></td>
+        <td class="slot"><img :src=images.shoulderImage :alt=shoulder.id id="shoulder-slot" class="gear-preview"><span id="unequip-shoulder" class="unequip">UNEQUIP</span></td>
+        <td class="slot"><img :src=images.chestImage :alt=chest.id id="chest-slot" class="gear-preview"><span id="unequip-chest" class="unequip">UNEQUIP</span></td>
+        <td class="slot"><img :src=images.neckImage :alt=neck.id id="neck-slot" class="gear-preview"><span id="unequip-neck" class="unequip">UNEQUIP</span></td>
         </tr>
         <tr>
-        <td class="slot"><div value="" id="mainhand-slot" class="gear-preview"><span id="unequip-mainhand" class="unequip">UNEQUIP</span></div></td>
-        <td class="slot"><div value="" id="hands-slot" class="gear-preview"><span id="unequip-hands" class="unequip">UNEQUIP</span></div></td>
-        <td class="slot"><div value="" id="offhand-slot" class="gear-preview"><span id="unequip-offhand" class="unequip">UNEQUIP</span></div></td>
+        <td class="slot"><img :src=images.mainhandImage :alt=mainhand.id id="mainhand-slot" class="gear-preview"><span id="unequip-mainhand" class="unequip">UNEQUIP</span></td>
+        <td class="slot"><img :src=images.handsImage :alt=hands.id id="hands-slot" class="gear-preview"><span id="unequip-hands" class="unequip">UNEQUIP</span></td>
+        <td class="slot"><img :src=images.offhandImage :alt=offhand.id id="offhand-slot" class="gear-preview"><span id="unequip-offhand" class="unequip">UNEQUIP</span></td>
         </tr>
         <tr>
-        <td><span class="player-stats">Kills: <span id="player-kills"></span></span></td>
-        <td class="slot"><div value="" id="feet-slot" class="gear-preview"><span id="unequip-feet" class="unequip">UNEQUIP</span></div></td>
-        <td><span class="player-stats">Deaths: <span id="player-deaths"></span></span></td>
+        <td><span class="player-stats">Kills: <span id="player-kills"></span>{{playerKills}}</span></td>
+        <td class="slot"><img :src=images.feetImage :alt=feet.id id="feet-slot" class="gear-preview"><span id="unequip-feet" class="unequip">UNEQUIP</span></td>
+        <td><span class="player-stats">Deaths: <span id="player-deaths"></span>{{playerDeaths}}</span></td>
         </tr>
     </table>
     </div>
@@ -38,12 +38,19 @@ export default {
     "playerDeaths"
   ],
   mounted(){
+    this.clearImages();
     this.fillSlots();
-    this.updateStatDisplay();
+    this.updateImages();
+    console.log("Mounted equip");
+    console.table(this.equippedItemsArray)
   },
-   watch: { 
+  beforeUnmount() {
+    this.clearImages();
+  },
+  watch: { 
     equippedItemsArray: function() { 
-        this.fillSlots()
+        this.fillSlots();
+        this.updateImages();
     }
   },
   data() {
@@ -56,10 +63,21 @@ export default {
       hands : {},
       offhand : {},
       feet : {},
+      images: {
+        helmImage: '',
+        chestImage: '',
+        shoulderImage: '',
+        neckImage: '',
+        mainhandImage: '',
+        handsImage: '',
+        offhandImage: '',
+        feetImage: '',
+      }
     }
   },
   methods: {
     fillSlots() {
+      this.clearSlots();
       for (var i=0; i<this.equippedItemsArray.length; i++){
         switch (this.equippedItemsArray[i].slot){
           case "helm":
@@ -90,62 +108,75 @@ export default {
             continue;
         }
       }
-      this.updateImages()
+      this.updateImages();
     },
     unequipGear(e) {
       if (e.target.matches('.gear-preview')) {
         var itemID = "";
-        itemID = e.target.value
-        if (itemID != undefined){
-           this.$emit('unequipItem', itemID);
+        itemID = e.target.alt;
+        console.log(itemID)
+        if (itemID != undefined && itemID != '') {
+          this.clearImages();
+          this.$emit('unequipItem', itemID);
+          this.updateImages();
         }
       }
     },
+    clearImages() {
+      this.images = {
+        helmImage: require('@/assets/images/HD_transparent_picture.png'),
+        chestImage: require('@/assets/images/HD_transparent_picture.png'),
+        shoulderImage: require('@/assets/images/HD_transparent_picture.png'),
+        neckImage: require('@/assets/images/HD_transparent_picture.png'),
+        mainhandImage: require('@/assets/images/HD_transparent_picture.png'),
+        handsImage: require('@/assets/images/HD_transparent_picture.png'),
+        offhandImage: require('@/assets/images/HD_transparent_picture.png'),
+        feetImage: require('@/assets/images/HD_transparent_picture.png'),
+      }
+    },
+    clearSlots() {
+      this.helm = {};
+      this.chest = {};
+      this.shoulder = {};
+      this.neck = {};
+      this.mainhand = {};
+      this.hands = {};
+      this.offhand = {};
+      this.feet = {};
+    },
     updateImages() {
+      this.clearImages();
       if (!Object.keys(this.helm).length == 0){
-        document.querySelector("#helm-slot").style.backgroundImage = `url(${this.helm.image})`
-        document.querySelector("#helm-slot").value = this.helm.id;
+        this.images.helmImage = this.helm.image;
         };
       if (!Object.keys(this.chest).length == 0){
-        document.querySelector("#chest-slot").style.backgroundImage = `url(${this.chest.image})`
-        document.querySelector("#chest-slot").value = this.chest.id;
+        this.images.chestImage = this.chest.image;
         };
       if (!Object.keys(this.shoulder).length == 0){
-        document.querySelector("#shoulder-slot").style.backgroundImage = `url(${this.shoulder.image})`
-        document.querySelector("#shoulder-slot").value = this.shoulder.id;
+        this.images.shoulderImage = this.shoulder.image;
         };
       if (!Object.keys(this.neck).length == 0){
-        document.querySelector("#neck-slot").style.backgroundImage = `url(${this.neck.image})`
-        document.querySelector("#neck-slot").value = this.neck.id;
+          this.images.neckImage = this.neck.image;
         };
       if (!Object.keys(this.mainhand).length == 0){
-        document.querySelector("#mainhand-slot").style.backgroundImage = `url(${this.mainhand.image})`
-        document.querySelector("#mainhand-slot").value = this.mainhand.id;
+          this.images.mainhandImage = this.mainhand.image;
         };
       if (!Object.keys(this.hands).length == 0){
-        document.querySelector("#hands-slot").style.backgroundImage = `url(${this.hands.image})`
-        document.querySelector("#hands-slot").value = this.hands.id;
+        this.images.handsImage = this.hands.image;
         };
       if (!Object.keys(this.offhand).length == 0){
-        document.querySelector("#offhand-slot").style.backgroundImage = `url(${this.offhand.image})`
-        document.querySelector("#offhand-slot").value = this.offhand.id;
+        this.images.offhandImage = this.offhand.image;
         };
       if (!Object.keys(this.feet).length == 0){
-        document.querySelector("#feet-slot").style.backgroundImage = `url(${this.feet.image})`
-        document.querySelector("#feet-slot").value = this.feet.id;
+        this.images.feetImage = this.feet.image;
         };
     },
-    updateStatDisplay() {
-      document.querySelector("#player-damage").innerHTML = this.playerDamage.toFixed(2);
-      document.querySelector("#player-armor").innerHTML = this.playerArmor.toFixed(2);
-      document.querySelector("#player-kills").innerHTML = this.playerKills;
-      document.querySelector("#player-deaths").innerHTML = this.playerDeaths;
-    },
+  
     showUnequip(e){
       if (e.target.matches('.gear-preview')) {
         var itemID = "";
-        itemID = e.target.value
-        if (itemID != undefined){
+        itemID = e.target.alt
+        if (itemID != undefined && itemID != ''){
           e.target.children[0].classList.add('show');
           setTimeout(function() { e.target.children[0].classList.remove('show'); }, 250);
         }
