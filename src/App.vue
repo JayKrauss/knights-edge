@@ -722,34 +722,32 @@ export default {
       ;
     },
     //unequips an item and updates player stats
-    unequipItem(id){
+    unequipItem(id) {
       console.log(id);
-      for (var a=0;a<this.player.equippedItemsIDs.length; a++){
-        if (this.player.equippedItemsIDs[a] == id){
+      for (var a = 0; a < this.player.equippedItemsIDs.length; a++) {
+        if (this.player.equippedItemsIDs[a] == id) {
           this.player.equippedItemsIDs.splice(a, 1);
         }
       }
-      for (var b=0;b<this.player.equippedWeapons.length; b++){
-        if (this.player.equippedWeapons[b] == id){
+      for (var b = 0; b < this.player.equippedWeapons.length; b++) {
+        if (this.player.equippedWeapons[b] == id) {
           this.player.equippedWeapons.splice(b, 1);
         }
       }
-      for (var c=0;c<this.player.equippedArmor.length; c++){
-        if (this.player.equippedArmor[c] == id){
+      for (var c = 0; c < this.player.equippedArmor.length; c++) {
+        if (this.player.equippedArmor[c] == id) {
           this.player.equippedArmor.splice(c, 1);
         }
       }
-      for (var d=0;d<this.player.equippedArmor.length; d++){
-        if (this.player.equippedAccessories[d] == id){
-          this.player.equippedAccessories.splice(d, 1);
+      for (var e = 0; e < this.player.equippedAccessories.length; e++) {
+        if (this.player.equippedAccessories[e] == id) {
+          this.player.equippedAccessories.splice(e, 1);
         }
       }
       this.collatePlayerStats();
-      this.player.currentInventoryIDs.push(
-        [id, 1, "equipment"]
-      );
+      this.player.currentInventoryIDs.push([id, 1, "equipment"]);
       this.buildEquippedItemArray();
-      this.openPane('inventory');
+      this.openPane('equipment');
     },
     //allows for stat modification
     modifyPlayerStats(stat, amount, direction) {
@@ -1074,6 +1072,7 @@ export default {
           this.townButtonsPane = true;
           break;
         case "inventory":
+          this.buildEquippedItemArray();
           this.buildInventory();
           this.statusPane = true;
           this.inventoryPane = true;
@@ -1215,7 +1214,7 @@ export default {
       for (var i=0 ; i < sheet.length ; i++)
           {
               if (sheet[i]["id"] == id) {
-                  //bounce the item to "global" so that the calling functions can actually see it
+                  //bounce the item to global so that the calling functions can actually see it
                   this.currentItem = sheet[i];
               }
           }
@@ -1466,7 +1465,7 @@ export default {
         alert("You cannot afford this.");
       }
     },
-    //buys a piece of adventuring gear from players
+    //buys a piece of adventuring gear from player
     sellItem(id){
         var existingSellIndex;
         var playerHas = false

@@ -44,7 +44,4 @@ export default {
      align-items: center;
      justify-content: center;
  }
- #town-buttons button {
-
- }
 </style>

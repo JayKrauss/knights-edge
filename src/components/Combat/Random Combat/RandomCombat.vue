@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import standardEnemies from "../../../datafiles/enemies/standardEnemies.js"
+import standardEnemies from "@/datafiles/enemies/standardEnemies.js"
 
 export default {
   name: "RandomCombat",
