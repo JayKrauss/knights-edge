@@ -244,6 +244,10 @@ export default {
     opacity: 0.70;
     align-content: center;
 }
+.gear-preview:hover{
+  border: solid red 3px;
+  border-radius: 10px;
+}
 table{
   margin-left: auto;
   margin-right: auto;
